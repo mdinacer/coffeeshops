@@ -1,13 +1,8 @@
-import { LoginIcon, LogoutIcon } from '@heroicons/react/outline';
-import {
-  MenuAlt1Icon,
-  SearchIcon,
-  BellIcon,
-  UserIcon,
-} from '@heroicons/react/solid';
-import { User } from '../../app/models/user';
-import { signOut } from '../../app/slices/accountSlice';
-import { useAppDispatch } from '../../app/store/configureStore';
+import {LoginIcon, LogoutIcon} from '@heroicons/react/outline';
+import {BellIcon, MenuAlt1Icon, SearchIcon, UserIcon,} from '@heroicons/react/solid';
+import {User} from '../../app/models/user';
+import {signOut} from '../../app/slices/accountSlice';
+import {useAppDispatch} from '../../app/store/configureStore';
 import AppButton from '../common/AppButton';
 import AppLink from '../common/AppLink';
 

@@ -1,14 +1,10 @@
-import {
-  createAsyncThunk,
-  createEntityAdapter,
-  createSlice,
-} from '@reduxjs/toolkit';
+import {createAsyncThunk, createEntityAdapter, createSlice,} from '@reduxjs/toolkit';
 import agent from '../api/agent';
-import { Operation } from '../models/operation';
-import { OperationParams } from '../models/operationParams';
-import { OperationType } from '../models/OperationType';
-import { MetaData } from '../models/pagination';
-import { RootState } from '../store/configureStore';
+import {Operation} from '../models/operation';
+import {OperationParams} from '../models/operationParams';
+import {OperationType} from '../models/OperationType';
+import {MetaData} from '../models/pagination';
+import {RootState} from '../store/configureStore';
 
 interface OperationState {
   operationsLoaded: boolean;

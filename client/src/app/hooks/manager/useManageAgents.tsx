@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../../store/configureStore';
-import { fetchAgentsAsync, agentsSelectors } from '../../slices/agentsSlice';
+import {useEffect} from 'react';
+import {useAppDispatch, useAppSelector} from '../../store/configureStore';
+import {agentsSelectors, fetchAgentsAsync} from '../../slices/agentsSlice';
 
 export default function useManageAgents() {
   const { status, agentsParams } = useAppSelector((state) => state.agent);

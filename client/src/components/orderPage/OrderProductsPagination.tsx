@@ -1,7 +1,7 @@
-import { AnimateSharedLayout, motion } from 'framer-motion';
-import { MetaData } from '../../app/models/pagination';
-import { setPageNumber } from '../../app/slices/shopSlice';
-import { useAppDispatch } from '../../app/store/configureStore';
+import {AnimateSharedLayout, motion} from 'framer-motion';
+import {MetaData} from '../../app/models/pagination';
+import {setPageNumber} from '../../app/slices/shopSlice';
+import {useAppDispatch} from '../../app/store/configureStore';
 
 interface Props {
   metaData: MetaData;

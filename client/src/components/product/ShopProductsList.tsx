@@ -1,13 +1,9 @@
-import { useEffect, useState } from 'react';
+import {useEffect, useState} from 'react';
 import agent from '../../app/api/agent';
 import useProducts from '../../app/hooks/useProducts';
-import { Product } from '../../app/models/product';
-import {
-  removeProduct,
-  setPageNumber,
-  setProductParams,
-} from '../../app/slices/shopSlice';
-import { useAppDispatch } from '../../app/store/configureStore';
+import {Product} from '../../app/models/product';
+import {removeProduct, setPageNumber, setProductParams,} from '../../app/slices/shopSlice';
+import {useAppDispatch} from '../../app/store/configureStore';
 import ProductForm from '../forms/ProductForm';
 import Pagination from '../input/Pagination';
 import Layout from '../Layout';

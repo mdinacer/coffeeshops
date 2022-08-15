@@ -1,9 +1,9 @@
-import { lazy, Suspense, useCallback, useEffect, useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
-import { fr } from 'date-fns/locale';
-import { useAppDispatch, useAppSelector } from '../store/configureStore';
-import { fetchShopAsync } from '../slices/shopSlice';
-import { fetchCurrentUser } from '../slices/accountSlice';
+import {lazy, Suspense, useCallback, useEffect, useState} from 'react';
+import {Route, Routes} from 'react-router-dom';
+import {fr} from 'date-fns/locale';
+import {useAppDispatch, useAppSelector} from '../store/configureStore';
+import {fetchShopAsync} from '../slices/shopSlice';
+import {fetchCurrentUser} from '../slices/accountSlice';
 import NotFound from '../../errors/NotFound';
 import HomePage from '../../pages/home/HomePage';
 import ServerError from '../../errors/ServerError';

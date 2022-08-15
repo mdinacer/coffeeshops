@@ -1,15 +1,12 @@
-import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
-import { useEffect } from 'react';
-import { FieldValues, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import {yupResolver} from '@hookform/resolvers/yup/dist/yup';
+import {useEffect} from 'react';
+import {FieldValues, useForm} from 'react-hook-form';
+import {useNavigate} from 'react-router-dom';
 import agent from '../../app/api/agent';
-import { setShopId } from '../../app/slices/accountSlice';
-import { setShop } from '../../app/slices/shopSlice';
-import { useAppDispatch, useAppSelector } from '../../app/store/configureStore';
-import {
-  CreateShopSchema,
-  EditShopSchema,
-} from '../../app/validation/shopValidationSchema';
+import {setShopId} from '../../app/slices/accountSlice';
+import {setShop} from '../../app/slices/shopSlice';
+import {useAppDispatch, useAppSelector} from '../../app/store/configureStore';
+import {CreateShopSchema} from '../../app/validation/shopValidationSchema';
 import NumberInput from '../input/NumberInput';
 import TextInput from '../input/TextInput';
 
@@ -18,7 +15,6 @@ export default function ShopForm() {
   const isEdit = !!shop;
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const validationSchema = isEdit ? EditShopSchema : CreateShopSchema;
 
   const {
     control,
@@ -27,7 +23,7 @@ export default function ShopForm() {
     formState: { isSubmitting, isDirty, isValid },
   } = useForm({
     mode: 'all',
-    resolver: yupResolver(validationSchema),
+    resolver: yupResolver(CreateShopSchema),
   });
 
   useEffect(() => {

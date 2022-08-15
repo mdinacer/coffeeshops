@@ -1,10 +1,10 @@
-import { ChevronUpIcon } from '@heroicons/react/solid';
-import { motion } from 'framer-motion';
-import { useRef } from 'react';
-import { Category } from '../../app/models/category';
-import { setProductParams } from '../../app/slices/shopSlice';
-import { useAppDispatch } from '../../app/store/configureStore';
-import { useOutsideClick } from '../../app/utils/outsideClick';
+import {ChevronUpIcon} from '@heroicons/react/solid';
+import {motion} from 'framer-motion';
+import {useRef} from 'react';
+import {Category} from '../../app/models/category';
+import {setProductParams} from '../../app/slices/shopSlice';
+import {useAppDispatch} from '../../app/store/configureStore';
+import {useOutsideClick} from '../../app/utils/outsideClick';
 import OrderCategoryCard from './OrderCategoryCard';
 
 interface Props {

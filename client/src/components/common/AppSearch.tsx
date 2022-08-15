@@ -1,5 +1,5 @@
-import { SearchIcon, XIcon } from '@heroicons/react/solid';
-import { useEffect, useState } from 'react';
+import {SearchIcon, XIcon} from '@heroicons/react/solid';
+import {useEffect, useState} from 'react';
 import TextField from '../fields/TextField';
 
 interface Props {

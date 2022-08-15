@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useState } from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import agent from '../api/agent';
-import { OperationElement } from '../models/OperationElement';
+import {OperationElement} from '../models/OperationElement';
 
 export default function useProductPurchases(
   productId: string | undefined | null

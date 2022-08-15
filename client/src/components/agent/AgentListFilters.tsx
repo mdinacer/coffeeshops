@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { AgentParams } from '../../app/models/agentParams';
-import { setAgentParams } from '../../app/slices/agentsSlice';
-import { useAppDispatch } from '../../app/store/configureStore';
+import {useState} from 'react';
+import {AgentParams} from '../../app/models/agentParams';
+import {setAgentParams} from '../../app/slices/agentsSlice';
+import {useAppDispatch} from '../../app/store/configureStore';
 import AppPageSize from '../common/AppPageSize';
 import AppSearch from '../common/AppSearch';
 import AppSort from '../common/AppSort';

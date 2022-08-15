@@ -1,9 +1,9 @@
-import { useCallback, useEffect, useState } from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import agent from '../../api/agent';
-import { MetaData } from '../../models/pagination';
-import { Product } from '../../models/product';
-import { ProductParams } from '../../models/productParams';
-import { getAxiosProductParams } from '../../slices/shopSlice';
+import {MetaData} from '../../models/pagination';
+import {Product} from '../../models/product';
+import {ProductParams} from '../../models/productParams';
+import {getAxiosProductParams} from '../../slices/shopSlice';
 
 export default function useManageProducts() {
   const [products, setProducts] = useState<Product[]>([]);

@@ -1,7 +1,7 @@
 import agent from '../../app/api/agent';
-import { Product } from '../../app/models/product';
-import { removeProduct } from '../../app/slices/shopSlice';
-import { useAppDispatch } from '../../app/store/configureStore';
+import {Product} from '../../app/models/product';
+import {removeProduct} from '../../app/slices/shopSlice';
+import {useAppDispatch} from '../../app/store/configureStore';
 import AppButton from '../common/AppButton';
 
 interface Props {

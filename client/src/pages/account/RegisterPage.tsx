@@ -1,14 +1,14 @@
-import { FieldValues, useForm } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router-dom';
-import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
+import {FieldValues, useForm} from 'react-hook-form';
+import {Link, useNavigate} from 'react-router-dom';
+import {yupResolver} from '@hookform/resolvers/yup/dist/yup';
 
-import { registerValidationSchema } from './accountValidations';
-import { useAppDispatch } from '../../app/store/configureStore';
+import {registerValidationSchema} from './accountValidations';
+import {useAppDispatch} from '../../app/store/configureStore';
 import agent from '../../app/api/agent';
-import { signInUser } from '../../app/slices/accountSlice';
+import {signInUser} from '../../app/slices/accountSlice';
 import PasswordInput from '../../components/input/PasswordInput';
 import TextInput from '../../components/input/TextInput';
-import { useState } from 'react';
+import {useState} from 'react';
 
 export default function RegisterPage() {
   const dispatch = useAppDispatch();

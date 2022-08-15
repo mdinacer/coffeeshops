@@ -1,6 +1,6 @@
-import { ViewGridIcon } from '@heroicons/react/solid';
-import { motion } from 'framer-motion';
-import { useState } from 'react';
+import {ViewGridIcon} from '@heroicons/react/solid';
+import {motion} from 'framer-motion';
+import {useState} from 'react';
 
 interface Props {
   onChange: (size: number) => void;

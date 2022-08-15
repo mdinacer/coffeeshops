@@ -1,11 +1,6 @@
-import {
-  KeyIcon,
-  MailIcon,
-  PencilAltIcon,
-  TrashIcon,
-} from '@heroicons/react/solid';
-import { useState } from 'react';
-import { useAppSelector } from '../../app/store/configureStore';
+import {KeyIcon, MailIcon, PencilAltIcon, TrashIcon,} from '@heroicons/react/solid';
+import {useState} from 'react';
+import {useAppSelector} from '../../app/store/configureStore';
 import getRoleName from '../../app/utils/rolesNames';
 import AppButton from '../../components/common/AppButton';
 import ProfileForm from '../../components/forms/ProfileForm';

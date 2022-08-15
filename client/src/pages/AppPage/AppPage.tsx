@@ -1,8 +1,8 @@
-import { AnimatePresence, motion } from 'framer-motion';
-import { useRef, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import { useAppSelector } from '../../app/store/configureStore';
-import { useOutsideClick } from '../../app/utils/outsideClick';
+import React, {useRef, useState} from 'react';
+import {AnimatePresence, motion} from 'framer-motion';
+import {useLocation} from 'react-router-dom';
+import {useAppSelector} from '../../app/store/configureStore';
+import {useOutsideClick} from '../../app/utils/outsideClick';
 import AppPageHeader from '../../components/appPage/AppPageHeader';
 import AppPageSidebar from '../../components/appPage/AppPageSidebar';
 

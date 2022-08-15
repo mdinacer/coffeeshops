@@ -1,10 +1,10 @@
-import { PencilAltIcon, TrashIcon } from '@heroicons/react/outline';
-import { useCallback, useEffect, useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import {PencilAltIcon, TrashIcon} from '@heroicons/react/outline';
+import {useCallback, useEffect, useState} from 'react';
+import {useLocation, useNavigate, useParams} from 'react-router-dom';
 import agent from '../../app/api/agent';
 import useProductBatches from '../../app/hooks/useProductBatches';
 import LoadingAnimation from '../../app/layout/LoadingAnimation';
-import { Product } from '../../app/models/product';
+import {Product} from '../../app/models/product';
 import AppButton from '../../components/common/AppButton';
 import AppDialog from '../../components/common/AppDialog';
 import ProductForm from '../../components/forms/ProductForm';

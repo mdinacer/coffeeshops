@@ -1,5 +1,5 @@
-import { useLocation, Navigate } from 'react-router-dom';
-import { useAppSelector } from '../store/configureStore';
+import {Navigate, useLocation} from 'react-router-dom';
+import {useAppSelector} from '../store/configureStore';
 
 export default function PrivateRoute({
   children,

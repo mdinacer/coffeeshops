@@ -1,4 +1,4 @@
-import { UserProfile } from '../../app/models/userProfile';
+import {UserProfile} from '../../app/models/userProfile';
 
 interface Props {
   owner: UserProfile;

@@ -1,8 +1,8 @@
-import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
-import { FieldValues } from 'react-hook-form';
+import {createAsyncThunk, createSlice, isAnyOf} from '@reduxjs/toolkit';
+import {FieldValues} from 'react-hook-form';
 import agent from '../api/agent';
-import { User } from '../models/user';
-import { UserProfile } from '../models/userProfile';
+import {User} from '../models/user';
+import {UserProfile} from '../models/userProfile';
 import customHistory from '../layout/history';
 
 interface AccountState {

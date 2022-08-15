@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useState } from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import agent from '../api/agent';
-import { ProductBatch } from '../models/ProductBatch';
+import {ProductBatch} from '../models/ProductBatch';
 
 export default function useProductBatches(
   productId: string | undefined | null

@@ -1,4 +1,4 @@
-import { TransactionDirection } from "./TransactionDirection";
+import {TransactionDirection} from "./TransactionDirection";
 
 
 export interface ShopPayment {

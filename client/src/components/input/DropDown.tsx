@@ -1,7 +1,7 @@
-import { ChevronDownIcon, ChevronRightIcon } from '@heroicons/react/solid';
-import { AnimatePresence, motion } from 'framer-motion';
-import { useEffect, useRef, useState } from 'react';
-import { useOutsideClick } from '../../app/utils/outsideClick';
+import {ChevronDownIcon, ChevronRightIcon} from '@heroicons/react/solid';
+import {AnimatePresence, motion} from 'framer-motion';
+import {useEffect, useRef, useState} from 'react';
+import {useOutsideClick} from '../../app/utils/outsideClick';
 import ComponentWrapper from '../common/ComponentWrapper';
 
 type DropDownItem = { title: string; value: any };

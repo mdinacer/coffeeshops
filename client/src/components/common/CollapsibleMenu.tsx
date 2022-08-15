@@ -1,5 +1,5 @@
-import { MenuAlt2Icon } from '@heroicons/react/solid';
-import { useState } from 'react';
+import {MenuAlt2Icon} from '@heroicons/react/solid';
+import {useState} from 'react';
 
 interface Props {
   title: string;

@@ -1,17 +1,17 @@
 import * as yup from 'yup';
-import { useEffect, useState } from 'react';
+import {useEffect, useState} from 'react';
 import useAgents from '../../app/hooks/useAgents';
-import { ShopAgentType } from '../../app/models/shopAgentType';
-import { ShopPayment } from '../../app/models/shopPayment';
+import {ShopAgentType} from '../../app/models/shopAgentType';
+import {ShopPayment} from '../../app/models/shopPayment';
 import DropDown from '../input/DropDown';
-import { FieldValues, useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
+import {FieldValues, useForm} from 'react-hook-form';
+import {yupResolver} from '@hookform/resolvers/yup/dist/yup';
 import NumberInput from '../input/NumberInput';
-import { useAppDispatch, useAppSelector } from '../../app/store/configureStore';
-import { agentsSelectors, fetchAgentAsync } from '../../app/slices/agentsSlice';
+import {useAppDispatch, useAppSelector} from '../../app/store/configureStore';
+import {agentsSelectors, fetchAgentAsync} from '../../app/slices/agentsSlice';
 import agent from '../../app/api/agent';
 import TextArea from '../input/TextArea';
-import { TransactionDirection } from '../../app/models/TransactionDirection';
+import {TransactionDirection} from '../../app/models/TransactionDirection';
 
 interface Props {
   shopAgentId?: string;

@@ -1,8 +1,8 @@
-import { format } from 'date-fns';
-import { useState } from 'react';
-import { OperationType } from '../../app/models/OperationType';
-import { setOperationParams } from '../../app/slices/operationSlice';
-import { useAppDispatch } from '../../app/store/configureStore';
+import {format} from 'date-fns';
+import {useState} from 'react';
+import {OperationType} from '../../app/models/OperationType';
+import {setOperationParams} from '../../app/slices/operationSlice';
+import {useAppDispatch} from '../../app/store/configureStore';
 import AppSort from '../common/AppSort';
 import AppDatePicker from '../input/DatePicker';
 import DropDown from '../input/DropDown';

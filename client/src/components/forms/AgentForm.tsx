@@ -1,10 +1,10 @@
-import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
-import { useEffect } from 'react';
-import { FieldValues, useForm } from 'react-hook-form';
+import {yupResolver} from '@hookform/resolvers/yup/dist/yup';
+import {useEffect} from 'react';
+import {FieldValues, useForm} from 'react-hook-form';
 import agent from '../../app/api/agent';
-import { ShopAgent } from '../../app/models/shopAgent';
-import { ShopAgentType } from '../../app/models/shopAgentType';
-import { AgentValidationSchema } from '../../app/validation/agentValidationSchema';
+import {ShopAgent} from '../../app/models/shopAgent';
+import {ShopAgentType} from '../../app/models/shopAgentType';
+import {AgentValidationSchema} from '../../app/validation/agentValidationSchema';
 import AppButton from '../common/AppButton';
 import TextInput from '../input/TextInput';
 

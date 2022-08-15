@@ -1,9 +1,9 @@
-import { PencilAltIcon, PlusIcon, TrashIcon } from '@heroicons/react/solid';
-import { useState } from 'react';
-import { ShopAgent } from '../../app/models/shopAgent';
-import { ShopAgentType } from '../../app/models/shopAgentType';
-import { agentsSelectors, updateShopAgent } from '../../app/slices/agentsSlice';
-import { useAppDispatch, useAppSelector } from '../../app/store/configureStore';
+import {PencilAltIcon, PlusIcon, TrashIcon} from '@heroicons/react/solid';
+import {useState} from 'react';
+import {ShopAgent} from '../../app/models/shopAgent';
+import {ShopAgentType} from '../../app/models/shopAgentType';
+import {agentsSelectors, updateShopAgent} from '../../app/slices/agentsSlice';
+import {useAppDispatch, useAppSelector} from '../../app/store/configureStore';
 import AppButton from '../common/AppButton';
 import AgentForm from '../forms/AgentForm';
 import PaymentDialog from '../payment/PaymentDialog';

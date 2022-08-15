@@ -1,4 +1,4 @@
-import { ITableCell } from './tableModels';
+import {ITableCell} from './tableModels';
 
 export default function ResponsiveTableCell({
   align = 'left',

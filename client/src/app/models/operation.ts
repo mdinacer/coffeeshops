@@ -1,5 +1,5 @@
-import { OperationElement } from "./OperationElement";
-import { OperationType } from "./OperationType";
+import {OperationElement} from "./OperationElement";
+import {OperationType} from "./OperationType";
 
 export interface Operation {
     id: string,

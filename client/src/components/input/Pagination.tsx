@@ -1,7 +1,8 @@
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid';
-import { useState } from 'react';
+import {ChevronLeftIcon, ChevronRightIcon} from '@heroicons/react/solid';
+import {useState} from 'react';
 import ReactPaginate from 'react-paginate';
-import { MetaData } from '../../app/models/pagination';
+import {MetaData} from '../../app/models/pagination';
+
 interface Props {
   metaData: MetaData;
   onPageChange: (page: number) => void;

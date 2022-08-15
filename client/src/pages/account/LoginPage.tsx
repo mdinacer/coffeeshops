@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
-import { FieldValues, useForm } from 'react-hook-form';
-import { Link, useLocation } from 'react-router-dom';
-import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
-import { useAppDispatch } from '../../app/store/configureStore';
-import { loginValidationSchema } from './accountValidations';
-import { signInUser } from '../../app/slices/accountSlice';
+import {useEffect, useState} from 'react';
+import {FieldValues, useForm} from 'react-hook-form';
+import {Link, useLocation} from 'react-router-dom';
+import {yupResolver} from '@hookform/resolvers/yup/dist/yup';
+import {useAppDispatch} from '../../app/store/configureStore';
+import {loginValidationSchema} from './accountValidations';
+import {signInUser} from '../../app/slices/accountSlice';
 import TextInput from '../../components/input/TextInput';
 import PasswordInput from '../../components/input/PasswordInput';
 import Layout from '../../components/Layout';

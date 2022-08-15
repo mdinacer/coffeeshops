@@ -1,13 +1,10 @@
-import { XIcon } from '@heroicons/react/solid';
-import { format } from 'date-fns';
-import { useEffect } from 'react';
-import { locale } from '../../app/layout/App';
-import { OperationType } from '../../app/models/OperationType';
-import {
-  fetchOperationAsync,
-  operationSelectors,
-} from '../../app/slices/operationSlice';
-import { useAppDispatch, useAppSelector } from '../../app/store/configureStore';
+import {XIcon} from '@heroicons/react/solid';
+import {format} from 'date-fns';
+import {useEffect} from 'react';
+import {locale} from '../../app/layout/App';
+import {OperationType} from '../../app/models/OperationType';
+import {fetchOperationAsync, operationSelectors,} from '../../app/slices/operationSlice';
+import {useAppDispatch, useAppSelector} from '../../app/store/configureStore';
 import AppButton from '../common/AppButton';
 import ResponsiveTable from '../common/ResponsiveTable';
 import ResponsiveTableRow from '../common/ResponsiveTableRow';

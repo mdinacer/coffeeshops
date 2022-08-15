@@ -1,5 +1,5 @@
-import { TransactionDirection } from "./TransactionDirection";
-import { TransactionType } from "./TransactionType";
+import {TransactionDirection} from "./TransactionDirection";
+import {TransactionType} from "./TransactionType";
 
 export interface ShopTransaction {
     id: string,

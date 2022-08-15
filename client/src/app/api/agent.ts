@@ -1,20 +1,18 @@
-import axios, { AxiosError, AxiosResponse } from "axios";
-import { PaginatedResponse } from "../models/pagination";
-
-import { toast } from "react-toastify";
-import { User } from "../models/user";
-import { Product } from "../models/product";
-import { Shop } from "../models/shop";
-import { Category } from "../models/category";
-import { Operation } from "../models/operation";
-import { store } from "../store/configureStore";
+import axios, {AxiosError, AxiosResponse} from "axios";
+import {toast} from "react-toastify";
+import {User} from "../models/user";
+import {Product} from "../models/product";
+import {Shop} from "../models/shop";
+import {Category} from "../models/category";
+import {Operation} from "../models/operation";
+import {store} from "../store/configureStore";
 import customHistory from "../layout/history";
-import { signOut } from "../slices/accountSlice";
-import { ShopAgent } from "../models/shopAgent";
-import { OperationElement } from "../models/OperationElement";
-import { ShopPayment } from "../models/shopPayment";
-import { ShopTransaction } from "../models/shopTransaction";
-import { ProductBatch } from "../models/ProductBatch";
+import {signOut} from "../slices/accountSlice";
+import {ShopAgent} from "../models/shopAgent";
+import {OperationElement} from "../models/OperationElement";
+import {ShopPayment} from "../models/shopPayment";
+import {ShopTransaction} from "../models/shopTransaction";
+import {ProductBatch} from "../models/ProductBatch";
 
 const sleep = () => new Promise(resolve => setTimeout(resolve, 50));
 
@@ -52,7 +50,7 @@ axios.interceptors.response.use(async response => {
     // }
 
     return response;
-}, (error: AxiosError<any, any>) => {
+}, (error: AxiosError<any>) => {
 
     if (error.response) {
         const { data, status, headers } = error.response;

@@ -1,7 +1,7 @@
-import { useCallback, useEffect, useState } from 'react';
-import { FieldValues, useForm } from 'react-hook-form';
+import {useCallback, useEffect, useState} from 'react';
+import {FieldValues, useForm} from 'react-hook-form';
 import agent from '../../app/api/agent';
-import { ProductSmall } from '../../app/models/product';
+import {ProductSmall} from '../../app/models/product';
 import DropDown from '../input/DropDown';
 
 export default function ProductLossDialog() {

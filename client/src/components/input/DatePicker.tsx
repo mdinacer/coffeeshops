@@ -1,12 +1,8 @@
-import DatePicker, { ReactDatePickerCustomHeaderProps } from 'react-datepicker';
-import { forwardRef } from 'react';
-import { format } from 'date-fns';
-import {
-  CalendarIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-} from '@heroicons/react/solid';
-import { locale } from '../../app/layout/App';
+import DatePicker, {ReactDatePickerCustomHeaderProps} from 'react-datepicker';
+import {forwardRef} from 'react';
+import {format} from 'date-fns';
+import {CalendarIcon, ChevronLeftIcon, ChevronRightIcon,} from '@heroicons/react/solid';
+import {locale} from '../../app/layout/App';
 import ComponentWrapper from '../common/ComponentWrapper';
 
 interface Props {

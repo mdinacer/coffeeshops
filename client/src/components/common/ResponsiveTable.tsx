@@ -1,5 +1,5 @@
-import { motion } from 'framer-motion';
-import { IResponsiveTable } from './tableModels';
+import {motion} from 'framer-motion';
+import {IResponsiveTable} from './tableModels';
 
 const styles = {
   header:

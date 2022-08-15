@@ -1,6 +1,4 @@
-import useManageProducts, {
-  ProductsManager,
-} from '../../app/hooks/manager/useManageProducts';
+import useManageProducts, {ProductsManager,} from '../../app/hooks/manager/useManageProducts';
 import ListPageLayout from '../../app/layout/ListPageLayout';
 import CollapsibleMenu from '../../components/common/CollapsibleMenu';
 import InventoryList from '../../components/inventory/InventoryList';

@@ -1,5 +1,5 @@
-import { AnimatePresence, motion } from 'framer-motion';
-import { Product } from '../../app/models/product';
+import {AnimatePresence, motion} from 'framer-motion';
+import {Product} from '../../app/models/product';
 import OrderProductCard from './OrderProductCard';
 
 interface Props {

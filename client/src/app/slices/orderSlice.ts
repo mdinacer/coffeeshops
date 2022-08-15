@@ -1,7 +1,7 @@
-import { createAsyncThunk, createEntityAdapter, createSlice } from "@reduxjs/toolkit";
+import {createAsyncThunk, createEntityAdapter, createSlice} from "@reduxjs/toolkit";
 import agent from "../api/agent";
-import { EmptyOrder, Order, Table } from "../models/order";
-import { RootState } from "../store/configureStore";
+import {EmptyOrder, Order, Table} from "../models/order";
+import {RootState} from "../store/configureStore";
 
 interface OrdersState {
     ordersCacheLoaded: boolean;

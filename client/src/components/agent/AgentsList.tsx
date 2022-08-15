@@ -1,4 +1,4 @@
-import { ShopAgent } from '../../app/models/shopAgent';
+import {ShopAgent} from '../../app/models/shopAgent';
 import ResponsiveTable from '../common/ResponsiveTable';
 import ResponsiveTableRow from '../common/ResponsiveTableRow';
 

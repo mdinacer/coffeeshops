@@ -1,6 +1,6 @@
-import { SearchIcon, XIcon } from '@heroicons/react/solid';
-import { useState } from 'react';
-import { productsList } from '../../app/data/productsList';
+import {SearchIcon, XIcon} from '@heroicons/react/solid';
+import {useState} from 'react';
+import {productsList} from '../../app/data/productsList';
 
 interface Props {
   onExit: (item?: any | null) => void;

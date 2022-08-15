@@ -1,20 +1,17 @@
-import { FieldValues, useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
+import {FieldValues, useForm} from 'react-hook-form';
+import {yupResolver} from '@hookform/resolvers/yup/dist/yup';
 
-import { Product } from '../../app/models/product';
-import { useAppDispatch } from '../../app/store/configureStore';
-import {
-  CreateProductSchema,
-  EditProductSchema,
-} from '../../app/validation/productValidationSchema';
-import { useEffect, useState } from 'react';
+import {Product} from '../../app/models/product';
+import {useAppDispatch} from '../../app/store/configureStore';
+import {CreateProductSchema, EditProductSchema,} from '../../app/validation/productValidationSchema';
+import {useEffect, useState} from 'react';
 import TextInput from '../input/TextInput';
 import DropDown from '../input/DropDown';
 import NumberInput from '../input/NumberInput';
 import ImageDropZone from '../input/ImageDropZone';
 import agent from '../../app/api/agent';
-import { setProduct, updateProduct } from '../../app/slices/shopSlice';
-import { ViewGridAddIcon } from '@heroicons/react/solid';
+import {setProduct, updateProduct} from '../../app/slices/shopSlice';
+import {ViewGridAddIcon} from '@heroicons/react/solid';
 
 import TextArea from '../input/TextArea';
 import ProductGalleryForm from './ProductGalleryForm';

@@ -1,6 +1,6 @@
-import { motion } from 'framer-motion';
+import {motion} from 'framer-motion';
 import ResponsiveTableCell from './ResponsiveTableCell';
-import { ITableRow } from './tableModels';
+import {ITableRow} from './tableModels';
 
 export default function ResponsiveTableRow({ cells, onClick }: ITableRow) {
   return (

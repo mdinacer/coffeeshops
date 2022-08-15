@@ -1,8 +1,8 @@
-import { format } from 'date-fns';
-import { useState, useEffect, useCallback } from 'react';
+import {format} from 'date-fns';
+import {useCallback, useEffect, useState} from 'react';
 import agent from '../../app/api/agent';
-import { locale } from '../../app/layout/App';
-import { ShopPayment } from '../../app/models/shopPayment';
+import {locale} from '../../app/layout/App';
+import {ShopPayment} from '../../app/models/shopPayment';
 import ResponsiveTable from '../common/ResponsiveTable';
 import ResponsiveTableRow from '../common/ResponsiveTableRow';
 

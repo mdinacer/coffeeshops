@@ -1,11 +1,11 @@
-import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
-import { useEffect } from 'react';
-import { FieldValues, useForm } from 'react-hook-form';
+import {yupResolver} from '@hookform/resolvers/yup/dist/yup';
+import {useEffect} from 'react';
+import {FieldValues, useForm} from 'react-hook-form';
 import agent from '../../app/api/agent';
-import { UserProfile } from '../../app/models/userProfile';
-import { setProfile } from '../../app/slices/accountSlice';
-import { useAppDispatch, useAppSelector } from '../../app/store/configureStore';
-import { ProfileValidationSchema } from '../../app/validation/profileValidationSchema';
+import {UserProfile} from '../../app/models/userProfile';
+import {setProfile} from '../../app/slices/accountSlice';
+import {useAppDispatch, useAppSelector} from '../../app/store/configureStore';
+import {ProfileValidationSchema} from '../../app/validation/profileValidationSchema';
 import AppButton from '../common/AppButton';
 import TextInput from '../input/TextInput';
 

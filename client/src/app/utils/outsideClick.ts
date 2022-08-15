@@ -1,4 +1,4 @@
-import { MutableRefObject, useEffect } from "react";
+import {MutableRefObject, useEffect} from "react";
 
 export function useOutsideClick(ref: MutableRefObject<any>, callback: () => void) {
     useEffect(() => {

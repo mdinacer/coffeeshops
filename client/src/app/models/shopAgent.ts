@@ -1,4 +1,4 @@
-import { ShopAgentType } from "./shopAgentType";
+import {ShopAgentType} from "./shopAgentType";
 
 
 export interface ShopAgent {

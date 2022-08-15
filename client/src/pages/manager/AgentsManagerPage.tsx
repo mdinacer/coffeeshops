@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import {useState} from 'react';
 import useManageAgents from '../../app/hooks/manager/useManageAgents';
 import ListPageLayout from '../../app/layout/ListPageLayout';
-import { ShopAgent } from '../../app/models/shopAgent';
-import { ShopAgentType } from '../../app/models/shopAgentType';
-import { setPageNumber } from '../../app/slices/shopSlice';
-import { useAppDispatch } from '../../app/store/configureStore';
+import {ShopAgent} from '../../app/models/shopAgent';
+import {ShopAgentType} from '../../app/models/shopAgentType';
+import {setPageNumber} from '../../app/slices/shopSlice';
+import {useAppDispatch} from '../../app/store/configureStore';
 import AgentDetails from '../../components/agent/AgentDetails';
 import AgentsListFilters from '../../components/agent/AgentListFilters';
 import AgentsList from '../../components/agent/AgentsList';

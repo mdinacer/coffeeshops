@@ -1,4 +1,4 @@
-import { ArrowDownIcon, ArrowUpIcon, PlusIcon } from '@heroicons/react/solid';
+import {ArrowDownIcon, ArrowUpIcon, PlusIcon} from '@heroicons/react/solid';
 import useManageTransactions from '../../app/hooks/manager/useManageTransactions';
 import ListPageLayout from '../../app/layout/ListPageLayout';
 import AppButton from '../../components/common/AppButton';

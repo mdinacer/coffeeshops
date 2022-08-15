@@ -1,11 +1,11 @@
-import { format } from 'date-fns';
-import { useState, useEffect, useCallback } from 'react';
+import {format} from 'date-fns';
+import {useCallback, useEffect, useState} from 'react';
 import agent from '../../api/agent';
-import { MetaData } from '../../models/pagination';
-import { ShopTransaction } from '../../models/shopTransaction';
-import { TransactionDirection } from '../../models/TransactionDirection';
-import { TransactionParams } from '../../models/TransactionParams';
-import { TransactionType } from '../../models/TransactionType';
+import {MetaData} from '../../models/pagination';
+import {ShopTransaction} from '../../models/shopTransaction';
+import {TransactionDirection} from '../../models/TransactionDirection';
+import {TransactionParams} from '../../models/TransactionParams';
+import {TransactionType} from '../../models/TransactionType';
 
 export default function useManageTransactions() {
   const [transactions, setTransactions] = useState<ShopTransaction[]>([]);

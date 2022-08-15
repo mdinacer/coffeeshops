@@ -1,5 +1,5 @@
-import { SortAscendingIcon, SortDescendingIcon } from '@heroicons/react/solid';
-import { useState } from 'react';
+import {SortAscendingIcon, SortDescendingIcon} from '@heroicons/react/solid';
+import {useState} from 'react';
 import DropDown from '../input/DropDown';
 
 interface Props {

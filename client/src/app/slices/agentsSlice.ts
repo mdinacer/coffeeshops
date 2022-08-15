@@ -1,15 +1,11 @@
-import {
-    createAsyncThunk,
-    createEntityAdapter,
-    createSlice,
-} from '@reduxjs/toolkit';
+import {createAsyncThunk, createEntityAdapter, createSlice,} from '@reduxjs/toolkit';
 import agent from '../api/agent';
-import { ShopAgent } from '../models/shopAgent';
+import {ShopAgent} from '../models/shopAgent';
 
-import { MetaData } from '../models/pagination';
-import { RootState } from '../store/configureStore';
-import { AgentParams } from '../models/agentParams';
-import { ShopAgentType } from '../models/shopAgentType';
+import {MetaData} from '../models/pagination';
+import {RootState} from '../store/configureStore';
+import {AgentParams} from '../models/agentParams';
+import {ShopAgentType} from '../models/shopAgentType';
 
 interface ShopAgentState {
     agentsLoaded: boolean;

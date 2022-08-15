@@ -1,7 +1,7 @@
-import { format } from 'date-fns';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { locale } from '../../app/layout/App';
-import { Product } from '../../app/models/product';
+import {format} from 'date-fns';
+import {useLocation, useNavigate} from 'react-router-dom';
+import {locale} from '../../app/layout/App';
+import {Product} from '../../app/models/product';
 import ResponsiveTable from '../common/ResponsiveTable';
 import ResponsiveTableRow from '../common/ResponsiveTableRow';
 

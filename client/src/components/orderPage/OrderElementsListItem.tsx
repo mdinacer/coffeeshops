@@ -1,6 +1,6 @@
-import { MinusIcon, PlusIcon, XIcon } from '@heroicons/react/solid';
-import { motion } from 'framer-motion';
-import { OrderElement } from '../../app/models/order';
+import {MinusIcon, PlusIcon, XIcon} from '@heroicons/react/solid';
+import {motion} from 'framer-motion';
+import {OrderElement} from '../../app/models/order';
 
 interface Props {
   element: OrderElement;

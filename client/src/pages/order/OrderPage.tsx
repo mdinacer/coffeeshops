@@ -1,11 +1,11 @@
-import { CashIcon, ChevronDownIcon, TrashIcon } from '@heroicons/react/solid';
-import { AnimatePresence, motion } from 'framer-motion';
-import { useState } from 'react';
+import {CashIcon, ChevronDownIcon, TrashIcon} from '@heroicons/react/solid';
+import {AnimatePresence, motion} from 'framer-motion';
+import {useState} from 'react';
 
 import useProducts from '../../app/hooks/useProducts';
-import { CURRENCY_TEXT } from '../../app/layout/App';
-import { Category } from '../../app/models/category';
-import { Product } from '../../app/models/product';
+import {CURRENCY_TEXT} from '../../app/layout/App';
+import {Category} from '../../app/models/category';
+import {Product} from '../../app/models/product';
 import Layout from '../../components/Layout';
 import OrderElementsList from '../../components/orderPage/OrderElementsList';
 import OrderCategoriesList from '../../components/orderPage/OrderCategoriesList';
@@ -13,8 +13,8 @@ import OrderProductsPagination from '../../components/orderPage/OrderProductsPag
 import OrderProductsGrid from '../../components/orderPage/OrderProductsGrid';
 import OrderTablesList from '../../components/orderPage/OrderTablesList';
 import useOrders from '../../app/hooks/useOrders';
-import { useAppDispatch, useAppSelector } from '../../app/store/configureStore';
-import { addOrder, ordersSelectors } from '../../app/slices/orderSlice';
+import {useAppDispatch, useAppSelector} from '../../app/store/configureStore';
+import {addOrder, ordersSelectors} from '../../app/slices/orderSlice';
 import AppButton from '../../components/common/AppButton';
 import AppDialog from '../../components/common/AppDialog';
 import OrderConfirmation from '../../components/orderPage/OrderConfirmation';

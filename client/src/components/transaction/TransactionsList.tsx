@@ -1,9 +1,9 @@
-import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/react/solid';
-import { format } from 'date-fns';
-import { locale } from '../../app/layout/App';
-import { ShopTransaction } from '../../app/models/shopTransaction';
-import { TransactionDirection } from '../../app/models/TransactionDirection';
-import { TransactionType } from '../../app/models/TransactionType';
+import {ArrowDownIcon, ArrowUpIcon} from '@heroicons/react/solid';
+import {format} from 'date-fns';
+import {locale} from '../../app/layout/App';
+import {ShopTransaction} from '../../app/models/shopTransaction';
+import {TransactionDirection} from '../../app/models/TransactionDirection';
+import {TransactionType} from '../../app/models/TransactionType';
 import ResponsiveTable from '../common/ResponsiveTable';
 import ResponsiveTableRow from '../common/ResponsiveTableRow';
 

@@ -1,5 +1,5 @@
-import { AnimatePresence } from 'framer-motion';
-import { OrderElement } from '../../app/models/order';
+import {AnimatePresence} from 'framer-motion';
+import {OrderElement} from '../../app/models/order';
 import OrderElementsListItem from './OrderElementsListItem';
 
 interface Props {

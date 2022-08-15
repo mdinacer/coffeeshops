@@ -1,6 +1,6 @@
 import Pagination from '../../components/input/Pagination';
 import Layout from '../../components/Layout';
-import { MetaData } from '../models/pagination';
+import {MetaData} from '../models/pagination';
 
 interface Props {
   title: string;

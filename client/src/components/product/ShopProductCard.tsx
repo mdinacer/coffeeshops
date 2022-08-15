@@ -1,6 +1,6 @@
-import { PencilAltIcon, TrashIcon } from '@heroicons/react/solid';
-import { motion } from 'framer-motion';
-import { Product } from '../../app/models/product';
+import {PencilAltIcon, TrashIcon} from '@heroicons/react/solid';
+import {motion} from 'framer-motion';
+import {Product} from '../../app/models/product';
 
 interface Props {
   product: Product;

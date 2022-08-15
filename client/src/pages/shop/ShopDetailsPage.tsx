@@ -1,7 +1,7 @@
-import { PlusIcon } from '@heroicons/react/solid';
-import { useState } from 'react';
-import { Product } from '../../app/models/product';
-import { useAppSelector } from '../../app/store/configureStore';
+import {PlusIcon} from '@heroicons/react/solid';
+import {useState} from 'react';
+import {Product} from '../../app/models/product';
+import {useAppSelector} from '../../app/store/configureStore';
 import ProductForm from '../../components/forms/ProductForm';
 import Layout from '../../components/Layout';
 import ShopProductsList from '../../components/product/ShopProductsList';

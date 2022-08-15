@@ -1,4 +1,4 @@
-import { ProductBatch } from "./ProductBatch";
+import {ProductBatch} from "./ProductBatch";
 
 export interface Product {
     id: string;

@@ -1,4 +1,4 @@
-import { ProductsManager } from '../../app/hooks/manager/useManageProducts';
+import {ProductsManager} from '../../app/hooks/manager/useManageProducts';
 import AppPageSize from '../common/AppPageSize';
 import AppSearch from '../common/AppSearch';
 import AppSort from '../common/AppSort';

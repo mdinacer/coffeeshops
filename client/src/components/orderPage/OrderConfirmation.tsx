@@ -1,15 +1,14 @@
-import { UserAddIcon } from '@heroicons/react/solid';
-import { useState } from 'react';
+import {UserAddIcon} from '@heroicons/react/solid';
+import {useState} from 'react';
 import agent from '../../app/api/agent';
 import useAgents from '../../app/hooks/useAgents';
-import { OperationElement } from '../../app/models/OperationElement';
-import { OperationType } from '../../app/models/OperationType';
-import { ShopAgentType } from '../../app/models/shopAgentType';
+import {OperationElement} from '../../app/models/OperationElement';
+import {OperationType} from '../../app/models/OperationType';
+import {ShopAgentType} from '../../app/models/shopAgentType';
 import AppButton from '../common/AppButton';
 import TextField from '../fields/TextField';
 import AgentForm from '../forms/AgentForm';
 import DropDown from '../input/DropDown';
-import Layout from '../Layout';
 
 interface Props {
   elements: OperationElement[];

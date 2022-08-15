@@ -1,4 +1,4 @@
-import { UseControllerProps, useController } from 'react-hook-form';
+import {useController, UseControllerProps} from 'react-hook-form';
 import ComponentWrapper from '../common/ComponentWrapper';
 
 interface Props extends UseControllerProps {

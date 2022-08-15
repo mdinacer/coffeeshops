@@ -1,8 +1,8 @@
-import { PlusIcon } from '@heroicons/react/solid';
-import { useState } from 'react';
+import {PlusIcon} from '@heroicons/react/solid';
+import {useState} from 'react';
 import useManageProducts from '../../app/hooks/manager/useManageProducts';
 import ListPageLayout from '../../app/layout/ListPageLayout';
-import { Product } from '../../app/models/product';
+import {Product} from '../../app/models/product';
 import AppButton from '../../components/common/AppButton';
 import AppDialog from '../../components/common/AppDialog';
 import CollapsibleMenu from '../../components/common/CollapsibleMenu';

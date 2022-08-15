@@ -7,11 +7,11 @@ import {
   LogoutIcon,
   ViewListIcon,
 } from '@heroicons/react/outline';
-import { Link, useLocation } from 'react-router-dom';
-import { Shop } from '../../app/models/shop';
-import { User } from '../../app/models/user';
-import { signOut } from '../../app/slices/accountSlice';
-import { useAppDispatch } from '../../app/store/configureStore';
+import {Link, useLocation} from 'react-router-dom';
+import {Shop} from '../../app/models/shop';
+import {User} from '../../app/models/user';
+import {signOut} from '../../app/slices/accountSlice';
+import {useAppDispatch} from '../../app/store/configureStore';
 
 interface Props {
   user: User | null;

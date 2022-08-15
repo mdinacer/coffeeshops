@@ -1,8 +1,8 @@
 import agent from '../../app/api/agent';
-import { ShopAgent } from '../../app/models/shopAgent';
-import { ShopAgentType } from '../../app/models/shopAgentType';
-import { removeProduct } from '../../app/slices/shopSlice';
-import { useAppDispatch } from '../../app/store/configureStore';
+import {ShopAgent} from '../../app/models/shopAgent';
+import {ShopAgentType} from '../../app/models/shopAgentType';
+import {removeProduct} from '../../app/slices/shopSlice';
+import {useAppDispatch} from '../../app/store/configureStore';
 import AppButton from '../common/AppButton';
 
 interface Props {

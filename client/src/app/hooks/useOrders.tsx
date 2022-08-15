@@ -1,17 +1,17 @@
-import { useCallback, useEffect } from 'react';
-import { EmptyOrder, Order, OrderElement } from '../models/order';
-import { useAppDispatch, useAppSelector } from '../store/configureStore';
+import {useCallback, useEffect} from 'react';
+import {EmptyOrder, Order, OrderElement} from '../models/order';
+import {useAppDispatch, useAppSelector} from '../store/configureStore';
 import agent from '../api/agent';
 import {
-  addOrder,
-  fetchCachedOrdersAsync,
-  initTables,
-  ordersSelectors,
-  removeOrder,
-  updateOrder,
-  updateTable,
+    addOrder,
+    fetchCachedOrdersAsync,
+    initTables,
+    ordersSelectors,
+    removeOrder,
+    updateOrder,
+    updateTable,
 } from '../slices/orderSlice';
-import { Product } from '../models/product';
+import {Product} from '../models/product';
 
 export default function useOrders() {
   const dispatch = useAppDispatch();

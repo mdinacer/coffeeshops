@@ -2,9 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './app/layout/App';
 import reportWebVitals from './reportWebVitals';
-import { Provider } from 'react-redux';
-import { store } from './app/store/configureStore';
-import { CustomRouter } from './app/layout/CustomRouter';
+import {Provider} from 'react-redux';
+import {store} from './app/store/configureStore';
+import {CustomRouter} from './app/layout/CustomRouter';
 import customHistory from './app/layout/history';
 import './index.css';
 

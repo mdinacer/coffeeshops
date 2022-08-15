@@ -1,4 +1,4 @@
-import { Table } from '../../app/models/order';
+import {Table} from '../../app/models/order';
 
 interface Props {
   tables: Table[];

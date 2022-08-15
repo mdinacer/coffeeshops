@@ -1,15 +1,11 @@
-import {
-  createAsyncThunk,
-  createEntityAdapter,
-  createSlice,
-} from '@reduxjs/toolkit';
+import {createAsyncThunk, createEntityAdapter, createSlice,} from '@reduxjs/toolkit';
 import agent from '../api/agent';
-import { Category } from '../models/category';
-import { MetaData } from '../models/pagination';
-import { Product } from '../models/product';
-import { ProductParams } from '../models/productParams';
-import { Shop } from '../models/shop';
-import { RootState } from '../store/configureStore';
+import {Category} from '../models/category';
+import {MetaData} from '../models/pagination';
+import {Product} from '../models/product';
+import {ProductParams} from '../models/productParams';
+import {Shop} from '../models/shop';
+import {RootState} from '../store/configureStore';
 
 interface ShopState {
   shop: Shop | null;
@@ -134,12 +130,12 @@ export const shopSlice = createSlice({
 
     setPageNumber: (state, action) => {
       state.productsLoaded = false;
-      state.productParams = { ...state.productParams, ...action.payload };
+      state.productParams = { ...state.productParams, pageNumber:action.payload };
     },
 
     setPageSize: (state, action) => {
       state.productsLoaded = false;
-      state.productParams = { ...state.productParams, ...action.payload };
+      state.productParams = { ...state.productParams, pageSize: action.payload};
     },
 
     setMetaData: (state, action) => {

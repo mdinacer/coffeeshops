@@ -1,4 +1,4 @@
-import { useAppSelector } from '../../app/store/configureStore';
+import {useAppSelector} from '../../app/store/configureStore';
 import Layout from '../../components/Layout';
 import ShopDetailsHeader from '../../components/shop/ShopDetailsHeader';
 import ShopDetailsOwner from '../../components/shop/ShopDetailsOwner';

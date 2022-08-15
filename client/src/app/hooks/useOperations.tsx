@@ -1,9 +1,6 @@
-import { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../store/configureStore';
-import {
-  fetchOperationsAsync,
-  operationSelectors,
-} from '../slices/operationSlice';
+import {useEffect} from 'react';
+import {useAppDispatch, useAppSelector} from '../store/configureStore';
+import {fetchOperationsAsync, operationSelectors,} from '../slices/operationSlice';
 
 export default function useOperations() {
   const operations = useAppSelector(operationSelectors.selectAll);

@@ -1,6 +1,6 @@
-import { useCallback } from 'react';
-import { useDropzone } from 'react-dropzone';
-import { useController, UseControllerProps } from 'react-hook-form';
+import {useCallback} from 'react';
+import {useDropzone} from 'react-dropzone';
+import {useController, UseControllerProps} from 'react-hook-form';
 
 interface Props extends UseControllerProps {
   className?: string;

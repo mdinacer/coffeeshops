@@ -1,4 +1,4 @@
-import { useController, UseControllerProps } from 'react-hook-form';
+import {useController, UseControllerProps} from 'react-hook-form';
 
 interface Props extends UseControllerProps {
   label: string;

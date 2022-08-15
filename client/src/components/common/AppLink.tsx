@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom';
-import { buttonGenre } from './AppButton';
+import {Link} from 'react-router-dom';
+import {buttonGenre} from './AppButton';
 
 interface Props {
   label?: string;
