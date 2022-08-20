@@ -1,5 +1,5 @@
-import {AnimatePresence, motion} from 'framer-motion';
-import {Product} from '../../app/models/product';
+import { AnimatePresence, motion } from 'framer-motion';
+import { Product } from '../../app/models/product';
 import OrderProductCard from './OrderProductCard';
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
 
 export default function OrderProductsGrid({ products, onSelect }: Props) {
   return (
-    <div className='grid grid-cols-2 sm:grid-cols-5 md:grid-cols-3 w-full  xl:grid-cols-4 gap-5 h-auto drop-shadow-md'>
+    <div className='grid h-auto w-full grid-cols-2 gap-5 md:grid-cols-3 xl:grid-cols-3'>
       <AnimatePresence>
         {products.map((product) => (
           <motion.button

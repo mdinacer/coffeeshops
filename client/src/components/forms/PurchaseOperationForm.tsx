@@ -1,15 +1,15 @@
-import {PlusCircleIcon} from '@heroicons/react/solid';
-import {yupResolver} from '@hookform/resolvers/yup/dist/yup';
-import {useCallback, useEffect, useState} from 'react';
-import {FieldValues, useForm} from 'react-hook-form';
+import { PlusCircleIcon } from '@heroicons/react/solid';
+import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
+import { useCallback, useEffect, useState } from 'react';
+import { FieldValues, useForm } from 'react-hook-form';
 import agent from '../../app/api/agent';
-import {Operation} from '../../app/models/operation';
-import {OperationElement} from '../../app/models/OperationElement';
-import {OperationType} from '../../app/models/OperationType';
-import {Product, ProductSmall} from '../../app/models/product';
-import {addOperation} from '../../app/slices/operationSlice';
-import {useAppDispatch} from '../../app/store/configureStore';
-import {OperationValidationSchema} from '../../app/validation/operationValidationSchema';
+import { Operation } from '../../app/models/operation';
+import { OperationElement } from '../../app/models/OperationElement';
+import { OperationType } from '../../app/models/OperationType';
+import { Product, ProductSmall } from '../../app/models/product';
+import { addOperation } from '../../app/slices/operationSlice';
+import { useAppDispatch } from '../../app/store/configureStore';
+import { OperationValidationSchema } from '../../app/validation/operationValidationSchema';
 import AppButton from '../common/AppButton';
 import ResponsiveTable from '../common/ResponsiveTable';
 import ResponsiveTableRow from '../common/ResponsiveTableRow';
@@ -41,9 +41,16 @@ export default function PurchaseOperationForm({ operation, onClose }: Props) {
     watch,
     setValue,
     formState: { isSubmitting, isDirty, isValid },
-  } = useForm({
+  } = useForm<FieldValues | any, any>({
     mode: 'all',
     resolver: yupResolver(OperationValidationSchema),
+    defaultValues: {
+      productId: '',
+      quantity: 0,
+      price: 0,
+      minQuantity: 0,
+      expiryDate: '',
+    },
   });
 
   function handleRemoveElement(productId: string) {
@@ -73,8 +80,12 @@ export default function PurchaseOperationForm({ operation, onClose }: Props) {
     }
   }, []);
 
-  const closeForm = (product: Product | undefined) => {
+  const closeForm = async (product: Product | undefined) => {
     setProductFormVisible(false);
+    if (product) {
+      await fetchProducts();
+      setValue('productId', product.id);
+    }
   };
 
   useEffect(() => {
@@ -109,6 +120,7 @@ export default function PurchaseOperationForm({ operation, onClose }: Props) {
       };
 
       setElements((prev) => [...prev, item]);
+      reset();
     }
   }
 
@@ -130,15 +142,15 @@ export default function PurchaseOperationForm({ operation, onClose }: Props) {
 
   if (productsLoading)
     return (
-      <div className='h-40 max-w-lg w-full flex items-center justify-center'>
-        <p className=' text-3xl uppercase opacity-40 font-Primary font-thin'>
+      <div className='flex h-40 w-full max-w-lg items-center justify-center'>
+        <p className=' font-Primary text-3xl font-thin uppercase opacity-40'>
           Chargement des données
         </p>
       </div>
     );
 
   if (productFormVisible)
-    return <ProductForm onClose={(value) => closeForm(value)} />;
+    return <ProductForm onClose={(value) => closeForm(value)} isPurchase />;
 
   if (validateOperation)
     return (
@@ -157,10 +169,10 @@ export default function PurchaseOperationForm({ operation, onClose }: Props) {
     );
 
   return (
-    <div className='flex flex-col items-stretch gap-y-5 max-w-lg '>
+    <div className='flex max-w-lg flex-col items-stretch gap-y-5 '>
       <form
         onSubmit={handleSubmit(submitData)}
-        className='flex flex-col gap-y-4 w-full bg-gray-200 rounded-2xl px-5 py-5'
+        className='flex w-full flex-col gap-y-4 rounded-2xl bg-gray-200 px-5 py-5'
       >
         <div className=' w-full '>
           <DropDown
@@ -176,9 +188,9 @@ export default function PurchaseOperationForm({ operation, onClose }: Props) {
                 type='button'
                 onClick={() => setProductFormVisible(true)}
                 title={`Ajouter un article`}
-                className='h-full w-full flex items-center justify-center px-2'
+                className='flex h-full w-full items-center justify-center px-2'
               >
-                <PlusCircleIcon className='w-6 h-6' />
+                <PlusCircleIcon className='h-6 w-6' />
               </button>
             }
           />
@@ -195,7 +207,15 @@ export default function PurchaseOperationForm({ operation, onClose }: Props) {
         <NumberInput
           control={control}
           placeholder={''}
-          label={`prix`}
+          min={0}
+          label='Quantité Minimum'
+          name={'minQuantity'}
+          showButtons
+        />
+        <NumberInput
+          control={control}
+          placeholder={''}
+          label={`prix d'achat`}
           name={'price'}
         />
 
@@ -218,12 +238,12 @@ export default function PurchaseOperationForm({ operation, onClose }: Props) {
           label={'Ajouter'}
         />
       </form>
-      <div className=' flex-auto flex flex-col overflow-hidden select-none'>
-        <p className=' font-Primary text-2xl uppercase font-thin mb-3 flex-initial '>
+      <div className=' flex flex-auto select-none flex-col overflow-hidden'>
+        <p className=' mb-3 flex-initial font-Primary text-2xl font-thin uppercase '>
           éléments
         </p>
 
-        <div className='flex-auto h-[30vh]  overflow-y-auto overflow-x-hidden'>
+        <div className='h-[30vh] flex-auto  overflow-y-auto overflow-x-hidden'>
           <ResponsiveTable
             headers={['article', 'quantité', 'total']}
             children={elements.map((element, index) => (
@@ -252,7 +272,7 @@ export default function PurchaseOperationForm({ operation, onClose }: Props) {
           />
         </div>
       </div>
-      <div className=' w-full grid grid-cols-2 gap-x-5'>
+      <div className=' grid w-full grid-cols-2 gap-x-5'>
         <AppButton
           disabled={elements.length === 0}
           label='Enregistrer'

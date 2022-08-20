@@ -14,10 +14,12 @@ namespace API.Controllers
     {
         private readonly DataContext _context;
         private readonly IMapper _mapper;
+
         public PaymentsController(DataContext context, IMapper mapper)
         {
             _mapper = mapper;
             _context = context;
+
         }
 
         [Authorize(Policy = "IsShopMember")]

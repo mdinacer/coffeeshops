@@ -18,7 +18,7 @@ export default function ComponentWrapper({
       <label className={`flex-auto flex flex-row w-full gap-x-2 items-center `}>
         <div className='flex-initial'>
           {label && (
-            <p className=' min-w-[4rem] w-full text-sm uppercase  opacity-50 border-r border-gray-400 pr-2  hover:text-indigo-900'>
+            <p className=' min-w-[4rem] w-full text-sm uppercase  opacity-50 border-r border-gray-400 pr-2  hover:text-sky-900'>
               {label}
             </p>
           )}

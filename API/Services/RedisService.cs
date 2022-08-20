@@ -1,6 +1,5 @@
 using System.Text.Json;
 using API.DTO;
-using API.Models;
 using StackExchange.Redis;
 
 namespace API.Services
@@ -13,10 +12,11 @@ namespace API.Services
             _database = redis.GetDatabase();
         }
 
-        public async Task<bool> DeleteOrderAsync(string orderId)
+        public async Task<bool> ClearOrdersAsync(string shopId)
         {
-            return await _database.KeyDeleteAsync(orderId);
+            return await _database.KeyDeleteAsync(shopId);
         }
+
 
         public async Task<List<CacheShopOrder>?> GetOrdersAsync(string shopId)
         {
@@ -27,12 +27,28 @@ namespace API.Services
 
         public async Task<List<CacheShopOrder>?> UpdateOrderAsync(string shopId, ShopOrdersDto shopOrders)
         {
-            var created = await _database.StringSetAsync(shopId, JsonSerializer.Serialize(shopOrders.Orders),
-                TimeSpan.FromDays(1));
+            if (shopOrders.Orders.Any(o => o.Elements.Count > 0))
+            {
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                };
+                var created = await _database.StringSetAsync(shopId, JsonSerializer.Serialize(shopOrders.Orders),
+                                TimeSpan.FromDays(1));
 
-            if (!created) return null;
+                if (!created) return null;
 
-            return await GetOrdersAsync(shopId);
+                return await GetOrdersAsync(shopId);
+            }
+            else
+            {
+                await ClearOrdersAsync(shopId);
+                return new();
+            }
+
         }
+
+
+
     }
 }

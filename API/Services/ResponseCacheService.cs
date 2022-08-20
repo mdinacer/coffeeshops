@@ -11,7 +11,7 @@ namespace API.Services
         {
             _database = redis.GetDatabase();
         }
-        public async Task CacheResponseAsync(string cacheKey, object response, TimeSpan timeToLive)
+        public async Task CacheResponseAsync(string cacheKey, object? response, TimeSpan timeToLive)
         {
             if (response == null)
             {
@@ -38,6 +38,11 @@ namespace API.Services
             }
 
             return cachedResponse;
+        }
+
+        public async Task<bool> ClearCachedResponseAsync(string cacheKey)
+        {
+            return await _database.KeyDeleteAsync(cacheKey);
         }
     }
 }

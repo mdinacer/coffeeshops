@@ -17,15 +17,18 @@ namespace API.Controllers
     {
         private readonly DataContext _context;
         private readonly IMapper _mapper;
+        private readonly HistoryCacheService _history;
+
         private readonly ImageService _imageService;
-        public ProductsController(DataContext context, IMapper mapper, ImageService imageService)
+        public ProductsController(DataContext context, IMapper mapper, HistoryCacheService history, ImageService imageService)
         {
-            _imageService = imageService;
+            _history = history;
             _mapper = mapper;
             _context = context;
+            _imageService = imageService;
         }
 
-        [Cached(60 * 30)]
+        // [Cached(60 * 30)]
         [HttpGet("list")]
         public async Task<ActionResult<List<ProductSmallDto>>> GetProducts()
         {
@@ -37,7 +40,7 @@ namespace API.Controllers
         }
 
 
-        [Cached(60 * 60)]
+        //[Cached(60 * 60)]
         [HttpGet()]
         public async Task<ActionResult<PagedList<ProductFullDto>>> GetProducts([FromQuery] ProductsParams productsParams)
         {
@@ -50,9 +53,7 @@ namespace API.Controllers
             .AsQueryable();
 
             var products =
-                await PagedList<ProductFullDto>.ToPagedList(query, productsParams.PageNumber, productsParams.PageSize);
-
-            //Response.AddPaginationHeader(products.MetaData);
+                await PagedList<ProductFullDto>.ToPagedListAsync(query, productsParams.PageNumber, productsParams.PageSize);
 
             return Ok(products);
         }
@@ -115,6 +116,11 @@ namespace API.Controllers
             product = _mapper.Map<Product>(createProduct);
             product.ShopId = ShopId!;
 
+            if (createProduct.MinQuantity > 0 && createProduct.MinQuantity != product.MinQuantity)
+            {
+                product.MinQuantity = createProduct.MinQuantity;
+            }
+
             if (createProduct.File != null)
             {
                 var imageResult = await _imageService.AddImageAsync(createProduct.File, "products", new ImageTransform
@@ -161,9 +167,15 @@ namespace API.Controllers
 
             var success = await _context.SaveChangesAsync() > 0;
 
-            return success
-            ? Ok(_mapper.Map<ProductFullDto>(product))
-            : BadRequest(new ProblemDetails { Title = "Error creating product" });
+            if (success)
+            {
+                CreateProductHistoryElement(product);
+                return Ok(_mapper.Map<ProductFullDto>(product));
+            }
+            else
+            {
+                return BadRequest(new ProblemDetails { Title = "Error creating product" });
+            }
         }
 
 
@@ -176,6 +188,11 @@ namespace API.Controllers
             if (product == null) return BadRequest("Product doesn't exist");
 
             _mapper.Map(editProduct, product);
+
+            if (editProduct.MinQuantity > 0 && editProduct.MinQuantity != product.MinQuantity)
+            {
+                product.MinQuantity = editProduct.MinQuantity;
+            }
 
             if (editProduct.File != null)
             {
@@ -210,9 +227,15 @@ namespace API.Controllers
 
             var success = await _context.SaveChangesAsync() > 0;
 
-            return success
-            ? Ok(_mapper.Map<ProductFullDto>(product))
-            : BadRequest(new ProblemDetails { Title = "Error updating product" });
+            if (success)
+            {
+                CreateProductHistoryElement(product);
+                return Ok(_mapper.Map<ProductFullDto>(product));
+            }
+            else
+            {
+                return BadRequest(new ProblemDetails { Title = "Error updating product" });
+            }
         }
 
         [Authorize(Policy = "IsShopModerator")]
@@ -227,9 +250,15 @@ namespace API.Controllers
 
             var success = await _context.SaveChangesAsync() > 0;
 
-            return success
-            ? Ok(true)
-            : BadRequest(new ProblemDetails { Title = "Error deleting product" });
+            if (success)
+            {
+                CreateProductHistoryElement(product);
+                return Ok(true);
+            }
+            else
+            {
+                return BadRequest(new ProblemDetails { Title = "Error creating product" });
+            }
         }
 
         private async Task<int?> GetAverageSale(Product product)
@@ -255,7 +284,7 @@ namespace API.Controllers
                 return null;
             }
 
-            if (daysCount > 0 && product.SoldQuantity > 0)
+            if (product.SoldQuantity > 0)
             {
                 var average = product.SoldQuantity / daysCount;
                 return average;
@@ -264,6 +293,12 @@ namespace API.Controllers
             {
                 return null;
             }
+        }
+
+        private async void CreateProductHistoryElement(Product product)
+        {
+            if (string.IsNullOrEmpty(ShopId)) return;
+            await CreateHistoryElement(_context, _history, ShopId, product);
         }
     }
 }

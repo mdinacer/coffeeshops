@@ -1,8 +1,12 @@
-import DatePicker, {ReactDatePickerCustomHeaderProps} from 'react-datepicker';
-import {forwardRef} from 'react';
-import {format} from 'date-fns';
-import {CalendarIcon, ChevronLeftIcon, ChevronRightIcon,} from '@heroicons/react/solid';
-import {locale} from '../../app/layout/App';
+import DatePicker, { ReactDatePickerCustomHeaderProps } from 'react-datepicker';
+import { forwardRef } from 'react';
+import { format } from 'date-fns';
+import {
+  CalendarIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+} from '@heroicons/react/solid';
+import { locale } from '../../app/layout/App';
 import ComponentWrapper from '../common/ComponentWrapper';
 
 interface Props {
@@ -30,7 +34,7 @@ export default function AppDatePicker(props: Props) {
         <DatePicker
           todayButton={
             <div className=' my-2 px-5'>
-              <button className='w-full  uppercase bg-indigo-500 font-Primary text-base py-1 px-2 rounded-md font-thin text-white'>
+              <button className='w-full  uppercase bg-sky-500 font-Primary text-base py-1 px-2 rounded-md font-thin text-white'>
                 aujourd’hui
               </button>
             </div>

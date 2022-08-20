@@ -1,4 +1,4 @@
-import {useController, UseControllerProps} from 'react-hook-form';
+import { useController, UseControllerProps } from 'react-hook-form';
 
 interface Props extends UseControllerProps {
   label?: string;
@@ -23,7 +23,7 @@ export default function TextArea(props: Props) {
       >
         <div className='flex-initial w-full'>
           {props.label && (
-            <p className=' min-w-[4rem] w-full text-sm uppercase  opacity-50 border-b border-b-gray-300 py-2  hover:text-indigo-900'>
+            <p className=' min-w-[4rem] w-full text-sm uppercase  opacity-50 border-b border-b-gray-300 py-2  hover:text-sky-900'>
               {props.label}
             </p>
           )}

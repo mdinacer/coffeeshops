@@ -1,8 +1,15 @@
-import {LoginIcon, LogoutIcon} from '@heroicons/react/outline';
-import {BellIcon, MenuAlt1Icon, SearchIcon, UserIcon,} from '@heroicons/react/solid';
-import {User} from '../../app/models/user';
-import {signOut} from '../../app/slices/accountSlice';
-import {useAppDispatch} from '../../app/store/configureStore';
+import {
+  ArrowLeftIcon,
+  LoginIcon,
+  LogoutIcon,
+  UserCircleIcon,
+} from '@heroicons/react/outline';
+import { BellIcon, MenuAlt1Icon, SearchIcon } from '@heroicons/react/solid';
+import { Link, useLocation } from 'react-router-dom';
+import useNotifications from '../../app/hooks/useNotifications';
+import { User } from '../../app/models/user';
+import { signOut } from '../../app/slices/accountSlice';
+import { useAppDispatch } from '../../app/store/configureStore';
 import AppButton from '../common/AppButton';
 import AppLink from '../common/AppLink';
 
@@ -19,25 +26,39 @@ export default function AppPageHeader({
   onMenuButtonClick,
 }: Props) {
   const dispatch = useAppDispatch();
+  const { state }: any | null = useLocation();
+  const from = state?.from || null;
+  const { connection } = useNotifications();
 
   return (
     <div
-      className={`flex flex-row justify-between  items-center w-full pl-5 py-2 md:py-0 border-b bg-gray-900 text-white drop-shadow-md border-b-gray-300 ${className}`}
+      className={`flex w-full flex-row  items-center justify-between border-b border-b-gray-300 bg-gray-200 md:py-0 md:pl-5 ${className}`}
     >
-      <div className='relative z-10'>
+      <div className='relative z-10 inline-flex items-center gap-x-5'>
         {!sidebarExpanded && (
           <button
             type='button'
             className='p-2'
             onClick={() => onMenuButtonClick(true)}
           >
-            <MenuAlt1Icon
-              className={` h-6 w-6 ${
-                sidebarExpanded ? 'text-white' : ' text-inherit'
-              }`}
-            />
+            <MenuAlt1Icon className={` h-6 w-6 `} />
           </button>
         )}
+        {from && (
+          <Link
+            to={from}
+            className='inline-flex items-center gap-x-2 rounded-full border border-gray-300 bg-gray-100 py-1 px-5  hover:bg-sky-500 hover:text-white'
+          >
+            <ArrowLeftIcon className={` h-5 w-5 `} />
+            <span className='hidden font-Primary font-thin uppercase md:block'>
+              Retour
+            </span>
+          </Link>
+        )}
+      </div>
+
+      <div>
+        <p>{JSON.stringify(connection?.state)}</p>
       </div>
 
       <div className=' flex flex-row gap-x-5'>
@@ -54,17 +75,20 @@ export default function AppPageHeader({
           <div className='flex flex-row items-center '>
             <AppLink
               toPath='/account/profile'
-              Icon={UserIcon}
+              labelStyle=' capitalize hidden md:block'
+              Icon={UserCircleIcon}
               label={user.profile.fullName || user.username}
-              genre={'none'}
-              className='text-inherit hover:translate-y-0 hover:shadow-none rounded-none h-full hover:border-none border-none'
+              noHover
+              className=' hover:text-inherit  hover:underline hover:underline-offset-2 '
             />
             <AppButton
-              label='Sortir'
               Icon={LogoutIcon}
-              genre='error'
+              label='sortir'
+              labelStyle=' hidden md:block'
+              genre='none'
               onClick={() => dispatch(signOut())}
-              className=' hover:translate-y-0 hover:shadow-none rounded-none h-full hover:border-none border-none'
+              noHover={true}
+              className=' rounded-none border-red-600 bg-red-600  hover:bg-red-700'
             />
           </div>
         ) : (
@@ -72,8 +96,10 @@ export default function AppPageHeader({
             <AppLink
               toPath='/account/login'
               Icon={LoginIcon}
-              genre={'primary'}
-              className=' hover:translate-y-0 hover:shadow-none rounded-none h-full hover:border-none border-none'
+              className={
+                ' underline  hover:text-inherit hover:underline-offset-1   '
+              }
+              noHover
             />
           </div>
         )}

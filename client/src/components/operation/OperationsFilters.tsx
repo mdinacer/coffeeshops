@@ -1,16 +1,19 @@
-import {format} from 'date-fns';
-import {useState} from 'react';
-import {OperationType} from '../../app/models/OperationType';
-import {setOperationParams} from '../../app/slices/operationSlice';
-import {useAppDispatch} from '../../app/store/configureStore';
+import { format } from 'date-fns';
+import { useState } from 'react';
+import { OperationType } from '../../app/models/OperationType';
+import { setOperationParams } from '../../app/slices/operationSlice';
+import { useAppDispatch } from '../../app/store/configureStore';
+import AppButtonSelect from '../common/AppButtonSelect';
+import AppPageSize from '../common/AppPageSize';
 import AppSort from '../common/AppSort';
 import AppDatePicker from '../input/DatePicker';
-import DropDown from '../input/DropDown';
 
 export default function OperationsFilters() {
   const dispatch = useAppDispatch();
-  const [startDate, setStartDate] = useState<Date | null | undefined>(null);
-  const [endDate, setEndDate] = useState<Date | null | undefined>(null);
+  const [startDate, setStartDate] = useState<Date | null | undefined>(
+    new Date()
+  );
+  const [endDate, setEndDate] = useState<Date | null | undefined>(new Date());
   const [selectedType, setSelectedType] = useState(OperationType.sale);
 
   const typeFilters = [
@@ -33,11 +36,15 @@ export default function OperationsFilters() {
     filter('orderBy', value);
   };
 
+  const handlePageSizeChange = (count: number) => {
+    filter('pageSize', count);
+  };
+
   return (
     <div>
-      <div className='grid  md:grid-cols-2 lg:grid-cols-4 gap-4'>
+      <div className='grid  gap-4 md:grid-cols-2 lg:grid-cols-5'>
         <div>
-          <DropDown
+          <AppButtonSelect
             items={typeFilters}
             label={`opération`}
             selectedValue={selectedType}
@@ -46,6 +53,15 @@ export default function OperationsFilters() {
               filter('type', OperationType[item.value]);
             }}
           />
+          {/* <DropDown
+            items={typeFilters}
+            label={`opération`}
+            selectedValue={selectedType}
+            onChange={(item) => {
+              setSelectedType(item.value);
+              filter('type', OperationType[item.value]);
+            }}
+          /> */}
         </div>
         <div>
           <AppSort
@@ -65,9 +81,10 @@ export default function OperationsFilters() {
             endDate={endDate}
             onChange={(value) => {
               setStartDate(value);
-              if (value) {
-                filter('startDate', format(new Date(value), 'yyyy-MM-dd'));
-              }
+              filter(
+                'startDate',
+                value ? format(new Date(value), 'yyyy-MM-dd') : undefined
+              );
             }}
           />
         </div>
@@ -82,11 +99,16 @@ export default function OperationsFilters() {
             label={'Fin'}
             onChange={(value) => {
               setEndDate(value);
-              if (value) {
-                filter('endDate', format(new Date(value), 'yyyy-MM-dd'));
-              }
+              filter(
+                'endDate',
+                value ? format(new Date(value), 'yyyy-MM-dd') : undefined
+              );
             }}
           />
+        </div>
+
+        <div>
+          <AppPageSize onChange={handlePageSizeChange} />
         </div>
       </div>
     </div>

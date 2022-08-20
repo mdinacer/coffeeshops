@@ -1,10 +1,11 @@
-import {configureStore} from "@reduxjs/toolkit";
-import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
-import {accountSlice} from "../slices/accountSlice";
-import {shopSlice} from "../slices/shopSlice";
-import {operationSlice} from "../slices/operationSlice";
-import {orderSlice} from "../slices/orderSlice";
-import {agentSlice} from "../slices/agentsSlice";
+import { configureStore } from "@reduxjs/toolkit";
+import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+import { accountSlice } from "../slices/accountSlice";
+import { shopSlice } from "../slices/shopSlice";
+import { operationSlice } from "../slices/operationSlice";
+import { orderSlice } from "../slices/orderSlice";
+import { agentSlice } from "../slices/agentsSlice";
+import { notificationsSlice } from "../slices/notificationsSlice";
 
 
 export const store = configureStore({
@@ -14,8 +15,13 @@ export const store = configureStore({
         shop: shopSlice.reducer,
         operation: operationSlice.reducer,
         order: orderSlice.reducer,
+        notifications: notificationsSlice.reducer,
 
     },
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({
+            serializableCheck: false,
+        }),
     //middleware: new MiddlewareArray().concat(sampleMiddleware),
 });
 

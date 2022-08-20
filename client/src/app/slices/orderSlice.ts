@@ -1,7 +1,7 @@
-import {createAsyncThunk, createEntityAdapter, createSlice} from "@reduxjs/toolkit";
+import { createAsyncThunk, createEntityAdapter, createSlice } from "@reduxjs/toolkit";
 import agent from "../api/agent";
-import {EmptyOrder, Order, Table} from "../models/order";
-import {RootState} from "../store/configureStore";
+import { EmptyOrder, Order, Table } from "../models/order";
+import { RootState } from "../store/configureStore";
 
 interface OrdersState {
     ordersCacheLoaded: boolean;
@@ -96,7 +96,9 @@ export const orderSlice = createSlice({
         });
 
         builder.addCase(fetchCachedOrdersAsync.fulfilled, (state, action) => {
-            ordersAdapter.setAll(state, action.payload);
+
+            const items: Order[] = action.payload || [];
+            ordersAdapter.setAll(state, items.filter(o => o.elements.length > 0));
             state.status = 'idle';
             state.ordersCacheLoaded = true;
             state.ordersCacheLoading = false;

@@ -1,6 +1,10 @@
-import {useEffect} from 'react';
-import {useAppDispatch, useAppSelector} from '../store/configureStore';
-import {fetchCategoriesAsync, fetchProductsAsync, productSelectors,} from '../slices/shopSlice';
+import { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../store/configureStore';
+import {
+  fetchCategoriesAsync,
+  fetchProductsAsync,
+  productSelectors,
+} from '../slices/shopSlice';
 
 export default function useProducts() {
   const products = useAppSelector(productSelectors.selectAll);

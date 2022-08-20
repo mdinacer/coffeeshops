@@ -1,7 +1,7 @@
-import {format} from 'date-fns';
-import {locale} from '../../app/layout/App';
-import {Operation} from '../../app/models/operation';
-import {OperationType} from '../../app/models/OperationType';
+import { format } from 'date-fns';
+import { locale } from '../../app/layout/App';
+import { Operation } from '../../app/models/operation';
+import { OperationType } from '../../app/models/OperationType';
 import ResponsiveTable from '../common/ResponsiveTable';
 import ResponsiveTableRow from '../common/ResponsiveTableRow';
 
@@ -22,7 +22,7 @@ export default function OperationsList({ operations, type, onSelect }: Props) {
         'reste',
       ]}
     >
-      {operations.map((operation, index) => (
+      {operations.map((operation) => (
         <ResponsiveTableRow
           key={operation.id}
           cells={[

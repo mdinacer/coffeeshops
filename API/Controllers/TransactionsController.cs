@@ -3,6 +3,7 @@ using API.DTO;
 using API.Extensions;
 using API.Helpers;
 using API.Models;
+using API.Services;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Authorization;
@@ -15,13 +16,15 @@ namespace API.Controllers
     {
         private readonly DataContext _context;
         private readonly IMapper _mapper;
-        public TransactionsController(DataContext context, IMapper mapper)
+        private readonly HistoryCacheService _history;
+        public TransactionsController(DataContext context, IMapper mapper, HistoryCacheService history)
         {
+            _history = history;
             _mapper = mapper;
             _context = context;
-        }
 
-        [HttpGet()]
+        }
+        [HttpGet]
         public async Task<ActionResult<PagedList<TransactionDto>>> GetTransactions([FromQuery] TransactionsParams transactionParams)
         {
             var query = _context.Transactions
@@ -32,9 +35,8 @@ namespace API.Controllers
             .AsQueryable();
 
             var transactions =
-               await PagedList<TransactionDto>.ToPagedList(query, transactionParams.PageNumber, transactionParams.PageSize);
+               await PagedList<TransactionDto>.ToPagedListAsync(query, transactionParams.PageNumber, transactionParams.PageSize);
 
-            //Response.AddPaginationHeader(transactions.MetaData);
             return transactions;
         }
 
@@ -61,15 +63,23 @@ namespace API.Controllers
                 Type = TransactionType.transaction
             };
 
-            _mapper.Map<CreateTransactionDto, MoneyTransaction>(createTransaction, transaction);
+            _mapper.Map(createTransaction, transaction);
 
             _context.Transactions.Add(transaction);
 
             var success = await _context.SaveChangesAsync() > 0;
 
-            return success
-            ? Ok(_mapper.Map<TransactionDto>(transaction))
-            : BadRequest(new ProblemDetails { Title = "Error creating Transaction" });
+            if (success)
+            {
+                CreateTransactionHistoryElement(transaction);
+                return Ok(_mapper.Map<TransactionDto>(transaction));
+            }
+            else
+            {
+                return BadRequest(new ProblemDetails { Title = "Error creating Transaction" });
+            }
+
+
         }
 
         [Authorize(Policy = "IsShopModerator")]
@@ -86,9 +96,21 @@ namespace API.Controllers
 
             var success = await _context.SaveChangesAsync() > 0;
 
-            return success
-            ? Ok(true)
-            : BadRequest(new ProblemDetails { Title = "Error deleting transaction" });
+            if (success)
+            {
+                CreateTransactionHistoryElement(transaction);
+                return Ok(true);
+            }
+            else
+            {
+                return BadRequest(new ProblemDetails { Title = "Error deleting transaction" });
+            }
+        }
+
+        private async void CreateTransactionHistoryElement(MoneyTransaction transaction)
+        {
+            if (string.IsNullOrEmpty(ShopId)) return;
+            await CreateHistoryElement(_context, _history, ShopId, transaction);
         }
 
     }

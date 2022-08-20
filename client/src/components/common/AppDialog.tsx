@@ -1,5 +1,5 @@
-import {motion} from 'framer-motion';
-import AppButton, {buttonGenre} from './AppButton';
+import { motion } from 'framer-motion';
+import AppButton, { buttonGenre } from './AppButton';
 
 interface Props {
   children: React.ReactNode;
@@ -19,25 +19,25 @@ export default function AppDialog({
   okButtonGenre,
   cancelButtonText = 'Fermer',
   buttonsVisible = true,
-  className,
+  className = ' md:min-w-[30vw] ',
 }: Props) {
   return (
     <motion.div
       initial={{ x: -500, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
       exit={{ x: 500, opacity: 0 }}
-      className={` ${className}  bg-gray-100 border border-gray-300 md:rounded-2xl   w-auto  flex flex-col items-stretch overflow-hidde md:p-6 p-3 drop-shadow-md `}
+      className={` ${className}   w-auto flex-col items-stretch overflow-y-auto  border  border-gray-300 bg-gray-200 p-3 drop-shadow-md md:flex md:rounded-2xl md:p-6 `}
     >
       {title && (
-        <div className=' flex-initial px-5  pb-2 border-b border-b-gray-200 mb-2'>
-          <h1 className=' font-Secondary text-2xl md:text-3xl font-semibold uppercase'>
+        <div className=' mb-2 flex-initial  border-b border-b-gray-200 px-5 pb-2'>
+          <h1 className=' text-center font-Secondary text-2xl font-semibold uppercase md:text-3xl'>
             {title}
           </h1>
         </div>
       )}
       <div className=' flex-auto font-Secondary '>{children}</div>
       {buttonsVisible && onClose && (
-        <div className='w-full flex flex-row gap-x-5 justify-around px-5 py-2 mt-5'>
+        <div className='mt-5 flex w-full flex-row justify-around gap-x-5 px-5 py-2'>
           <AppButton
             label={cancelButtonText}
             genre='secondary'

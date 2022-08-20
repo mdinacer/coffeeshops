@@ -1,11 +1,12 @@
 import Pagination from '../../components/input/Pagination';
 import Layout from '../../components/Layout';
-import {MetaData} from '../models/pagination';
+import { MetaData } from '../models/pagination';
 
 interface Props {
-  title: string;
+  title?: string;
   stats?: Array<{ title: string; value: any }>;
   list: React.ReactNode;
+  header?: React.ReactNode;
   actionButton?: React.ReactNode;
   filters?: React.ReactNode;
   metaData: MetaData | null;
@@ -17,6 +18,7 @@ interface Props {
 export default function ListPageLayout({
   title,
   list,
+  header,
   stats,
   actionButton,
   filters,
@@ -29,27 +31,36 @@ export default function ListPageLayout({
     <Layout
       dialogContent={dialogContent}
       dialogVisible={dialogVisible}
-      className=' flex flex-col items-stretch gap-y-4 md:gap-y-10'
+      className=' flex flex-col items-stretch gap-y-4 md:gap-y-5'
     >
-      <div className='flex-initial '>
-        <h1 className={` font-Primary text-4xl lg:text-5xl font-thin`}>
-          {title}
-        </h1>
-      </div>
-      <div className='flex-initial flex flex-col md:flex-row gap-4 rounded-md bg-gray-300  md:bg-transparent md:justify-between md:items-center '>
-        {stats && stats.length > 0 && (
-          <div className=' grid lg:grid-flow-col lg:gap-5 py-2 px-4 md:p-0'>
-            {stats.map((item, index) => (
-              <StatItem key={index} title={item.title} value={item.value} />
-            ))}
-          </div>
-        )}
-        <div>{actionButton}</div>
-      </div>
+      {(title || actionButton) && (
+        <div className='mb-5 flex w-full flex-col items-center justify-start gap-y-5 md:flex-row md:items-center md:justify-between '>
+          {title && (
+            <h1
+              className={` font-Primary text-4xl font-thin capitalize lg:text-5xl`}
+            >
+              {title}
+            </h1>
+          )}
+          {actionButton && <div>{actionButton}</div>}
+        </div>
+      )}
+      {header && <div>{header}</div>}
+      {stats && (
+        <div className='flex flex-initial flex-col items-center justify-center gap-4 rounded-md  bg-gray-300 md:flex-row md:bg-transparent '>
+          {stats.length > 0 && (
+            <div className=' grid w-full py-2 px-4 md:w-auto md:p-0 lg:grid-flow-col lg:gap-5'>
+              {stats.map((item, index) => (
+                <StatItem key={index} title={item.title} value={item.value} />
+              ))}
+            </div>
+          )}
+        </div>
+      )}
 
-      <div className='flex-initial'>{filters}</div>
+      {filters && <div className='flex-initial'>{filters}</div>}
 
-      <div className='flex-auto '>{list}</div>
+      <div className='flex-auto'>{list}</div>
 
       {metaData && metaData.totalPages > 0 && (
         <div className='flex-initial'>
@@ -67,9 +78,16 @@ interface ItemProps {
 
 function StatItem({ title, value }: ItemProps) {
   return (
-    <div className='flex lg:flex-row gap-x-4 items-end w-full justify-between  lg:justify-end lg:px-5'>
-      <p className=' font-Secondary uppercase text-base'>{title}</p>
-      <p className=' font-Primary uppercase text-lg lg:text-2xl'>{value}</p>
+    <div className='flex w-full items-end justify-between gap-x-4 lg:flex-row  lg:justify-end lg:px-5'>
+      <p className=' font-Secondary text-base uppercase'>{title}</p>
+
+      {typeof value === 'string' ? (
+        <p className=' font-Primary text-lg uppercase lg:text-2xl'>{value}</p>
+      ) : (
+        <div className='font-Primary text-lg uppercase lg:text-2xl'>
+          {value}
+        </div>
+      )}
     </div>
   );
 }

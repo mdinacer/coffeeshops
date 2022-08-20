@@ -1,6 +1,11 @@
-import {KeyIcon, MailIcon, PencilAltIcon, TrashIcon,} from '@heroicons/react/solid';
-import {useState} from 'react';
-import {useAppSelector} from '../../app/store/configureStore';
+import {
+  KeyIcon,
+  MailIcon,
+  PencilAltIcon,
+  TrashIcon,
+} from '@heroicons/react/solid';
+import { useState } from 'react';
+import { useAppSelector } from '../../app/store/configureStore';
 import getRoleName from '../../app/utils/rolesNames';
 import AppButton from '../../components/common/AppButton';
 import ProfileForm from '../../components/forms/ProfileForm';
@@ -15,11 +20,11 @@ export default function ProfilePage() {
   if (isEdit || !profile)
     return (
       <Layout className='flex'>
-        <div className='container flex-1 mx-auto px-5 flex flex-col items-center justify-center'>
-          <p className=' font-Primary text-5xl mb-5 font-thin'>
+        <div className='container mx-auto flex flex-1 flex-col items-center justify-center px-5'>
+          <p className=' mb-5 font-Primary text-5xl font-thin'>
             {user?.profile ? 'Modifier le profil' : 'Créer votre profil'}
           </p>
-          <div className=' max-w-2xl w-full '>
+          <div className=' w-full max-w-2xl '>
             <ProfileForm onClose={() => setIsEdit(false)} />
           </div>
         </div>
@@ -27,11 +32,11 @@ export default function ProfilePage() {
     );
 
   return (
-    <Layout className='flex container'>
-      <div className='container flex-1 mx-auto px-5 flex flex-col gap-y-10 my-10'>
-        <div className=' flex flex-col w-full gap-y-4 '>
+    <Layout className='container flex'>
+      <div className='container mx-auto my-10 flex flex-1 flex-col gap-y-10 px-5'>
+        <div className=' flex w-full flex-col gap-y-4 '>
           <div className='mb-5'>
-            <p className=' font-Primary text-3xl lg:text-5xl font-thin mb-2 '>
+            <p className=' mb-2 font-Primary text-3xl font-thin lg:text-5xl '>
               {user.profile.fullName}
             </p>
             {shop && (
@@ -49,7 +54,7 @@ export default function ProfilePage() {
           </div>
 
           <div className='  rounded-md '>
-            <p className=' font-Primary text-3xl font-thin mb-5 '>Contact</p>
+            <p className=' mb-5 font-Primary text-3xl font-thin '>Contact</p>
             <div className='grid lg:grid-cols-2'>
               <div className='flex flex-col gap-y-2'>
                 <DetailItem title='Email:' value={profile.email} />
@@ -65,7 +70,7 @@ export default function ProfilePage() {
             </div>
           </div>
 
-          <div className='w-full grid grid-cols-1 lg:grid-cols-4 gap-4'>
+          <div className='grid w-full grid-cols-1 gap-4 lg:grid-cols-4'>
             <AppButton
               label={'Modifier'}
               Icon={PencilAltIcon}
@@ -81,19 +86,15 @@ export default function ProfilePage() {
 
             <AppButton
               type='button'
-              customColors={
-                ' bg-orange-700 border-orange-500 hover:bg-orange-500 hover:shadow-orange-700 '
-              }
               label='Changer le mot de passe'
               Icon={KeyIcon}
-              genre='none'
+              genre='warning'
             />
             <AppButton
               type='button'
-              customColors=' bg-red-700 border-red-500 hover:bg-red-500 hover:shadow-red-700 '
               label=' Supprimer le compte'
               Icon={TrashIcon}
-              genre={'none'}
+              genre={'error'}
             />
           </div>
         </div>
@@ -119,7 +120,7 @@ function DetailItem({
     <div
       className={`flex ${horizontal ? 'flex-row' : ' flex-col'} ${className}`}
     >
-      <p className=' font-Primary text-base uppercase mr-2 min-w-[4rem]'>
+      <p className=' mr-2 min-w-[4rem] font-Primary text-base uppercase'>
         {title}
       </p>
       {Array.isArray(value) ? (
@@ -127,14 +128,14 @@ function DetailItem({
           {value.map((item, index) => (
             <p
               key={index}
-              className=' font-Secondary font-normal text-xl capitalize mr-2'
+              className=' mr-2 font-Secondary text-xl font-normal capitalize'
             >
               {item}
             </p>
           ))}
         </div>
       ) : (
-        <p className=' font-Secondary font-normal text-xl capitalize'>
+        <p className=' font-Secondary text-xl font-normal capitalize'>
           {value}
         </p>
       )}

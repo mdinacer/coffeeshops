@@ -1,4 +1,4 @@
-import {UserProfile} from "./userProfile";
+import { UserProfile } from "./userProfile";
 
 export interface Shop {
     id: string;

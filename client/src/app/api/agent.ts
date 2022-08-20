@@ -1,18 +1,19 @@
-import axios, {AxiosError, AxiosResponse} from "axios";
-import {toast} from "react-toastify";
-import {User} from "../models/user";
-import {Product} from "../models/product";
-import {Shop} from "../models/shop";
-import {Category} from "../models/category";
-import {Operation} from "../models/operation";
-import {store} from "../store/configureStore";
+import axios, { AxiosError, AxiosResponse } from "axios";
+import { toast } from "react-toastify";
+import { User } from "../models/user";
+import { Product } from "../models/product";
+import { Shop } from "../models/shop";
+import { Category } from "../models/category";
+import { Operation } from "../models/operation";
+import { store } from "../store/configureStore";
 import customHistory from "../layout/history";
-import {signOut} from "../slices/accountSlice";
-import {ShopAgent} from "../models/shopAgent";
-import {OperationElement} from "../models/OperationElement";
-import {ShopPayment} from "../models/shopPayment";
-import {ShopTransaction} from "../models/shopTransaction";
-import {ProductBatch} from "../models/ProductBatch";
+import { signOut } from "../slices/accountSlice";
+import { ShopAgent } from "../models/shopAgent";
+import { OperationElement } from "../models/OperationElement";
+import { ShopPayment } from "../models/shopPayment";
+import { ShopTransaction } from "../models/shopTransaction";
+import { ProductBatch } from "../models/ProductBatch";
+import { HistoryElement } from "../models/historyElement";
 
 const sleep = () => new Promise(resolve => setTimeout(resolve, 50));
 
@@ -119,11 +120,16 @@ function createFormData(item: any) {
 }
 
 const Account = {
-    login: (values: any) => requests.post<User>('Account/login', values),
-    register: (values: any) => requests.postForm('Account/register', createFormData(values)),
-    currentUser: () => requests.get<User>('Account/me'),
-    createProfile: (values: any) => requests.postForm('Account/profile', createFormData(values)),
-    editProfile: (values: any) => requests.putForm('Account/profile', createFormData(values)),
+    login: (values: any) => requests.post<User>('account/login', values),
+    register: (values: any) => requests.postForm('account/register', createFormData(values)),
+    currentUser: () => requests.get<User>('account/me'),
+    createProfile: (values: any) => requests.postForm('account/profile', createFormData(values)),
+    editProfile: (values: any) => requests.putForm('account/profile', createFormData(values)),
+    refreshToken: () => requests.post<User>('/account/refreshToken', {}),
+    verifyEmail: (token: string, email: string) =>
+        requests.post<void>(`/account/verifyEmail?token=${token}&email=${email}`, {}),
+    resendEmailConfirm: (email: string) =>
+        requests.get(`/account/resendEmailConfirmationLink?email=${email}`)
 }
 
 const Agents = {
@@ -140,6 +146,11 @@ const Categories = {
     create: (values: any) => requests.post<Category>(`Categories`, values),
     update: (categoryId: string, values: any) => requests.put<Category>(`Categories/${categoryId}`, values),
     delete: (categoryId: string) => requests.delete(`Categories/${categoryId}`),
+}
+
+const ShopHistory = {
+    list: (params: URLSearchParams) => requests.get<HistoryElement[]>(`History`, params),
+    delete: () => requests.delete(`History/`),
 }
 
 const Operations = {
@@ -185,7 +196,7 @@ const Shops = {
 
 const Transactions = {
     list: (params: URLSearchParams) => requests.get<ShopTransaction[]>(`Transactions`, params),
-    create: (values: any) => requests.post<ShopTransaction>(`Transactions`, values),
+    create: (values: any) => requests.post(`Transactions/`, values),
     delete: (transactionId: string) => requests.delete(`Transactions/${transactionId}`),
 }
 
@@ -193,6 +204,7 @@ const agent = {
     Account,
     Agents,
     Categories,
+    ShopHistory,
     Operations,
     Orders,
     Payments,

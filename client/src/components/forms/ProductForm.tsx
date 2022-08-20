@@ -1,17 +1,20 @@
-import {FieldValues, useForm} from 'react-hook-form';
-import {yupResolver} from '@hookform/resolvers/yup/dist/yup';
+import { FieldValues, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 
-import {Product} from '../../app/models/product';
-import {useAppDispatch} from '../../app/store/configureStore';
-import {CreateProductSchema, EditProductSchema,} from '../../app/validation/productValidationSchema';
-import {useEffect, useState} from 'react';
+import { Product } from '../../app/models/product';
+import { useAppDispatch } from '../../app/store/configureStore';
+import {
+  CreateProductSchema,
+  EditProductSchema,
+} from '../../app/validation/productValidationSchema';
+import { useEffect, useState } from 'react';
 import TextInput from '../input/TextInput';
 import DropDown from '../input/DropDown';
 import NumberInput from '../input/NumberInput';
 import ImageDropZone from '../input/ImageDropZone';
 import agent from '../../app/api/agent';
-import {setProduct, updateProduct} from '../../app/slices/shopSlice';
-import {ViewGridAddIcon} from '@heroicons/react/solid';
+import { setProduct, updateProduct } from '../../app/slices/shopSlice';
+import { ViewGridAddIcon } from '@heroicons/react/solid';
 
 import TextArea from '../input/TextArea';
 import ProductGalleryForm from './ProductGalleryForm';
@@ -22,9 +25,14 @@ import AppButton from '../common/AppButton';
 
 interface Props {
   product?: Product | undefined;
+  isPurchase?: boolean;
   onClose: (product?: Product) => void;
 }
-export default function ProductForm({ product, onClose }: Props) {
+export default function ProductForm({
+  product,
+  isPurchase = false,
+  onClose,
+}: Props) {
   const { categories } = useProducts();
   const isEdit = !!product;
   const dispatch = useAppDispatch();
@@ -39,14 +47,24 @@ export default function ProductForm({ product, onClose }: Props) {
     reset,
     setValue,
     formState: { isSubmitting, isDirty, isValid },
-  } = useForm({
+  } = useForm<FieldValues | any, any>({
     mode: 'all',
     resolver: yupResolver(validationSchema),
+    defaultValues: {
+      name: '',
+      quantity: 0,
+      categoryId: '',
+      description: '',
+      price: 0,
+      showcase: true,
+      useInventory: false,
+    },
   });
 
   const useInventory = watch('useInventory');
   const quantity = watch('quantity');
   const watchFile = watch('file', null);
+  const selectedCategory = watch('categoryId', null);
 
   useEffect(() => {
     if (product && !watchFile && !isDirty) {
@@ -72,6 +90,16 @@ export default function ProductForm({ product, onClose }: Props) {
     setValue('pictureUrl', item.pictureUrl);
     if (item.description) {
       setValue('description', item.description);
+    }
+    console.log('====================================');
+    console.log(categories);
+    console.log('====================================');
+    const category = categories.find(
+      (c) => c.name.trim().toLowerCase() === item.category.trim().toLowerCase()
+    );
+
+    if (category) {
+      setValue('categoryId', category.id);
     }
   }
 
@@ -111,14 +139,14 @@ export default function ProductForm({ product, onClose }: Props) {
   return (
     <form
       onSubmit={handleSubmit(submitData)}
-      className='flex flex-col gap-y-4 w-full max-w-lg'
+      className='flex w-full max-w-lg flex-col gap-y-4'
     >
       <TextInput
         control={control}
-        placeholder={''}
         label={'Désignation'}
         name={'name'}
-        className='w-full overflow-hidden '
+        inputStyle=' capitalize '
+        className='w-full overflow-hidden'
         button={
           !isEdit && (
             <AppButton
@@ -126,15 +154,16 @@ export default function ProductForm({ product, onClose }: Props) {
               label='Galerie'
               onClick={() => setProductGalleryVisible(true)}
               type='button'
-              genre='outline'
-              className='  border-none rounded-none'
+              genre='info'
+              noHover
+              className='  rounded-none border-none'
             />
           )
         }
       />
 
       <DropDown
-        selectedValue={watch('categoryId')}
+        selectedValue={selectedCategory}
         className='flex-auto'
         label='Catégorie'
         items={categories.map((category) => ({
@@ -151,8 +180,8 @@ export default function ProductForm({ product, onClose }: Props) {
         control={control}
       />
 
-      <div className='grid lg:grid-cols-2 gap-5'>
-        <div className=' '>
+      <div className='grid gap-5 lg:grid-cols-2'>
+        <div className={isPurchase ? ' col-span-2' : ' col-span-1'}>
           <NumberInput
             control={control}
             placeholder={''}
@@ -163,17 +192,19 @@ export default function ProductForm({ product, onClose }: Props) {
           />
         </div>
 
-        <NumberInput
-          control={control}
-          placeholder={''}
-          label={'Quantité'}
-          name={'quantity'}
-          min={0}
-          showButtons
-        />
+        {!isPurchase && (
+          <NumberInput
+            control={control}
+            placeholder={''}
+            label={'Quantité'}
+            name={'quantity'}
+            min={0}
+            showButtons
+          />
+        )}
       </div>
 
-      <div className='grid md:grid-cols-2 gap-5'>
+      <div className='grid gap-5 md:grid-cols-2'>
         <CheckboxInput control={control} label={'Vitrine'} name={'showcase'} />
         <CheckboxInput
           control={control}
@@ -182,8 +213,8 @@ export default function ProductForm({ product, onClose }: Props) {
         />
       </div>
 
-      {!isEdit && useInventory && quantity > 0 && (
-        <div className=' grid grid-cols-1 gap-5 border-y border-gray-indigo-800 p-3 bg-gray-300 rounded '>
+      {!isEdit && useInventory && quantity > 0 && !isPurchase && (
+        <div className=' border-gray-sky-800 grid grid-cols-1 gap-5 rounded border-y bg-gray-300 p-3 '>
           <AppDatePicker
             label={'Date de péremption'}
             minDate={new Date()}
@@ -203,33 +234,33 @@ export default function ProductForm({ product, onClose }: Props) {
             prefix={'DA'}
           />
 
-          <span className=' text-center text-xs font-Secondary italic opacity-50'>
+          <span className=' text-center font-Secondary text-xs italic opacity-50'>
             Facultatif
           </span>
         </div>
       )}
-      <div className='grid md:grid-cols-2 gap-5 mt-4'>
-        <div className=' bg-gray-100 border border-gray-300 rounded-lg py-5 '>
+      <div className='mt-4 grid grid-cols-2 gap-5'>
+        <div className=' rounded-lg border border-gray-300 bg-gray-100 py-5 '>
           <ImageDropZone control={control} name={'file'} />
         </div>
 
-        <div className='flex items-center h-auto w-full overflow-hidden  bg-gray-100 border border-gray-300 rounded-lg '>
+        <div className='flex h-auto w-full items-center overflow-hidden  rounded-lg border border-gray-300 bg-gray-100 '>
           {watchFile ? (
             <img
-              className='object-fill object-center h-[140px] lg:h-[200px] w-full  '
+              className='h-[140px] w-full object-fill object-center lg:h-[200px]  '
               src={watchFile.preview}
               alt='preview'
             />
           ) : (
             <img
-              className=' object-scale-down object-center h-[140px] lg:h-[200px] w-full  '
+              className=' h-[140px] w-full object-scale-down object-center lg:h-[200px]  '
               src={product?.pictureUrl || pictureUrl}
               alt={product?.pictureUrl || pictureUrl}
             />
           )}
         </div>
       </div>
-      <div className='w-full grid grid-cols-2 gap-x-5 mt-5'>
+      <div className='mt-5 grid w-full grid-cols-2 gap-x-5'>
         <AppButton
           label='Annuler'
           onClick={() => {

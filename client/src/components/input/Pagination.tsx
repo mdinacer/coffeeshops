@@ -1,7 +1,7 @@
-import {ChevronLeftIcon, ChevronRightIcon} from '@heroicons/react/solid';
-import {useState} from 'react';
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid';
+import { useState } from 'react';
 import ReactPaginate from 'react-paginate';
-import {MetaData} from '../../app/models/pagination';
+import { MetaData } from '../../app/models/pagination';
 
 interface Props {
   metaData: MetaData;
@@ -18,7 +18,7 @@ export default function Pagination({ metaData, onPageChange }: Props) {
   }
 
   return (
-    <div className='border-b-4 px-5 pt-1 border-b-indigo-500 w-auto h-auto'>
+    <div className='border-b-4 px-5 pt-1 border-b-sky-500 w-auto h-auto'>
       {metaData && (
         <div className='flex flex-col lg:flex-row justify-between items-center gap-y-2 lg:gap-y-0'>
           <p className='font-Primary font-thin text-lg lg:text-xl'>
@@ -33,7 +33,7 @@ export default function Pagination({ metaData, onPageChange }: Props) {
               forcePage={pageNumber}
               className='flex flex-row items-center gap-x-3 py-2  w-auto '
               pageClassName='font-thin'
-              activeClassName='font-normal bg-indigo-500 rounded-md text-white'
+              activeClassName='font-normal bg-sky-500 rounded-md text-white'
               pageLinkClassName={'p-2 font-Primary  text-inherit text-xl'}
               breakLabel='...'
               nextLabel={<ChevronRightIcon className='h-6 w-6' />}

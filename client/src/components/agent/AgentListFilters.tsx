@@ -1,21 +1,18 @@
-import {useState} from 'react';
-import {AgentParams} from '../../app/models/agentParams';
-import {setAgentParams} from '../../app/slices/agentsSlice';
-import {useAppDispatch} from '../../app/store/configureStore';
+import { UserIcon } from '@heroicons/react/outline';
+import { useState } from 'react';
+import { AgentParams } from '../../app/models/agentParams';
+import { setAgentParams } from '../../app/slices/agentsSlice';
+import { useAppDispatch } from '../../app/store/configureStore';
+import AppButtonSelect from '../common/AppButtonSelect';
 import AppPageSize from '../common/AppPageSize';
 import AppSearch from '../common/AppSearch';
 import AppSort from '../common/AppSort';
-import DropDown from '../input/DropDown';
 
 interface Props {
-  loading: boolean;
   agentParams: AgentParams;
 }
 
-export default function AgentsListFilters({
-  agentParams,
-  loading = false,
-}: Props) {
+export default function AgentsListFilters({ agentParams }: Props) {
   const dispatch = useAppDispatch();
   const [selectedType, setSelectedType] = useState(agentParams.type);
 
@@ -41,13 +38,14 @@ export default function AgentsListFilters({
 
   return (
     <div className=' grid xl:grid-cols-5 md:grid-cols-2 gap-5 w-full'>
-      <DropDown
-        className='flex-auto py-1'
-        buttonStyle=' border-none px-0  '
+      <AppButtonSelect
         items={typesList}
-        label={"Type d'agent"}
+        label={'Type'}
+        Icon={UserIcon}
         selectedValue={selectedType}
         onChange={(item) => {
+          console.log(item.value);
+
           setSelectedType(item.value);
           handleTypeChange(item.value);
         }}
@@ -62,8 +60,8 @@ export default function AgentsListFilters({
 }
 
 const typesList = [
-  { title: 'Client', value: 'client' },
-  { title: 'Fournisseur', value: 'provider' },
+  { title: 'Clients', value: 'client' },
+  { title: 'Fournisseurs', value: 'provider' },
 ];
 
 const orderFilters = [

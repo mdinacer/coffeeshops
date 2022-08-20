@@ -1,11 +1,11 @@
-import {CashIcon, ChevronDownIcon, TrashIcon} from '@heroicons/react/solid';
-import {AnimatePresence, motion} from 'framer-motion';
-import {useState} from 'react';
+import { CashIcon, ChevronDownIcon, TrashIcon } from '@heroicons/react/solid';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useState } from 'react';
 
 import useProducts from '../../app/hooks/useProducts';
-import {CURRENCY_TEXT} from '../../app/layout/App';
-import {Category} from '../../app/models/category';
-import {Product} from '../../app/models/product';
+import { CURRENCY_TEXT } from '../../app/layout/App';
+import { Category } from '../../app/models/category';
+import { Product } from '../../app/models/product';
 import Layout from '../../components/Layout';
 import OrderElementsList from '../../components/orderPage/OrderElementsList';
 import OrderCategoriesList from '../../components/orderPage/OrderCategoriesList';
@@ -13,8 +13,8 @@ import OrderProductsPagination from '../../components/orderPage/OrderProductsPag
 import OrderProductsGrid from '../../components/orderPage/OrderProductsGrid';
 import OrderTablesList from '../../components/orderPage/OrderTablesList';
 import useOrders from '../../app/hooks/useOrders';
-import {useAppDispatch, useAppSelector} from '../../app/store/configureStore';
-import {addOrder, ordersSelectors} from '../../app/slices/orderSlice';
+import { useAppDispatch, useAppSelector } from '../../app/store/configureStore';
+import { addOrder, ordersSelectors } from '../../app/slices/orderSlice';
 import AppButton from '../../components/common/AppButton';
 import AppDialog from '../../components/common/AppDialog';
 import OrderConfirmation from '../../components/orderPage/OrderConfirmation';
@@ -80,7 +80,6 @@ export default function OrderPage() {
 
   function clearOrderElements() {
     clearOrder(selectedTable);
-    clearOrder(selectedTable);
   }
 
   function handleConfirmedOrder() {
@@ -91,10 +90,10 @@ export default function OrderPage() {
 
   return (
     <Layout
-      className='relative flex flex-row gap-x-5 max-h-fill overflow-x-auto md:overflow-x-hidden xl:max-w-none py-0 px-0 md:px-5 snap-mandatory snap-x border border-gray-300  '
+      className='max-h-fill relative flex snap-x snap-mandatory flex-row gap-x-5 overflow-x-auto border border-gray-300 py-0 px-0 md:overflow-x-hidden md:px-5 2xl:max-w-none  '
       dialogVisible={confirmOrder}
       dialogContent={
-        <AppDialog className=' max-w-lg w-full'>
+        <AppDialog className=' w-full max-w-lg'>
           {order && (
             <OrderConfirmation
               elements={order.elements.map((o) => ({
@@ -117,15 +116,15 @@ export default function OrderPage() {
         </AppDialog>
       }
     >
-      <div className='relative md:w-2/3 w-screen flex flex-col  flex-auto min-w-full md:min-w-min snap-center border border-gray-300'>
-        <div className='w-ful flex items-center justify-center  border-b border-b-gray-300 py-2 bg-gray-100'>
+      <div className='relative flex w-screen min-w-full flex-auto  snap-center flex-col border border-gray-300 md:w-2/3 md:min-w-min'>
+        <div className='w-ful flex items-center justify-center  border-b border-b-gray-300 bg-gray-100 py-2'>
           <button
             type='button'
-            className=' inline-flex items-center justify-center w-full'
+            className=' inline-flex w-full items-center justify-center'
             onClick={() => setCategoriesVisible(true)}
           >
-            <ChevronDownIcon className='h-6 w-6 mr-2' />
-            <span className=' uppercase font-Primary text-lg'>
+            <ChevronDownIcon className='mr-2 h-6 w-6' />
+            <span className=' font-Primary text-lg uppercase'>
               {selectedCategory?.name || 'Catégories'}
             </span>
           </button>
@@ -138,13 +137,14 @@ export default function OrderPage() {
               onSelect={handleAddProduct}
             />
           ) : (
-            <div className='w-full h-full flex items-center justify-center'>
-              <p className=' font-Primary text-5xl uppercase font-thin opacity-10'>
+            <div className='flex h-full w-full items-center justify-center'>
+              <p className=' font-Primary text-5xl font-thin uppercase opacity-10'>
                 Aucun produit
               </p>
             </div>
           )}
         </div>
+
         {metaData && metaData.totalPages > 1 && (
           <OrderProductsPagination metaData={metaData} />
         )}
@@ -158,12 +158,12 @@ export default function OrderPage() {
           )}
         </AnimatePresence>
       </div>
-      <div className='md:w-1/3 w-screen flex-initial flex flex-col     border border-gray-300 min-w-full md:min-w-min snap-center'>
-        <div className='w-full flex-initial flex flex-row items-center md:max-w-[33.333333vw] px-2 md:px-5 border-b border-b-gray-300 pb-3'>
-          <div className=' flex-initial font-Primary text-xl uppercase font-thin  mr-5'>
+      <div className='flex w-screen min-w-full flex-initial snap-center     flex-col border border-gray-300 md:w-1/3 md:min-w-min'>
+        <div className='flex w-full flex-initial flex-row items-center border-b border-b-gray-300 px-2 py-2 md:max-w-[33.333333vw] md:px-5'>
+          <div className=' mr-5 flex-initial font-Primary text-xl font-thin  uppercase'>
             <p>Table</p>
           </div>
-          <div className=' flex-auto overflow-x-auto scrollbar-hide rounded-full snap-mandatory snap-x overscroll-x-none border border-gray-300 shadow-inner shadow-gray-500 py-1 px-2 md:px-5'>
+          <div className=' flex-auto snap-x snap-mandatory overflow-x-auto overscroll-x-none rounded-full border border-gray-300 py-1 px-2 shadow-inner shadow-gray-500 scrollbar-hide md:px-5'>
             <OrderTablesList
               tables={tables}
               tablesLoaded={tables.length > 0}
@@ -173,8 +173,8 @@ export default function OrderPage() {
           </div>
         </div>
 
-        <div className='flex-auto flex flex-col items-stretch md:px-5 py-5 bg-gray-50 '>
-          <p className='flex-initial font-Primary font-thin text-2xl text-center mb-5  uppercase'>
+        <div className='flex flex-auto flex-col items-stretch bg-gray-50 py-5 md:px-5 '>
+          <p className='mb-5 flex-initial text-center font-Primary text-2xl font-thin  uppercase'>
             {selectedTable > 0
               ? `Table N° ${selectedTable}`
               : 'opération comptoir'}
@@ -188,8 +188,8 @@ export default function OrderPage() {
               />
             )}
           </div>
-          <div className='flex-initial w-full flex flex-row justify-between items-end px-5 py-2 '>
-            <p className=' font-Secondary uppercase font-semibold'>Total</p>
+          <div className='flex w-full flex-initial flex-row items-end justify-between px-5 py-2 '>
+            <p className=' font-Secondary font-semibold uppercase'>Total</p>
             <AnimatePresence>
               <motion.p
                 initial={{ opacity: 0, x: -50 }}
@@ -202,7 +202,7 @@ export default function OrderPage() {
                 <motion.span className='text-2xl'>
                   {total.toFixed(2)}
                 </motion.span>
-                <span className='text-base ml-1 uppercase'>
+                <span className='ml-1 text-base uppercase'>
                   {CURRENCY_TEXT}
                 </span>
               </motion.p>
@@ -210,7 +210,7 @@ export default function OrderPage() {
           </div>
         </div>
 
-        <div className=' w-full grid grid-cols-2 md:gap-x-5 gap-2 px-5 py-4'>
+        <div className=' grid w-full grid-cols-2 gap-2 px-5 py-4 md:gap-x-5'>
           <AppButton
             disabled={!order || order.elements.length === 0}
             label={'Effacer'}

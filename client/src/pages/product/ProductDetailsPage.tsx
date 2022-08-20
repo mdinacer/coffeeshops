@@ -1,10 +1,10 @@
-import {PencilAltIcon, TrashIcon} from '@heroicons/react/outline';
-import {useCallback, useEffect, useState} from 'react';
-import {useLocation, useNavigate, useParams} from 'react-router-dom';
+import { PencilAltIcon, TrashIcon } from '@heroicons/react/outline';
+import { useCallback, useEffect, useState } from 'react';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import agent from '../../app/api/agent';
 import useProductBatches from '../../app/hooks/useProductBatches';
 import LoadingAnimation from '../../app/layout/LoadingAnimation';
-import {Product} from '../../app/models/product';
+import { Product } from '../../app/models/product';
 import AppButton from '../../components/common/AppButton';
 import AppDialog from '../../components/common/AppDialog';
 import ProductForm from '../../components/forms/ProductForm';
@@ -45,14 +45,14 @@ export default function ProductDetailsPage() {
     if (id && !productLoaded) {
       fetchProduct(id);
     }
-  }, [id, productLoaded]);
+  }, [fetchProduct, id, productLoaded]);
 
   if (productLoading)
     return (
-      <div className=' select-none bg-gray-900 text-white border-indigo-500 fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center z-50'>
+      <div className=' fixed top-0 left-0 right-0 bottom-0 z-50 flex select-none items-center justify-center border-sky-500 bg-gray-900 text-white'>
         <div className='flex flex-col items-center justify-center'>
           <LoadingAnimation />
-          <p className=' font-Primary text-3xl lg:text-5xl font-thin uppercase mt-5'>
+          <p className=' mt-5 font-Primary text-3xl font-thin uppercase lg:text-5xl'>
             Chargement en cours...
           </p>
         </div>
@@ -61,8 +61,8 @@ export default function ProductDetailsPage() {
 
   if (!product)
     return (
-      <div className=' flex items-center justify-center h-full w-full'>
-        <p className=' font-Primary text-2xl md:text-5xl uppercase opacity-10'>
+      <div className=' flex h-full w-full items-center justify-center'>
+        <p className=' font-Primary text-2xl uppercase opacity-10 md:text-5xl'>
           élément introuvable
         </p>
       </div>
@@ -70,7 +70,7 @@ export default function ProductDetailsPage() {
 
   return (
     <Layout
-      className='px-5 py-5 flex flex-col '
+      className='flex flex-col px-5 py-5 '
       dialogVisible={isEdit || isDelete}
       dialogContent={
         <>
@@ -102,26 +102,26 @@ export default function ProductDetailsPage() {
         </>
       }
     >
-      <div className=' w-full flex flex-col md:flex-row justify-between items-start md:items-end mb-5  bg-gray-100 p-5 rounded-2xl'>
+      <div className=' mb-5 flex w-full flex-col items-start justify-between rounded-2xl bg-gray-100  p-5 md:flex-row md:items-end'>
         <div className=' flex flex-row items-center '>
-          <div className='lg:px-5 px-0 pr-3 mx-auto md:mx-0 py-5 md:py-0 md:my-auto'>
+          <div className='mx-auto px-0 py-5 pr-3 md:mx-0 md:my-auto md:py-0 lg:px-5'>
             <img
               src={product.pictureUrl}
               alt={product.name}
-              className=' h-20 w-20 md:h-28 md:w-28 object-scale-down'
+              className=' h-20 w-20 object-scale-down md:h-28 md:w-28'
             />
           </div>
           <div>
-            <small className=' font-Primary text-base md:text-lg font-thin uppercase'>
+            <small className=' font-Primary text-base font-thin uppercase md:text-lg'>
               {product.category}
             </small>
-            <p className=' font-Primary text-3xl md:text-5xl lg:text-7xl  font-thin capitalize'>
+            <p className=' font-Primary text-3xl font-thin capitalize  md:text-5xl lg:text-7xl'>
               {product.name}
             </p>
           </div>
         </div>
 
-        <div className=' flex flex-row  items-center gap-x-4 justify-around w-full md:w-auto'>
+        <div className=' flex w-full  flex-row items-center justify-around gap-x-4 md:w-auto'>
           <AppButton
             label='Supprimer'
             Icon={TrashIcon}
@@ -139,8 +139,8 @@ export default function ProductDetailsPage() {
         </div>
       </div>
 
-      <div className='border-y border-gray-200 py-5 flex-initial bg-gray-100 p-5 rounded-2xl'>
-        <div className='grid md:grid-cols-6  gap-y-3 '>
+      <div className='flex-initial rounded-2xl border-y border-gray-200 bg-gray-100 p-5 py-5'>
+        <div className='grid gap-y-3  md:grid-cols-6 '>
           <StatItem
             title={'Prix'}
             value={product.price.toFixed(2)}
@@ -166,15 +166,15 @@ export default function ProductDetailsPage() {
           />
         </div>
         {!product.useInventory && (
-          <p className='w-full font-Secondary text-center text-sm opacity-50 italic pt-4'>
+          <p className='w-full pt-4 text-center font-Secondary text-sm italic opacity-50'>
             Inventaire non applicable
           </p>
         )}
       </div>
 
       {product.useInventory && batchesLoaded && (
-        <div className='mt-10 flex-auto flex flex-col overflow-hidden bg-gray-100 px-2 py-5 md:px-6 md:py-6 rounded-2xl'>
-          <p className=' font-Primary text-2xl uppercase font-thin mb-5 flex-initial px-3 '>
+        <div className='mt-10 flex flex-auto flex-col overflow-hidden rounded-2xl bg-gray-100 px-2 py-5 md:px-6 md:py-6'>
+          <p className=' mb-5 flex-initial px-3 font-Primary text-2xl font-thin uppercase '>
             Lots
           </p>
           {batchesLoading && <div>loading</div>}
@@ -195,27 +195,27 @@ interface StatItemProps {
 function StatItem({ title, value, prefix, fallBack = 'N/A' }: StatItemProps) {
   return (
     <div
-      className={`text-center flex flex-row md:flex-col w-full justify-between   md:justify-center items-end md:items-center md:gap-y-1  `}
+      className={`flex w-full flex-row items-end justify-between text-center   md:flex-col md:items-center md:justify-center md:gap-y-1  `}
     >
       <div>
-        <small className='  font-Primary text-base font-thin uppercase min-w-[8rem]'>
+        <small className='  min-w-[8rem] font-Primary text-base font-thin uppercase'>
           {title}
         </small>
       </div>
-      <div className='md:flex-auto md:w-full flex items-center justify-center'>
+      <div className='flex items-center justify-center md:w-full md:flex-auto'>
         {value ? (
           <p>
-            <span className=' font-Primary text-lg md:text-3xl font-light'>
+            <span className=' font-Primary text-lg font-light md:text-3xl'>
               {value}
             </span>
             {prefix && (
-              <span className='font-Primary text-sm ml-1 font-light'>
+              <span className='ml-1 font-Primary text-sm font-light'>
                 {prefix}
               </span>
             )}
           </p>
         ) : (
-          <p className=' font-Primary text-lg uppercase font-thin opacity-50'>
+          <p className=' font-Primary text-lg font-thin uppercase opacity-50'>
             {fallBack}
           </p>
         )}

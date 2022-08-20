@@ -44,7 +44,7 @@ public class TokenService
         {
             Subject = new ClaimsIdentity(claims),
             Expires = DateTime.UtcNow.AddDays(1),
-            SigningCredentials = credentials
+            SigningCredentials = credentials,
         };
 
         var tokenHandler = new JwtSecurityTokenHandler();

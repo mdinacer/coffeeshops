@@ -1,6 +1,6 @@
-import {motion} from 'framer-motion';
+import { motion } from 'framer-motion';
 import ResponsiveTableCell from './ResponsiveTableCell';
-import {ITableRow} from './tableModels';
+import { ITableRow } from './tableModels';
 
 export default function ResponsiveTableRow({ cells, onClick }: ITableRow) {
   return (
@@ -12,8 +12,8 @@ export default function ResponsiveTableRow({ cells, onClick }: ITableRow) {
           onClick();
         }
       }}
-      className={`py-2 px-5 bg-gray-50 border border-gray-100 rounded-2xl  grid gap-y-2 md:table-row ${
-        onClick && 'hover:text-white cursor-pointer  hover:bg-indigo-500 '
+      className={`grid gap-y-0 rounded-2xl border border-gray-100 bg-gray-200  py-2 px-5 md:table-row ${
+        onClick && 'cursor-pointer hover:bg-sky-500  hover:text-white '
       }`}
     >
       {cells.map((cell, index) => (

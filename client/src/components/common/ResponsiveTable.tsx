@@ -1,5 +1,5 @@
-import {motion} from 'framer-motion';
-import {IResponsiveTable} from './tableModels';
+import { motion } from 'framer-motion';
+import { IResponsiveTable } from './tableModels';
 
 const styles = {
   header:
@@ -12,13 +12,13 @@ export default function ResponsiveTable({
 }: IResponsiveTable) {
   return (
     <motion.table
-      variants={containerVariants}
+      variants={tableContainer}
       initial='hidden'
       animate='show'
       exit='close'
-      className='table-auto w-full border-collapse borde border-slate-300'
+      className='  w-full table-auto border-collapse border-slate-300'
     >
-      <thead className='bg-gray-300 text-center hidden md:table-header-group drop-shadow-md border border-gray-500 '>
+      <thead className='hidden border border-gray-500 bg-gray-300 text-center drop-shadow-md md:table-header-group '>
         <tr>
           {headers.map((header, index) => (
             <th key={index} className={styles.header}>
@@ -27,13 +27,13 @@ export default function ResponsiveTable({
           ))}
         </tr>
       </thead>
-      <tbody className=' grid gap-y-5 md:table-row-group'>{children}</tbody>
+      <tbody className=' grid gap-y-2 md:table-row-group'>{children}</tbody>
     </motion.table>
   );
 }
 
-const containerVariants = {
-  hidden: { opacity: 0 },
+const tableContainer = {
+  hidden: { opacity: 1 },
   show: {
     opacity: 1,
     transition: {

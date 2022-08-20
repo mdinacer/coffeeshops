@@ -1,17 +1,17 @@
 import * as yup from 'yup';
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import useAgents from '../../app/hooks/useAgents';
-import {ShopAgentType} from '../../app/models/shopAgentType';
-import {ShopPayment} from '../../app/models/shopPayment';
+import { ShopAgentType } from '../../app/models/shopAgentType';
+import { ShopPayment } from '../../app/models/shopPayment';
 import DropDown from '../input/DropDown';
-import {FieldValues, useForm} from 'react-hook-form';
-import {yupResolver} from '@hookform/resolvers/yup/dist/yup';
+import { FieldValues, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 import NumberInput from '../input/NumberInput';
-import {useAppDispatch, useAppSelector} from '../../app/store/configureStore';
-import {agentsSelectors, fetchAgentAsync} from '../../app/slices/agentsSlice';
+import { useAppDispatch, useAppSelector } from '../../app/store/configureStore';
+import { agentsSelectors, fetchAgentAsync } from '../../app/slices/agentsSlice';
 import agent from '../../app/api/agent';
 import TextArea from '../input/TextArea';
-import {TransactionDirection} from '../../app/models/TransactionDirection';
+import { TransactionDirection } from '../../app/models/TransactionDirection';
 
 interface Props {
   shopAgentId?: string;
@@ -105,17 +105,17 @@ export default function PaymentDialog({ shopAgentId, type, onClose }: Props) {
   }, [dispatch, selectedAgentId, shopAgent]);
 
   return (
-    <div>
+    <div className='w-full'>
       {shopAgent && (
         <div className='mb-5'>
-          <p className=' font-Primary text-4xl font-thin mb-2'>
+          <p className=' mb-2 font-Primary text-4xl font-thin capitalize'>
             {shopAgent?.name}
           </p>
         </div>
       )}
 
       <form
-        className='w-full flex flex-col gap-y-5'
+        className='flex w-full flex-col gap-y-5 '
         onSubmit={handleSubmit(submitData)}
       >
         {!shopAgent && !agentsLoading && agents.length > 0 && (
@@ -131,14 +131,14 @@ export default function PaymentDialog({ shopAgentId, type, onClose }: Props) {
           />
         )}
         {shopAgent ? (
-          <div className='grid grid-cols-3 py-5 border-y border-y-gray-300 mb-5 '>
+          <div className='mb-5 grid grid-cols-3 border-y border-y-gray-300 py-5 '>
             <div className={`text-center `}>
               <small className=' font-Primary text-sm font-thin uppercase'>
                 Total
               </small>
               <p className=' font-Primary text-2xl font-light'>
                 {shopAgent.total.toFixed(2)}
-                <span className='font-secondary uppercase text-xs'> DA</span>
+                <span className='font-secondary text-xs uppercase'> DA</span>
               </p>
             </div>
             <div className=' text-center'>
@@ -147,7 +147,7 @@ export default function PaymentDialog({ shopAgentId, type, onClose }: Props) {
               </small>
               <p className=' font-Primary text-2xl font-light'>
                 {shopAgent.paid.toFixed(2)}
-                <span className='font-secondary uppercase text-xs'> DA</span>
+                <span className='font-secondary text-xs uppercase'> DA</span>
               </p>
             </div>
             <div className={`text-center `}>
@@ -157,17 +157,17 @@ export default function PaymentDialog({ shopAgentId, type, onClose }: Props) {
               <p
                 className={`font-Primary text-2xl ${
                   shopAgent.debt > 0
-                    ? ' text-red-600 dark:text-red-400 font-bold'
-                    : ' text-inherit font-light'
+                    ? ' font-bold text-red-600 dark:text-red-400'
+                    : ' font-light text-inherit'
                 }`}
               >
                 <span>{shopAgent.debt.toFixed(2)}</span>
-                <span className='font-secondary uppercase text-xs'> DA</span>
+                <span className='font-secondary text-xs uppercase'> DA</span>
               </p>
             </div>
           </div>
         ) : (
-          <div className='flex items-center justify-center h-10 py-5 border-y border-y-gray-300 '>
+          <div className='flex h-10 items-center justify-center border-y border-y-gray-300 py-5 '>
             <p className={`font-Primary text-2xl`}>Chargement</p>
           </div>
         )}
@@ -189,7 +189,7 @@ export default function PaymentDialog({ shopAgentId, type, onClose }: Props) {
           name={'description'}
         />
 
-        <div className='w-full grid grid-cols-2 gap-x-5 mt-5'>
+        <div className='mt-5 grid w-full grid-cols-2 gap-x-5'>
           <button
             type='button'
             onClick={() => onClose()}
@@ -203,7 +203,7 @@ export default function PaymentDialog({ shopAgentId, type, onClose }: Props) {
             value={isSubmitting ? 'Enregistrement en cours' : 'Enregistrer'}
             className={`${buttonStyle} ${
               isValid
-                ? 'bg-indigo-500 text-white cursor-pointer'
+                ? 'cursor-pointer bg-sky-500 text-white'
                 : ' bg-gray-400 text-gray-300'
             }`}
           />

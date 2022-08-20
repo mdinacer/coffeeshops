@@ -1,5 +1,5 @@
-import {CheckCircleIcon} from '@heroicons/react/solid';
-import {useController, UseControllerProps} from 'react-hook-form';
+import { CheckCircleIcon } from '@heroicons/react/solid';
+import { useController, UseControllerProps } from 'react-hook-form';
 
 interface Props extends UseControllerProps {
   label: string;
@@ -18,7 +18,7 @@ export default function CheckboxInput(props: Props) {
     >
       <div className='flex-auto'>
         {props.label && (
-          <p className=' min-w-[4rem] w-full text-sm uppercase  opacity-50 border-r border-gray-400  py-2  hover:text-indigo-900'>
+          <p className=' min-w-[4rem] w-full text-sm uppercase  opacity-50 border-r border-gray-400  py-2  hover:text-sky-900'>
             {props.label}
           </p>
         )}
@@ -37,9 +37,7 @@ export default function CheckboxInput(props: Props) {
         >
           <CheckCircleIcon
             className={`h-7 w-7 transition-all duration-300   ${
-              field.value === true
-                ? ' opacity-100 text-indigo-500'
-                : ' opacity-20'
+              field.value === true ? ' opacity-100 text-sky-500' : ' opacity-20'
             }`}
           />
         </div>

@@ -1,7 +1,8 @@
-import {useAppSelector} from '../../app/store/configureStore';
+import { useAppSelector } from '../../app/store/configureStore';
 import Layout from '../../components/Layout';
 import ShopDetailsHeader from '../../components/shop/ShopDetailsHeader';
 import ShopDetailsOwner from '../../components/shop/ShopDetailsOwner';
+import ShopUsersForm from '../../components/shop/ShopUsersForm';
 
 export default function ShopManagerPage() {
   const { shop } = useAppSelector((state) => state.shop);
@@ -15,12 +16,12 @@ export default function ShopManagerPage() {
         productsCount={shop.productsCount}
         operationsCount={shop.operationsCount}
       />
-      <div className='my-5 p-5 bg-gray-100 dark:bg-gray-600 rounded '>
-        <p className=' font-Primary text-2xl uppercase font-thin'>
+      <div className='my-5 rounded bg-gray-100 p-5 dark:bg-gray-600 '>
+        <p className=' font-Primary text-2xl font-thin uppercase'>
           Propriétaire
         </p>
-        <div className='w-full grid lg:grid-cols-2 '>
-          <ShopDetailsOwner owner={shop.owner} />
+        <div className='grid w-full lg:grid-cols-2 '>
+          <ShopUsersForm />
         </div>
       </div>
     </Layout>

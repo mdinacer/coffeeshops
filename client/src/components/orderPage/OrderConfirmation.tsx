@@ -1,10 +1,10 @@
-import {UserAddIcon} from '@heroicons/react/solid';
-import {useState} from 'react';
+import { UserAddIcon } from '@heroicons/react/solid';
+import { useState } from 'react';
 import agent from '../../app/api/agent';
 import useAgents from '../../app/hooks/useAgents';
-import {OperationElement} from '../../app/models/OperationElement';
-import {OperationType} from '../../app/models/OperationType';
-import {ShopAgentType} from '../../app/models/shopAgentType';
+import { OperationElement } from '../../app/models/OperationElement';
+import { OperationType } from '../../app/models/OperationType';
+import { ShopAgentType } from '../../app/models/shopAgentType';
 import AppButton from '../common/AppButton';
 import TextField from '../fields/TextField';
 import AgentForm from '../forms/AgentForm';
@@ -99,21 +99,21 @@ export default function OrderConfirmation({
     );
 
   return (
-    <div className='w-full flex flex-col items-stretch gap-y-5'>
+    <div className='flex w-full flex-col items-stretch gap-y-5'>
       <div className='flex flex-col gap-y-3 border-b border-b-gray-200 pb-4'>
-        <div className=' inline-flex justify-between items-end w-full'>
+        <div className=' inline-flex w-full items-end justify-between'>
           <p className='font-Primary text-base uppercase'>Total</p>
           <p className=' font-Primary text-2xl font-thin'>
             {total.toFixed(2)} Da
           </p>
         </div>
-        <div className=' inline-flex justify-between items-end w-full'>
+        <div className=' inline-flex w-full items-end justify-between'>
           <p className='font-Primary text-base uppercase'>Payé</p>
           <p className=' font-Primary text-2xl font-thin'>
             {paidAmount.toFixed(2)} Da
           </p>
         </div>
-        <div className=' inline-flex justify-between items-end w-full'>
+        <div className=' inline-flex w-full items-end justify-between'>
           <p className='font-Primary text-base uppercase'>
             {isDebt() ? 'Reste' : 'Monnaie'}
           </p>
@@ -131,7 +131,7 @@ export default function OrderConfirmation({
         </div>
       </div>
 
-      <div className='w-full flex flex-col gap-y-3 '>
+      <div className='flex w-full flex-col gap-y-3 '>
         <TextField
           type='number'
           inputStyles='text-center'
@@ -154,7 +154,7 @@ export default function OrderConfirmation({
             <AppButton
               type='button'
               genre='outline'
-              className=' border-none rounded-none'
+              className=' rounded-none border-none text-black'
               Icon={UserAddIcon}
               onClick={() => setAgentFormVisible(true)}
               title={`Ajouter un ${
@@ -166,7 +166,7 @@ export default function OrderConfirmation({
         />
       </div>
 
-      <div className=' grid xl:grid-cols-2 gap-5 mt-5 '>
+      <div className=' mt-5 grid gap-5 xl:grid-cols-2 '>
         <AppButton
           label={'Fermer'}
           disabled={isSubmitting}

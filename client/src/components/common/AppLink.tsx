@@ -1,5 +1,5 @@
-import {Link} from 'react-router-dom';
-import {buttonGenre} from './AppButton';
+import { Link, useLocation } from 'react-router-dom';
+import { buttonGenre } from './AppButton';
 
 interface Props {
   label?: string;
@@ -11,6 +11,8 @@ interface Props {
   labelStyle?: string;
   genre?: buttonGenre;
   customColors?: string;
+  noHover?: boolean;
+  rounded?: boolean;
 }
 
 export default function AppLink({
@@ -21,38 +23,62 @@ export default function AppLink({
   className,
   iconStyle,
   labelStyle,
-  genre = 'primary',
+  genre,
   customColors,
+  noHover,
+  rounded,
 }: Props) {
+  const { pathname } = useLocation();
   const buttonColorsStyle = () => {
     switch (genre) {
       case 'primary':
-        return ' bg-indigo-600 border-indigo-600 hover:bg-indigo-500 hover:shadow-indigo-700 ';
+        return ` hover:text-white border-indigo-500 border-2 text-indigo-600  hover:bg-indigo-500 hover:border-indigo-400 hover:shadow-indigo-700 ${
+          !noHover && buttonHoverStyle
+        } `;
       case 'secondary':
-        return ' bg-gray-700 border-gray-600 hover:bg-gray-500 hover:shadow-gray-700 ';
+        return ` hover:text-white border-gray-500 border-2 text-gray-600  hover:bg-gray-500 hover:border-gray-400 hover:shadow-gray-700 ${
+          !noHover && buttonHoverStyle
+        } `;
       case 'outline':
-        return ' bg-transparent border-gray-500 hover:bg-gray-900 hover:text-white hover:shadow-none hover:translate-y-1 py-1 text-inherit ';
+        return ' hover:text-white bg-transparent border-gray-500 hover:bg-transparent';
+
       case 'info':
-        return ' bg-green-700 border-green-500 hover:bg-green-500 hover:shadow-green-700 ';
+        return ` hover:text-white border-sky-500 border-2 text-sky-600  hover:bg-sky-500 hover:border-sky-400 hover:shadow-sky-700 ${
+          !noHover && buttonHoverStyle
+        } `;
+      case 'success':
+        return ` hover:text-white border-green-500 border-2 text-green-600  hover:bg-green-500 hover:border-green-400 hover:shadow-green-700 ${
+          !noHover && buttonHoverStyle
+        } `;
       case 'warning':
-        return ' bg-orange-700 border-orange-500 hover:bg-orange-500 hover:shadow-orange-700 ';
+        return ` hover:text-white border-orange-500 border-2 text-orange-600  hover:bg-orange-500 hover:border-orange-400 hover:shadow-orange-700 ${
+          !noHover && buttonHoverStyle
+        } `;
       case 'error':
-        return ' bg-red-700 border-red-500 hover:bg-red-500 hover:shadow-red-700 ';
+        return ` hover:text-white border-red-500 border-2 text-red-600  hover:bg-red-500 hover:border-red-400 hover:shadow-red-700 ${
+          !noHover && buttonHoverStyle
+        } `;
       case 'none':
         return customColors;
     }
   };
 
-  const buttonStateStyle = ` ${buttonColorsStyle()} opacity-100 cursor-pointer hover:shadow-lg hover:-translate-y-1 `;
+  const buttonStateStyle = ` cursor-pointer ${buttonColorsStyle()} `;
   return (
     <Link
       to={toPath}
-      state={{ state }}
-      className={` ${buttonStyle} ${buttonStateStyle} ${className} `}
+      state={state || { from: pathname }}
+      className={`   ${
+        rounded && ' rounded-xl '
+      }  ${buttonStyle} ${buttonStateStyle} ${className}  `}
     >
-      {Icon && <Icon className={`h-5 w-5  ${iconStyle}`} />}
+      <div className='h-full'>
+        {Icon && <Icon className={`h-6 w-6  ${iconStyle}`} />}
+      </div>
       {label && (
-        <span className={` font-Secondary uppercase text-sm  ${labelStyle}`}>
+        <span
+          className={` ${labelStyle} font-Secondary text-sm font-normal uppercase  `}
+        >
           {label}
         </span>
       )}
@@ -60,4 +86,6 @@ export default function AppLink({
   );
 }
 const buttonStyle =
-  'inline-flex items-center border  justify-center gap-x-2 text-white py-2 rounded px-4 transition-all duration-300';
+  ' inline-flex items-center border  justify-center gap-x-2 md:py-2  px-4 transition-all duration-300 ';
+
+const buttonHoverStyle = ' hover:shadow-md hover:-translate-y-1 text-white ';

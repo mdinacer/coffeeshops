@@ -1,10 +1,10 @@
-import {ChevronUpIcon} from '@heroicons/react/solid';
-import {motion} from 'framer-motion';
-import {useRef} from 'react';
-import {Category} from '../../app/models/category';
-import {setProductParams} from '../../app/slices/shopSlice';
-import {useAppDispatch} from '../../app/store/configureStore';
-import {useOutsideClick} from '../../app/utils/outsideClick';
+import { ChevronUpIcon } from '@heroicons/react/solid';
+import { motion } from 'framer-motion';
+import { useRef } from 'react';
+import { Category } from '../../app/models/category';
+import { setProductParams } from '../../app/slices/shopSlice';
+import { useAppDispatch } from '../../app/store/configureStore';
+import { useOutsideClick } from '../../app/utils/outsideClick';
 import OrderCategoryCard from './OrderCategoryCard';
 
 interface Props {
@@ -39,17 +39,17 @@ export default function OrderCategoriesList({
       animate={{ y: 0 }}
       exit={{ y: '-100%' }}
       transition={{ stiffness: 100 }}
-      className=' bg-gray-100 absolute top-0 left-0 right-0 md:rounded-2xl px-5 md:px-10 py-5'
+      className=' absolute top-0 left-0 right-0 bg-gray-200 px-5 py-5 md:rounded-2xl md:px-10'
     >
-      <div className=' grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-2'>
+      <div className=' grid grid-cols-1 gap-x-4 gap-y-2 md:grid-cols-2'>
         {categoriesList().map((category) => (
           <button
             key={category.id}
             onClick={() => handleClose(category)}
             type='button'
-            className={` w-full text-left rounded-md hover:bg-gray-200  ${
+            className={` w-full rounded-md text-left hover:bg-sky-400  ${
               selectedCategory === category.id
-                ? 'bg-indigo-700 text-white'
+                ? 'bg-sky-700 text-white'
                 : 'bg-gray-100'
             }`}
           >
@@ -57,14 +57,14 @@ export default function OrderCategoriesList({
           </button>
         ))}
       </div>
-      <div className='w-ful flex items-center justify-center py-2 mt-5'>
+      <div className='w-ful mt-5 flex items-center justify-center py-2'>
         <button
           type='button'
           className=' inline-flex items-center'
           onClick={() => handleClose()}
         >
-          <ChevronUpIcon className='h-6 w-6 mr-2' />
-          <span className='uppercase font-Secondary'>Fermer</span>
+          <ChevronUpIcon className='mr-2 h-6 w-6' />
+          <span className='font-Secondary uppercase'>Fermer</span>
         </button>
       </div>
     </motion.div>

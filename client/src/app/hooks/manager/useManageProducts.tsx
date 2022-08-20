@@ -1,9 +1,9 @@
-import {useCallback, useEffect, useState} from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import agent from '../../api/agent';
-import {MetaData} from '../../models/pagination';
-import {Product} from '../../models/product';
-import {ProductParams} from '../../models/productParams';
-import {getAxiosProductParams} from '../../slices/shopSlice';
+import { MetaData } from '../../models/pagination';
+import { Product } from '../../models/product';
+import { ProductParams } from '../../models/productParams';
+import { getAxiosProductParams } from '../../slices/shopSlice';
 
 export default function useManageProducts() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -47,7 +47,7 @@ export default function useManageProducts() {
   }
 
   function refreshProducts() {
-    fetchProducts();
+    setProductsLoaded(false);
   }
 
   function addProduct(product: Product) {
@@ -70,7 +70,7 @@ export default function useManageProducts() {
     if (!productsLoaded && !productsLoading) {
       fetchProducts();
     }
-  }, [fetchProducts, productsLoaded, productsLoading]);
+  }, [productsLoaded, productsLoading]);
 
   return {
     products,
@@ -88,7 +88,7 @@ export default function useManageProducts() {
 function initParams() {
   return {
     pageNumber: 1,
-    pageSize: 10,
+    pageSize: 15,
     orderBy: 'name',
     showcase: null,
     searchTerm: null,

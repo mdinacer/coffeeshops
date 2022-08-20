@@ -1,12 +1,15 @@
-import {PlusIcon} from '@heroicons/react/solid';
-import {useEffect, useState} from 'react';
+import { PlusIcon } from '@heroicons/react/solid';
+import { useEffect, useState } from 'react';
 import useOperations from '../../app/hooks/useOperations';
 import ListPageLayout from '../../app/layout/ListPageLayout';
-import {Operation} from '../../app/models/operation';
-import {OperationType} from '../../app/models/OperationType';
-import {addOperation} from '../../app/slices/operationSlice';
-import {setPageNumber, setProductParams} from '../../app/slices/shopSlice';
-import {useAppDispatch} from '../../app/store/configureStore';
+import { Operation } from '../../app/models/operation';
+import { OperationType } from '../../app/models/OperationType';
+import {
+  addOperation,
+  setOperationParams,
+  setPageNumber,
+} from '../../app/slices/operationSlice';
+import { useAppDispatch } from '../../app/store/configureStore';
 import AppButton from '../../components/common/AppButton';
 import AppDialog from '../../components/common/AppDialog';
 import AppLink from '../../components/common/AppLink';
@@ -25,7 +28,9 @@ export default function OperationsPage() {
   );
 
   async function handlePageChange(page: number) {
-    dispatch(setPageNumber({ pageNumber: page + 1 }));
+    console.log(page + 1);
+
+    dispatch(setPageNumber(page + 1));
   }
   const getTypeTitle = () => {
     return operationType === OperationType[0] ? 'Achats' : 'Ventes';
@@ -45,7 +50,7 @@ export default function OperationsPage() {
   };
 
   useEffect(() => {
-    dispatch(setProductParams(initParams()));
+    dispatch(setOperationParams(initParams()));
   }, [dispatch]);
   return (
     <ListPageLayout
@@ -74,10 +79,13 @@ export default function OperationsPage() {
       actionButton={
         operationType === OperationType[1] ? (
           <AppLink
-            className=' w-full md:w-auto'
+            className=' w-full md:w-auto '
             label={'Ajouter une vente'}
             Icon={PlusIcon}
             toPath={'/order'}
+            genre='info'
+            noHover
+            rounded
           />
         ) : (
           <AppButton
@@ -85,6 +93,9 @@ export default function OperationsPage() {
             label={'Ajouter un achat'}
             Icon={PlusIcon}
             onClick={() => setPurchaseFormVisible(true)}
+            genre='info'
+            noHover
+            rounded
           />
         )
       }
@@ -105,7 +116,7 @@ export default function OperationsPage() {
           )}
 
           {selectedOperation && (
-            <AppDialog className=' max-w-lg'>
+            <AppDialog className=' w-full   md:min-w-[42rem]'>
               <OperationDetails
                 operationId={selectedOperation.id}
                 onClose={() => setSelectedOperation(null)}

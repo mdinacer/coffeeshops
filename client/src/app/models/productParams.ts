@@ -6,3 +6,4 @@ export interface ProductParams {
     categoryId?: string | null;
     showcase?: boolean | null;
 }
+

@@ -1,7 +1,7 @@
-import {ChevronDownIcon, ChevronRightIcon} from '@heroicons/react/solid';
-import {AnimatePresence, motion} from 'framer-motion';
-import {useEffect, useRef, useState} from 'react';
-import {useOutsideClick} from '../../app/utils/outsideClick';
+import { ChevronDownIcon, ChevronRightIcon } from '@heroicons/react/solid';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
+import { useOutsideClick } from '../../app/utils/outsideClick';
 import ComponentWrapper from '../common/ComponentWrapper';
 
 type DropDownItem = { title: string; value: any };
@@ -53,7 +53,7 @@ export default function DropDown({
           <div className=' '>
             <button
               disabled={disabled}
-              className={`w-full overflow-hidden flex flex-row justify-between items-center  py-2 px-3 ${buttonStyle}`}
+              className={`flex w-full flex-row items-center justify-between overflow-hidden  py-2 px-3 ${buttonStyle}`}
               type='button'
               onClick={() => setExpanded((prev) => !prev)}
             >
@@ -63,13 +63,13 @@ export default function DropDown({
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -30 }}
                   key={selectedItem?.title}
-                  className='flex-auto w-full text-left font-Secondary first-letter:uppercase '
+                  className='w-full flex-auto text-left font-Secondary first-letter:uppercase '
                 >
                   {selectedItem?.title}
                 </motion.p>
               </AnimatePresence>
               <ChevronDownIcon
-                className={`flex-initial h-6 w-6 transition-all duration-300 ${
+                className={`h-6 w-6 flex-initial transition-all duration-300 ${
                   expanded ? 'rotate-180' : 'rotate-0'
                 }`}
               />
@@ -82,20 +82,20 @@ export default function DropDown({
                   exit={{ opacity: 0, y: -30 }}
                   key={'menu'}
                   layout
-                  className='absolute left-0 border min-w-[16rem] border-gray-300  w-full max-w-xl mt-3  bg-gray-100  drop-shadow-md rounded-xl py-2 px-4 z-20'
+                  className='absolute left-0 z-20 mt-3 w-full  min-w-[16rem] max-w-xl rounded-xl  border  border-gray-300 bg-gray-100 py-2 px-4 drop-shadow-md'
                 >
                   <ul className='list-none'>
                     {items.map((item, index) => (
                       <li
                         key={index}
-                        className=' list-item hover:bg-indigo-500 hover:text-white py-1 px-3 rounded'
+                        className=' list-item rounded py-1 px-3 hover:bg-sky-500 hover:text-white'
                       >
                         <button
-                          className='w-full font-Secondary text-left capitalize  flex flex-row items-center'
+                          className='flex w-full flex-row items-center  text-left font-Secondary capitalize'
                           type='button'
                           onClick={() => handleOnChange(item)}
                         >
-                          <div className='h-6 w-6 mr-1'>
+                          <div className='mr-1 h-6 w-6'>
                             {selectedItem?.value === item.value && (
                               <ChevronRightIcon className='h-6 w-6' />
                             )}

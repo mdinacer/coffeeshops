@@ -1,12 +1,18 @@
-import {ArrowDownIcon, ArrowUpIcon, PlusIcon} from '@heroicons/react/solid';
+import { ArrowDownIcon, ArrowUpIcon, PlusIcon } from '@heroicons/react/solid';
+import { useState } from 'react';
 import useManageTransactions from '../../app/hooks/manager/useManageTransactions';
 import ListPageLayout from '../../app/layout/ListPageLayout';
+import { ShopTransaction } from '../../app/models/shopTransaction';
 import AppButton from '../../components/common/AppButton';
+import AppDialog from '../../components/common/AppDialog';
 import CollapsibleMenu from '../../components/common/CollapsibleMenu';
+import TransactionForm from '../../components/forms/TransactionForm';
 import TransactionsFilter from '../../components/transaction/TransactionsFilter';
 import TransactionsList from '../../components/transaction/TransactionsList';
 
 export default function TransactionsManagerPage() {
+  const [transactionDialogVisible, setTransactionDialogVisible] =
+    useState(false);
   const {
     transactions,
     metaData,
@@ -14,10 +20,11 @@ export default function TransactionsManagerPage() {
     totalOngoing,
     setParams,
     setPageNumber,
+    refresh,
   } = useManageTransactions();
 
-  // const [selectedTransaction, setSelectedTransaction] =
-  //   useState<ShopTransaction | null>(null);
+  const [selectedTransaction, setSelectedTransaction] =
+    useState<ShopTransaction | null>(null);
 
   async function handlePageChange(page: number) {
     setPageNumber(page);
@@ -31,9 +38,9 @@ export default function TransactionsManagerPage() {
       value: (
         <div className=' flex flex-row items-center'>
           {totalIncoming < totalOngoing ? (
-            <ArrowDownIcon className='h-5 w-5 mr-2 dark:text-red-400 text-red-600' />
+            <ArrowDownIcon className='mr-2 h-5 w-5 text-red-600 dark:text-red-400' />
           ) : (
-            <ArrowUpIcon className='h-5 w-5 mr-2 dark:text-green-400 text-green-600' />
+            <ArrowUpIcon className='mr-2 h-5 w-5 text-green-600 dark:text-green-400' />
           )}
           <p
             className={` uppercase  ${
@@ -51,7 +58,7 @@ export default function TransactionsManagerPage() {
         <TransactionsList
           transactions={transactions}
           onSelect={(transaction) => {
-            //setSelectedTransaction(transaction);
+            setSelectedTransaction(transaction);
           }}
         />
       }
@@ -64,7 +71,27 @@ export default function TransactionsManagerPage() {
       metaData={metaData}
       onPageChange={handlePageChange}
       actionButton={
-        <AppButton label={'Ajouter'} Icon={PlusIcon} genre='info' />
+        <AppButton
+          label={'Ajouter'}
+          Icon={PlusIcon}
+          genre='info'
+          rounded
+          onClick={() => setTransactionDialogVisible(true)}
+        />
+      }
+      dialogVisible={transactionDialogVisible}
+      dialogContent={
+        <AppDialog className=' md:min-w-[30vw]'>
+          <TransactionForm
+            onClose={(value) => {
+              if (value) {
+                refresh();
+                console.log(value);
+              }
+              setTransactionDialogVisible(false);
+            }}
+          />
+        </AppDialog>
       }
     />
   );

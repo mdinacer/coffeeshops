@@ -1,5 +1,5 @@
-import {SearchIcon, XIcon} from '@heroicons/react/solid';
-import {useEffect, useState} from 'react';
+import { SearchIcon, XIcon } from '@heroicons/react/solid';
+import { useEffect, useState } from 'react';
 import TextField from '../fields/TextField';
 
 interface Props {
@@ -21,13 +21,13 @@ export default function AppSearch({ initialValue, onSearch }: Props) {
   }, [searchTerm]);
 
   return (
-    <div className=' xl:max-w-sm w-full flex flex-row items-center  bg-gray-100 border border-gray-300 rounded-lg px-4'>
+    <div className=' flex w-full flex-row items-center rounded-lg  border border-gray-300 bg-gray-100 px-4 xl:max-w-sm'>
       <div>
         <SearchIcon className='h-6 w-6' />
       </div>
       <TextField
         inputStyles=' border-none px-0'
-        className=' bg-transparent border-none w-full px-0 py-0 pl-0'
+        className=' w-full border-none bg-transparent px-0 py-0 pl-0'
         type='text'
         label={''}
         placeholder='Rechercher un article'

@@ -13,8 +13,10 @@ namespace API.Extensions
             services.AddScoped<TokenService>();
             services.AddScoped<ImageService>();
             services.AddScoped<RedisService>();
-            services.TryAddSingleton<IResponseCacheService, ResponseCacheService>();
+            services.AddScoped<HistoryCacheService>();
+            services.AddScoped<IResponseCacheService, ResponseCacheService>();
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddSignalR();
             // services.AddTransient<IMailService, MailService>();
             //services.AddScoped<PaymentService>();
 

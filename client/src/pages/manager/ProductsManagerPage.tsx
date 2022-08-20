@@ -1,8 +1,8 @@
-import {PlusIcon} from '@heroicons/react/solid';
-import {useState} from 'react';
+import { PlusIcon } from '@heroicons/react/solid';
+import { useState } from 'react';
 import useManageProducts from '../../app/hooks/manager/useManageProducts';
 import ListPageLayout from '../../app/layout/ListPageLayout';
-import {Product} from '../../app/models/product';
+import { Product } from '../../app/models/product';
 import AppButton from '../../components/common/AppButton';
 import AppDialog from '../../components/common/AppDialog';
 import CollapsibleMenu from '../../components/common/CollapsibleMenu';
@@ -45,7 +45,7 @@ export default function ProductsManagerPage() {
         </CollapsibleMenu>
       }
       list={
-        <div className='gap-y-5 md:gap-y-2 grid lg:grid-cols-3 gap-5'>
+        <div className='grid gap-5 gap-y-5 md:gap-y-2 lg:grid-cols-3'>
           {products.map((product) => (
             <ShopProductCard
               key={product.id}

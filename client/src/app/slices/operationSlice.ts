@@ -1,17 +1,17 @@
-import {createAsyncThunk, createEntityAdapter, createSlice,} from '@reduxjs/toolkit';
+import { createAsyncThunk, createEntityAdapter, createSlice, } from '@reduxjs/toolkit';
 import agent from '../api/agent';
-import {Operation} from '../models/operation';
-import {OperationParams} from '../models/operationParams';
-import {OperationType} from '../models/OperationType';
-import {MetaData} from '../models/pagination';
-import {RootState} from '../store/configureStore';
+import { Operation } from '../models/operation';
+import { OperationParams } from '../models/operationParams';
+import { OperationType } from '../models/OperationType';
+import { MetaData } from '../models/pagination';
+import { RootState } from '../store/configureStore';
 
 interface OperationState {
   operationsLoaded: boolean;
-  operationsLoading: boolean;
   operationParams: OperationParams;
   operationType: string;
   metaData: MetaData | null;
+  status: "idle" | "pending" | "error";
 }
 
 const operationsAdapter = createEntityAdapter<Operation>({
@@ -54,8 +54,11 @@ export const fetchOperationsAsync = createAsyncThunk<
   const params = getAxiosOperationParams(operationParams);
   try {
     const response: any = await agent.Operations.list(params);
-    thunkApi.dispatch(setMetaData(response.metaData));
-    return response.items;
+
+    const { items, ...metaData } = response
+
+    thunkApi.dispatch(setMetaData(metaData));
+    return items;
   } catch (error: any) {
     return thunkApi.rejectWithValue({ error: error.data });
   }
@@ -79,13 +82,15 @@ function initParams(): OperationParams {
     pageSize: 10,
     orderBy: 'name',
     type: OperationType.sale,
+    startDate: new Date().toUTCString(),
+    endDate: new Date().toUTCString(),
   };
 }
 
 export const operationSlice = createSlice({
   name: 'operation',
   initialState: operationsAdapter.getInitialState<OperationState>({
-    operationsLoading: false,
+    status: "idle",
     operationsLoaded: false,
     operationParams: initParams(),
     operationType: OperationType[1],
@@ -104,12 +109,12 @@ export const operationSlice = createSlice({
 
     setPageNumber: (state, action) => {
       state.operationsLoaded = false;
-      state.operationParams = { ...state.operationParams, ...action.payload };
+      state.operationParams = { ...state.operationParams, pageNumber: action.payload };
     },
 
     setPageSize: (state, action) => {
       state.operationsLoaded = false;
-      state.operationParams = { ...state.operationParams, ...action.payload };
+      state.operationParams = { ...state.operationParams, pageSize: action.payload };
     },
 
     setMetaData: (state, action) => {
@@ -127,26 +132,30 @@ export const operationSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchOperationsAsync.pending, (state) => {
-      state.operationsLoading = true;
+      state.status = "pending";
     });
 
     builder.addCase(fetchOperationsAsync.fulfilled, (state, action) => {
       operationsAdapter.setAll(state, action.payload);
-      state.operationsLoading = false;
+      state.status = "idle";
       state.operationsLoaded = true;
     });
 
     builder.addCase(fetchOperationsAsync.rejected, (state) => {
-      state.operationsLoading = false;
+      state.status = "error";
     });
 
-    builder.addCase(fetchOperationAsync.pending, (state) => {});
+    builder.addCase(fetchOperationAsync.pending, (state) => {
+      state.status = "pending";
+    });
 
     builder.addCase(fetchOperationAsync.fulfilled, (state, action) => {
       operationsAdapter.upsertOne(state, action.payload);
     });
 
-    builder.addCase(fetchOperationAsync.rejected, (state) => {});
+    builder.addCase(fetchOperationAsync.rejected, (state) => {
+      state.status = "error";
+    });
   },
 });
 

@@ -1,7 +1,7 @@
-import {useState} from 'react';
-import {TransactionDirection} from '../../app/models/TransactionDirection';
-import {TransactionParams} from '../../app/models/TransactionParams';
-import {TransactionType} from '../../app/models/TransactionType';
+import { useState } from 'react';
+import { TransactionDirection } from '../../app/models/TransactionDirection';
+import { TransactionParams } from '../../app/models/TransactionParams';
+import { TransactionType } from '../../app/models/TransactionType';
 import AppPageSize from '../common/AppPageSize';
 import AppSort from '../common/AppSort';
 import AppDatePicker from '../input/DatePicker';
@@ -71,9 +71,7 @@ export default function TransactionFilters({ setParams }: Props) {
           endDate={endDate}
           onChange={(value) => {
             setStartDate(value);
-            if (value) {
-              filter('startDate', new Date(value));
-            }
+            filter('startDate', value ? new Date(value) : undefined);
           }}
         />
       </div>
@@ -88,9 +86,7 @@ export default function TransactionFilters({ setParams }: Props) {
           label={'Fin'}
           onChange={(value) => {
             setEndDate(value);
-            if (value) {
-              filter('endDate', new Date(value));
-            }
+            filter('endDate', value ? new Date(value) : undefined);
           }}
         />
       </div>

@@ -15,9 +15,10 @@ namespace API.Helpers
 
             CreateMap<CreateShopDto, Shop>();
             CreateMap<UpdateShopDto, Shop>();
-            CreateMap<Shop, ShopDto>().ForMember(d => d.Owner, o => o.MapFrom(s => s.Owner.Profile != null ? s.Owner.Profile.GetFullName() : string.Empty));
+            CreateMap<Shop, ShopDto>();
+            //.ForMember(d => d.Owner, o => o.MapFrom(s => s.Owner.Profile != null ? s.Owner.Profile.GetFullName() : string.Empty));
             CreateMap<Shop, ShopDetailsDto>()
-            .ForMember(d => d.Owner, o => o.MapFrom(s => s.Owner.Profile))
+            //.ForMember(d => d.Owner, o => o.MapFrom(s => s.Owner.Profile))
             .ForMember(d => d.ProductsCount, o => o.MapFrom(s => s.Products.Count))
             .ForMember(d => d.OperationsCount, o => o.MapFrom(s => s.Operations.Count));
 

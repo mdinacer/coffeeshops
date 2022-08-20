@@ -1,6 +1,5 @@
 using API.Models;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 
 namespace API.Data
 {
@@ -20,9 +19,10 @@ namespace API.Data
                 }
             }
 
+
             if (!userManager.Users.Any())
             {
-                var user = new User
+                var admin = new User
                 {
                     UserName = "admin",
                     Email = "admin@test.com",
@@ -36,8 +36,60 @@ namespace API.Data
                     }
                 };
 
-                await userManager.CreateAsync(user, "Pa$$w0rd");
-                await userManager.AddToRoleAsync(user, "Admin");
+                await userManager.CreateAsync(admin, "Pa$$w0rd");
+                await userManager.AddToRoleAsync(admin, "Admin");
+
+                var moderator = new User
+                {
+                    UserName = "moderator",
+                    Email = "moderator@test.com",
+                    Profile = new UserProfile
+                    {
+                        FirstName = "Bob",
+                        LastName = "Bobbity",
+                        Email = "moderator@test.com",
+                        Mobile = "+213662991735",
+                        Address1 = "36 cité les pins Arzew - Oran"
+                    }
+                };
+
+                await userManager.CreateAsync(moderator, "Pa$$w0rd");
+                await userManager.AddToRoleAsync(moderator, "Moderator");
+
+                var agent = new User
+                {
+                    UserName = "Agent",
+                    Email = "agent@test.com",
+                    Profile = new UserProfile
+                    {
+                        FirstName = "Tom",
+                        LastName = "Tommity",
+                        Email = "agent@test.com",
+                        Mobile = "+213662991735",
+                        Address1 = "36 cité les pins Arzew - Oran"
+                    }
+                };
+
+                await userManager.CreateAsync(agent, "Pa$$w0rd");
+                await userManager.AddToRoleAsync(agent, "Agent");
+
+                var shop = new Shop
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    Name = "RedPill Shop",
+                    TablesCount = 12,
+
+                };
+                context.Shops.Add(shop);
+
+                admin.ShopId = shop.Id;
+                moderator.ShopId = shop.Id;
+                agent.ShopId = shop.Id;
+                shop.OwnerId = admin.Id;
+
+                await context.SaveChangesAsync();
+
+
             }
 
             if (!context.Categories.Any())
@@ -46,7 +98,6 @@ namespace API.Data
                 var categories = new List<Category>{
                 new   Category{
                     Name =  "boissons chaudes",
-
                     PictureUrl="/assets/images/categories/hot_drink.png",
                     Validated= true,
             },

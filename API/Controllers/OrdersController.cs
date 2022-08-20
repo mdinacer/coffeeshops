@@ -10,10 +10,8 @@ namespace API.Controllers
     public class OrdersController : BaseApiController
     {
         private readonly RedisService _redis;
-        private readonly IMapper _mapper;
-        public OrdersController(RedisService redis, IMapper mapper)
+        public OrdersController(RedisService redis)
         {
-            _mapper = mapper;
             _redis = redis;
         }
 
@@ -40,7 +38,7 @@ namespace API.Controllers
         [HttpDelete]
         public async Task DeleteOrderAsync(string id)
         {
-            await _redis.DeleteOrderAsync(id);
+            await _redis.ClearOrdersAsync(id);
         }
     }
 }

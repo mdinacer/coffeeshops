@@ -29,11 +29,9 @@ namespace API.Data
             base.OnModelCreating(builder);
 
             builder.Entity<Shop>()
-            .HasOne<User>(s => s.Owner)
+            .HasMany<User>(s => s.Users)
             .WithOne(u => u.Shop)
-            .HasForeignKey<User>(u => u.ShopId);
-
-
+            .HasForeignKey(u => u.ShopId);
 
             builder.Entity<User>()
             .HasOne<UserProfile>(s => s.Profile)
@@ -53,19 +51,11 @@ namespace API.Data
                 .HasForeignKey(o => o.ShopId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-
-
             builder.Entity<Shop>()
-           .HasMany(s => s.Transactions)
-           .WithOne(p => p.Shop)
-           .HasForeignKey(p => p.ShopId)
-           .OnDelete(DeleteBehavior.Cascade);
-
-            // builder.Entity<Shop>()
-            //     .HasMany(s => s.Categories)
-            //     .WithOne(o => o.Shop)
-            //     .HasForeignKey(o => o.ShopId)
-            //     .OnDelete(DeleteBehavior.Cascade);
+                .HasMany(s => s.Transactions)
+                .WithOne(p => p.Shop)
+                .HasForeignKey(p => p.ShopId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<Operation>()
                 .HasMany(s => s.Elements)
@@ -73,30 +63,17 @@ namespace API.Data
                 .HasForeignKey(o => o.OperationId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // builder.Entity<Agent>()
-            //     .HasMany(c => c.Operations)
-            //     .WithOne(o => o.Agent)
-            //     .HasForeignKey(o => o.AgentId);
-
-
-
-            builder.Entity<Category>()
-                .HasMany(s => s.Products)
-                .WithOne(o => o.Category)
-                .HasForeignKey(o => o.CategoryId)
-                .OnDelete(DeleteBehavior.Cascade);
+            // builder.Entity<Category>()
+            //     .HasMany(s => s.Products)
+            //     .WithOne(o => o.Category)
+            //     .HasForeignKey(o => o.CategoryId)
+            //     .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<Product>()
             .HasMany(s => s.Batches)
             .WithOne(o => o.Product)
             .HasForeignKey(o => o.ProductId)
             .OnDelete(DeleteBehavior.Cascade);
-
-            //    builder.Entity<Product>()
-            // .HasMany(s => s.Operations)
-            // .WithOne(o => o.Product)
-            // .HasForeignKey(o => o.ProductId)
-            // .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

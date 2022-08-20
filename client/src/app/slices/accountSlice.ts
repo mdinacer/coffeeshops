@@ -1,8 +1,8 @@
-import {createAsyncThunk, createSlice, isAnyOf} from '@reduxjs/toolkit';
-import {FieldValues} from 'react-hook-form';
+import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
+import { FieldValues } from 'react-hook-form';
 import agent from '../api/agent';
-import {User} from '../models/user';
-import {UserProfile} from '../models/userProfile';
+import { User } from '../models/user';
+import { UserProfile } from '../models/userProfile';
 import customHistory from '../layout/history';
 
 interface AccountState {
@@ -10,6 +10,7 @@ interface AccountState {
   profile: UserProfile | null;
   shopId: string | null;
   roles: string[];
+
 }
 
 const initialState: AccountState = {
@@ -36,7 +37,7 @@ export const signUpUser = createAsyncThunk<User, FieldValues>(
   'account/signUpUser',
   async (data, thunkApi) => {
     try {
-      const user = await agent.Account.register(data);
+      const user: User = await agent.Account.register(data);
       localStorage.setItem('user', JSON.stringify(user));
       return user;
     } catch (error: any) {
@@ -63,6 +64,8 @@ export const fetchCurrentUser = createAsyncThunk<User>(
     },
   }
 );
+
+
 
 export const accountSlice = createSlice({
   name: 'account',

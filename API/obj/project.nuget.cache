@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "sfoqBHIP5M11WRvJXF/8hE+bzzhweoqx8ZyIplrd8+WxugYYpiY1eizZ3yGl+O83SEWe06R5ZcD0jSI90J0gvw==",
+  "dgSpecHash": "VK5pceKUNk7CioljS6RC1R+PbLuk+38QzkWB3AHZQ3ITwjkJ16aRgpsISYHe7rsNZ/KRiLdxqfdNjvf7rrltlw==",
   "success": true,
   "projectFilePath": "/Users/nacer/Desktop/Projects/CoffeeShops/API/API.csproj",
   "expectedPackageFiles": [
@@ -46,7 +46,9 @@
     "/Users/nacer/.nuget/packages/npgsql/6.0.6/npgsql.6.0.6.nupkg.sha512",
     "/Users/nacer/.nuget/packages/npgsql.entityframeworkcore.postgresql/6.0.6/npgsql.entityframeworkcore.postgresql.6.0.6.nupkg.sha512",
     "/Users/nacer/.nuget/packages/pipelines.sockets.unofficial/2.2.2/pipelines.sockets.unofficial.2.2.2.nupkg.sha512",
+    "/Users/nacer/.nuget/packages/sendgrid/9.28.1/sendgrid.9.28.1.nupkg.sha512",
     "/Users/nacer/.nuget/packages/stackexchange.redis/2.6.48/stackexchange.redis.2.6.48.nupkg.sha512",
+    "/Users/nacer/.nuget/packages/starkbank-ecdsa/1.3.3/starkbank-ecdsa.1.3.3.nupkg.sha512",
     "/Users/nacer/.nuget/packages/swashbuckle.aspnetcore/6.4.0/swashbuckle.aspnetcore.6.4.0.nupkg.sha512",
     "/Users/nacer/.nuget/packages/swashbuckle.aspnetcore.swagger/6.4.0/swashbuckle.aspnetcore.swagger.6.4.0.nupkg.sha512",
     "/Users/nacer/.nuget/packages/swashbuckle.aspnetcore.swaggergen/6.4.0/swashbuckle.aspnetcore.swaggergen.6.4.0.nupkg.sha512",

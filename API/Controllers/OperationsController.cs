@@ -1,13 +1,15 @@
-using System.Reflection.Emit;
+using System.Text.Json;
 using API.Data;
 using API.DTO;
 using API.Extensions;
 using API.Helpers;
 using API.Models;
+using API.Services;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
@@ -15,16 +17,20 @@ namespace API.Controllers
     [Authorize(Policy = "IsShopMember")]
     public class OperationsController : BaseApiController
     {
-        private readonly IMapper _mapper;
         private readonly DataContext _context;
-        public OperationsController(DataContext context, IMapper mapper)
+        private readonly IMapper _mapper;
+        private readonly IHubContext<Hubs> _hub;
+        private readonly HistoryCacheService _history;
+
+        public OperationsController(DataContext context, IMapper mapper, HistoryCacheService history, IHubContext<Hubs> hub)
         {
-            _context = context;
+            _history = history;
+            _hub = hub;
             _mapper = mapper;
+            _context = context;
+
         }
-
-
-        [HttpGet()]
+        [HttpGet]
         public async Task<ActionResult<PagedList<OperationDto>>> GetOperations([FromQuery] OperationParams operationParams)
         {
             var query = _context.Operations
@@ -35,9 +41,7 @@ namespace API.Controllers
             .AsQueryable();
 
             var operations =
-               await PagedList<OperationDto>.ToPagedList(query, operationParams.PageNumber, operationParams.PageSize);
-
-            //Response.AddPaginationHeader(operations.MetaData);
+               await PagedList<OperationDto>.ToPagedListAsync(query, operationParams.PageNumber, operationParams.PageSize);
 
             return operations;
         }
@@ -119,12 +123,12 @@ namespace API.Controllers
                         };
                         product.Batches.Add(batch);
                     }
-                    if (createOperation.Type == ShopOperationType.sale)
+                    else if (createOperation.Type == ShopOperationType.sale)
                     {
                         var quantity = element.Quantity;
                         var batches = product.Batches
-                        .Where(b => !b.SoldOut && !b.GetExpired())
-                        .OrderBy(b => b.Date).ToList();
+                            .Where(b => !b.SoldOut && !b.GetExpired())
+                            .OrderBy(b => b.Date).ToList();
 
                         if (quantity > 0)
                         {
@@ -138,17 +142,16 @@ namespace API.Controllers
                                     batch.Active = true;
                                     batch.SoldOut = false;
                                     quantity = 0;
-                                };
-
-                                if (quantity > remain)
-                                {
-                                    batch.SoldQuantity += remain;
-                                    batch.SoldOut = true;
-                                    batch.Active = false;
-                                    quantity -= remain;
                                 }
-                            });
 
+                                ;
+
+                                if (quantity <= remain) return;
+                                batch.SoldQuantity += remain;
+                                batch.SoldOut = true;
+                                batch.Active = false;
+                                quantity -= remain;
+                            });
                         }
                     }
                 }
@@ -172,7 +175,7 @@ namespace API.Controllers
                     agent.Total += operation.Total;
                     agent.Paid += operation.Paid;
 
-                    var type = agent.Type == AgentType.client ? "Client" : "Fournisseur";
+                    // var type = agent.Type == AgentType.client ? "Client" : "Fournisseur";
                 }
             }
 
@@ -204,10 +207,18 @@ namespace API.Controllers
 
 
             var success = await _context.SaveChangesAsync() > 0;
-            return success
-            ? Ok(_mapper.Map<OperationDto>(operation))
-            : BadRequest(new ProblemDetails { Title = "Error creating operation" });
 
+            if (success)
+            {
+                CreateOperationHistoryElement(operation);
+                var operationDto = _mapper.Map<OperationDto>(operation);
+                await _hub.Clients.Group(ShopId!).SendAsync("ReceiveMessage", operationDto);
+                return Ok(operationDto);
+            }
+            else
+            {
+                return BadRequest(new ProblemDetails { Title = "Error creating operation" });
+            }
         }
 
 
@@ -215,6 +226,9 @@ namespace API.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<OperationDto>> EditOperation(string id)
         {
+            var user = await GetUser(_context);
+
+            if (user == null || string.IsNullOrEmpty(ShopId)) return BadRequest("Must be authenticated");
             var operation = await _context.Operations.SingleOrDefaultAsync(o => o.Id == id && o.ShopId == ShopId);
 
             if (operation == null) return BadRequest("Operation not found");
@@ -223,9 +237,21 @@ namespace API.Controllers
 
             var success = await _context.SaveChangesAsync() > 0;
 
-            return success ?
-                Ok(_mapper.Map<OperationDto>(operation))
-                : BadRequest(new ProblemDetails { Title = "Error Deleting operation" });
+            if (success)
+            {
+                CreateOperationHistoryElement(operation);
+                return Ok(true);
+            }
+            else
+            {
+                return BadRequest(new ProblemDetails { Title = "Error Deleting operation" });
+            }
+        }
+
+        private async void CreateOperationHistoryElement(Operation operation)
+        {
+            if (string.IsNullOrEmpty(ShopId)) return;
+            await CreateHistoryElement(_context, _history, ShopId, operation);
         }
     }
 

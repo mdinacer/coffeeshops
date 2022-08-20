@@ -32,6 +32,15 @@ namespace API.Helpers
                 return;
             }
 
+            switch (context.HttpContext.Request.Method)
+            {
+                case "POST":
+                case "PUT":
+                case "DELETE":
+                    await cacheService.ClearCachedResponseAsync(cacheKey);
+                    break;
+            };
+
             var executedContext = await next();
 
             if (executedContext.Result is OkObjectResult okObjectResult)

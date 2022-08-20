@@ -1,8 +1,8 @@
-import {format} from 'date-fns';
-import {useCallback, useEffect, useState} from 'react';
+import { format } from 'date-fns';
+import { useCallback, useEffect, useState } from 'react';
 import agent from '../../app/api/agent';
-import {locale} from '../../app/layout/App';
-import {ShopPayment} from '../../app/models/shopPayment';
+import { locale } from '../../app/layout/App';
+import { ShopPayment } from '../../app/models/shopPayment';
 import ResponsiveTable from '../common/ResponsiveTable';
 import ResponsiveTableRow from '../common/ResponsiveTableRow';
 
@@ -22,6 +22,7 @@ export default function AgentPaymentsList({ agentId }: Props) {
       const result = await agent.Payments.list(id);
       if (result) {
         setPayments(result);
+        console.log(result);
       }
       setPaymentsLoaded(true);
     } catch (error) {
@@ -35,17 +36,17 @@ export default function AgentPaymentsList({ agentId }: Props) {
     if (!paymentsLoaded && !paymentsLoading && agentId) {
       fetchPayments(agentId);
     }
-  }, [agentId, paymentsLoaded, paymentsLoading]);
+  }, [agentId, fetchPayments, paymentsLoaded, paymentsLoading]);
 
   return (
-    <div className=' flex-auto flex flex-col overflow-hidden'>
-      <p className=' font-Primary text-2xl uppercase font-thin mb-3 flex-initial '>
+    <div className=' flex flex-auto flex-col overflow-hidden'>
+      <p className=' mb-3 flex-initial font-Primary text-2xl font-thin uppercase '>
         Paiements
       </p>
 
       {paymentsLoaded && payments.length > 0 && (
         <ResponsiveTable
-          headers={['date', 'montant']}
+          headers={['date', 'montant', 'description']}
           children={payments.map((element, index) => (
             <ResponsiveTableRow
               key={element.id}
@@ -61,6 +62,12 @@ export default function AgentPaymentsList({ agentId }: Props) {
                   title: 'montant',
                   value: element.amount.toFixed(2),
                   align: 'right',
+                },
+
+                {
+                  title: 'description',
+                  value: element.description,
+                  align: 'left',
                 },
               ]}
             />

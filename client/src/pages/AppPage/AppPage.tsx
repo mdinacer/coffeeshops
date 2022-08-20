@@ -1,8 +1,8 @@
-import React, {useRef, useState} from 'react';
-import {AnimatePresence, motion} from 'framer-motion';
-import {useLocation} from 'react-router-dom';
-import {useAppSelector} from '../../app/store/configureStore';
-import {useOutsideClick} from '../../app/utils/outsideClick';
+import React, { useRef, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useLocation } from 'react-router-dom';
+import { useAppSelector } from '../../app/store/configureStore';
+import { useOutsideClick } from '../../app/utils/outsideClick';
 import AppPageHeader from '../../components/appPage/AppPageHeader';
 import AppPageSidebar from '../../components/appPage/AppPageSidebar';
 
@@ -22,7 +22,7 @@ export default function AppPage({ children }: Props) {
   return (
     <motion.div
       layout
-      className='select-none min-h-screen w-screen overflow-hidden bg-gray-200 flex flex-row items-stretch justify-start'
+      className='flex min-h-screen w-screen select-none flex-row items-stretch justify-start overflow-hidden bg-gray-50'
     >
       <AnimatePresence exitBeforeEnter>
         {sidebarExpanded && (
@@ -38,7 +38,7 @@ export default function AppPage({ children }: Props) {
             style={{
               transformOrigin: 'left',
             }}
-            className='absolute top-0 left-0 bottom-0 bg-white drop-shadow-md flex w-full md:w-full md:max-w-[400px] h-screen overflow-hidden z-30'
+            className='absolute top-0 left-0 bottom-0 z-30 flex h-screen w-full overflow-hidden bg-white drop-shadow-md md:w-full md:max-w-[400px]'
           >
             <AppPageSidebar
               shop={shop}
@@ -69,36 +69,38 @@ export default function AppPage({ children }: Props) {
           // </motion.div>
         )}
       </AnimatePresence>
-      <div className='relative w-screen flex flex-col '>
+      <div className='relative flex w-screen flex-col '>
         {sidebarExpanded && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1, transition: { delay: 0.4 } }}
             exit={{ opacity: 0, transition: { delay: 0.4 } }}
-            className=' absolute md:block hidden top-0 left-0 right-0 bottom-0 bg-black bg-opacity-60  backdrop-blur z-20'
+            className=' absolute top-0 left-0 right-0 bottom-0 z-20 hidden bg-black bg-opacity-60  backdrop-blur md:block'
           />
         )}
-        <AppPageHeader
-          sidebarExpanded={sidebarExpanded}
-          user={user}
-          onMenuButtonClick={(value) => setSidebarExpanded(value)}
-          className=' flex-initial mb-2 '
-        />
+        {user && pathname !== '/' && (
+          <AppPageHeader
+            sidebarExpanded={sidebarExpanded}
+            user={user}
+            onMenuButtonClick={(value) => setSidebarExpanded(value)}
+            className='relative flex-initial drop-shadow-md '
+          />
+        )}
         <AnimatePresence exitBeforeEnter>
-          <motion.div
-            initial={{ opacity: 0, x: -100 }}
-            animate={{ opacity: 1, x: 0, transition: { delay: 0.4 } }}
-            exit={{ opacity: 0, x: 100 }}
-            transition={{
-              stiffness: 100,
-              staggerChildren: 0.34,
-              duration: 0.3,
-            }}
-            key={pathname}
-            className='relative flex-auto overflow-y-auto overflow-x-hidden'
-          >
-            {children}
-          </motion.div>
+          <div className=' flex-auto overflow-hidden '>
+            <motion.div
+              key={pathname}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1, transition: { delay: 0.2 } }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              transition={{
+                stiffness: 100,
+              }}
+              className=' relative h-full w-full flex-auto overflow-y-auto overflow-x-hidden'
+            >
+              {children}
+            </motion.div>
+          </div>
         </AnimatePresence>
       </div>
     </motion.div>

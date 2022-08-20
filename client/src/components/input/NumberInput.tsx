@@ -1,5 +1,5 @@
-import {ChevronDownIcon, ChevronUpIcon} from '@heroicons/react/solid';
-import {useController, UseControllerProps} from 'react-hook-form';
+import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/solid';
+import { useController, UseControllerProps } from 'react-hook-form';
 import ComponentWrapper from '../common/ComponentWrapper';
 
 interface Props extends UseControllerProps {
@@ -39,16 +39,16 @@ export default function NumberInput({
       <ComponentWrapper
         label={props.label}
         element={
-          <div className='flex-auto flex flex-row items-center'>
+          <div className='flex flex-auto flex-row items-center'>
             <input
-              className={`form-input w-full font-Secondary text-center border-none focus:outline-none  focus:border  bg-transparent placeholder:first-letter:uppercase placeholder:text-gray-400 py-2`}
+              className={`form-input w-full border-none bg-transparent py-2 text-center  font-Secondary  placeholder:text-gray-400 placeholder:first-letter:uppercase focus:border focus:outline-none`}
               aria-label={props.label}
               type={'number'}
               {...props}
               {...field}
             />
             {prefix && (
-              <p className=' text-gray-500 text-sm font-Secondary flex-initial pr-2'>
+              <p className=' flex-initial pr-2 font-Secondary text-sm text-gray-500'>
                 {prefix}
               </p>
             )}
@@ -56,14 +56,14 @@ export default function NumberInput({
         }
         button={
           showButtons && (
-            <div className='flex flex-row justify-evenly items-stretch  h-full  '>
+            <div className='flex h-full flex-row items-stretch  justify-evenly  '>
               <button
                 onClick={handleDecrease}
                 disabled={+field.value <= (props.min || 0)}
                 type='button'
-                className={`flex  items-center justify-center bg-gray-300    ${
+                className={`${buttonStyle} ${
                   +field.value <= (props.min || 0)
-                    ? 'text-gray-200 bg-gray-100'
+                    ? 'bg-gray-100 text-gray-200'
                     : ''
                 }`}
               >
@@ -73,7 +73,7 @@ export default function NumberInput({
               <button
                 onClick={handleIncrease}
                 type='button'
-                className={`flex  items-center justify-center bg-gray-300  h-full `}
+                className={buttonStyle}
               >
                 <ChevronUpIcon className='h-6 w-6' />
               </button>
@@ -82,7 +82,7 @@ export default function NumberInput({
         }
       />
       {fieldState.error && (fieldState.isDirty || fieldState.isTouched) && (
-        <div className='py-1 w-full'>
+        <div className='w-full py-1'>
           <p className={`w-full text-sm text-red-500 first-letter:uppercase `}>
             {fieldState.error.message}
           </p>
@@ -91,3 +91,6 @@ export default function NumberInput({
     </div>
   );
 }
+
+const buttonStyle =
+  ' flex items-center justify-center bg-gray-300 px-1 md:px-2 ';

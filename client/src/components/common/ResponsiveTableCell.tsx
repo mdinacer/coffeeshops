@@ -1,4 +1,4 @@
-import {ITableCell} from './tableModels';
+import { ITableCell } from './tableModels';
 
 export default function ResponsiveTableCell({
   align = 'left',
@@ -9,12 +9,14 @@ export default function ResponsiveTableCell({
   return (
     <td
       align={align}
-      className={`w-full md:w-auto h-full inline-flex justify-between md:table-cell items-end px-0 md:px-5 md:border py-1 md:border-gray-200  ${className}`}
+      className={`inline-flex h-full w-full items-end justify-between px-0 py-1 md:table-cell md:w-auto md:border md:border-gray-200 md:px-5  ${className}`}
     >
-      <span className='block md:hidden font-Primary text-base font-thin uppercase'>
+      <span className='block font-Primary text-base font-thin uppercase md:hidden'>
         {title}
       </span>
-      <div className='capitalize font-Secondary text-lg'>{value}</div>
+      <div className='font-Secondary text-base font-light capitalize'>
+        {value}
+      </div>
     </td>
   );
 }

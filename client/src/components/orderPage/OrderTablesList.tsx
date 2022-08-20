@@ -1,4 +1,4 @@
-import {Table} from '../../app/models/order';
+import { Table } from '../../app/models/order';
 
 interface Props {
   tables: Table[];
@@ -16,20 +16,20 @@ export default function OrderTablesList({
   return (
     <>
       {tablesLoaded ? (
-        <div className=' flex flex-row items-center w-max max-w-none  gap-3'>
+        <div className=' flex w-max max-w-none flex-row items-center  gap-3'>
           {tables.map((table, index) =>
             table.id === 0 ? (
               <div key={table.id} className=' relative  w-full'>
                 <button
                   onClick={() => onSelect(0)}
                   type='button'
-                  className={`w-full h-10 py-0 snap-center  rounded-full flex items-center justify-center   hover:bg-gray-600 transition-all hover:text-white px-3  ${
+                  className={`flex h-10 w-full snap-center  items-center justify-center rounded-full py-0   px-3 transition-all hover:bg-gray-600 hover:text-white  ${
                     selectedTable === 0
                       ? 'bg-gray-800 text-white'
                       : 'bg-gray-300'
-                  } ${table.active && ' border-red-500 border-4'}  `}
+                  } ${table.active && ' border-4 border-red-500'}  `}
                 >
-                  <span className=' font-Primary uppercase font-thin text-base'>
+                  <span className=' font-Primary text-base font-thin uppercase'>
                     Comptoir
                   </span>
                 </button>
@@ -69,9 +69,9 @@ function TableItem({ table, isSelected, onSelect }: TableItemProps) {
         type='button'
         className={` snap-start  ${
           isSelected ? 'bg-gray-900 text-white' : 'bg-gray-300'
-        } ${buttonStyle} ${table.active && ' border-gray-900 border-4'}  `}
+        } ${buttonStyle} ${table.active && ' border-4 border-gray-900'}  `}
       >
-        <span className=' font-Primary uppercase font-thin text-lg'>
+        <span className=' font-Primary text-lg font-thin uppercase'>
           {table.id}
         </span>
       </button>

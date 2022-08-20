@@ -8,3 +8,4 @@ export const AgentValidationSchema = yup.object({
     address1: yup.string().max(255).optional().nullable(),
     address2: yup.string().optional().optional().nullable(),
 });
+

@@ -6,6 +6,6 @@ namespace API.Models
         public string? PublicId { get; set; }
         public string PictureUrl { get; set; }
         public bool Validated { get; set; } = false;
-        public List<Product> Products { get; set; } = new();
+        //public List<Product> Products { get; set; } = new();
     }
 }

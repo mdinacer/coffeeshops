@@ -1,15 +1,19 @@
-import {lazy, Suspense, useCallback, useEffect, useState} from 'react';
-import {Route, Routes} from 'react-router-dom';
-import {fr} from 'date-fns/locale';
-import {useAppDispatch, useAppSelector} from '../store/configureStore';
-import {fetchShopAsync} from '../slices/shopSlice';
-import {fetchCurrentUser} from '../slices/accountSlice';
+import { lazy, Suspense, useCallback, useEffect, useState } from 'react';
+import { Route, Routes } from 'react-router-dom';
+import { fr } from 'date-fns/locale';
+import { useAppDispatch, useAppSelector } from '../store/configureStore';
+import { fetchShopAsync } from '../slices/shopSlice';
+import { fetchCurrentUser } from '../slices/accountSlice';
 import NotFound from '../../errors/NotFound';
 import HomePage from '../../pages/home/HomePage';
 import ServerError from '../../errors/ServerError';
 import PrivateRoute from './PrivateRoute';
 import LoadingAnimation from './LoadingAnimation';
 import AppPage from '../../pages/AppPage';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
+import useNotifications from '../hooks/useNotifications';
+import { HubConnectionState } from '@microsoft/signalr';
 
 export const locale = fr;
 
@@ -18,6 +22,8 @@ function App() {
   const { shopId } = useAppSelector((state) => state.account);
   const [loadingUser, setLoadingUser] = useState(true);
   const [loadingShop, setLoadingShop] = useState(false);
+  const { connection, status, startConnection, stopConnection, sendMessage } =
+    useNotifications();
 
   const initApp = useCallback(async () => {
     try {
@@ -28,7 +34,7 @@ function App() {
     } finally {
       setLoadingUser(false);
     }
-  }, [dispatch]);
+  }, []);
 
   const loadShop = useCallback(async () => {
     try {
@@ -39,17 +45,29 @@ function App() {
     } finally {
       setLoadingShop(false);
     }
-  }, [dispatch]);
+  }, []);
 
   useEffect(() => {
     initApp().then(() => {});
-  }, [initApp]);
+  }, []);
 
   useEffect(() => {
     if (shopId) {
       loadShop().then(() => {});
     }
-  }, [loadShop, shopId]);
+  }, [shopId]);
+
+  useEffect(() => {
+    if (connection && connection.state === HubConnectionState.Disconnected) {
+      startConnection(connection);
+    }
+
+    // return () => {
+    //   if (connection && connection.state === HubConnectionState.Connected) {
+    //     stopConnection(connection);
+    //   }
+    // };
+  }, [connection]);
 
   // useEffect(() => {
   //   if (shop) {
@@ -61,10 +79,10 @@ function App() {
 
   if (loadingUser || loadingShop)
     return (
-      <div className=' select-none bg-gray-900 text-white border-indigo-500 fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center z-50'>
+      <div className=' fixed top-0 left-0 right-0 bottom-0 z-50 flex select-none items-center justify-center border-sky-500 bg-gray-900 text-white'>
         <div className='flex flex-col items-center justify-center'>
           <LoadingAnimation />
-          <p className=' font-Primary text-3xl lg:text-5xl font-thin uppercase mt-5'>
+          <p className=' mt-5 font-Primary text-3xl font-thin uppercase lg:text-5xl'>
             Chargement en cours...
           </p>
         </div>
@@ -72,6 +90,7 @@ function App() {
     );
   return (
     <AppPage>
+      <ToastContainer position='bottom-right' hideProgressBar theme='colored' />
       <Routes>
         <Route path='/'>
           <Route index element={<HomePage />} />
@@ -152,22 +171,46 @@ function App() {
               />
             </Route>
 
-            <Route
-              path='agents'
-              element={
-                <Suspense>
-                  <PrivateRoute>
-                    <AgentsManager />
-                  </PrivateRoute>
-                </Suspense>
-              }
-            />
+            <Route path='agents'>
+              <Route
+                index
+                element={
+                  <Suspense>
+                    <PrivateRoute>
+                      <AgentsManager />
+                    </PrivateRoute>
+                  </Suspense>
+                }
+              />
+
+              <Route
+                path=':id'
+                element={
+                  <Suspense>
+                    <PrivateRoute>
+                      <AgentDetails />
+                    </PrivateRoute>
+                  </Suspense>
+                }
+              />
+            </Route>
             <Route
               path='transactions'
               element={
                 <Suspense>
                   <PrivateRoute>
                     <TransactionsManager />
+                  </PrivateRoute>
+                </Suspense>
+              }
+            />
+
+            <Route
+              path='history'
+              element={
+                <Suspense>
+                  <PrivateRoute>
+                    <HistoryManager />
                   </PrivateRoute>
                 </Suspense>
               }
@@ -208,6 +251,7 @@ function App() {
             }
           />
         </Route>
+        <Route path='not-found' element={<NotFound />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
     </AppPage>
@@ -231,11 +275,14 @@ const ShopManager = lazy(() => import('../../pages/manager/ShopManagerPage'));
 const ProductsManager = lazy(
   () => import('../../pages/manager/ProductsManagerPage')
 );
-const AgentsManager = lazy(
-  () => import('../../pages/manager/AgentsManagerPage')
-);
+const AgentsManager = lazy(() => import('../../pages/agent/AgentsManagerPage'));
+const AgentDetails = lazy(() => import('../../pages/agent/AgentDetailsPage'));
 const TransactionsManager = lazy(
   () => import('../../pages/manager/TransactionsManagerPage')
+);
+
+const HistoryManager = lazy(
+  () => import('../../pages/manager/HistoryManagerPage')
 );
 
 const ProductDetails = lazy(

@@ -1,9 +1,9 @@
-import {PencilAltIcon, PlusIcon, TrashIcon} from '@heroicons/react/solid';
-import {useState} from 'react';
-import {ShopAgent} from '../../app/models/shopAgent';
-import {ShopAgentType} from '../../app/models/shopAgentType';
-import {agentsSelectors, updateShopAgent} from '../../app/slices/agentsSlice';
-import {useAppDispatch, useAppSelector} from '../../app/store/configureStore';
+import { PencilAltIcon, PlusIcon, TrashIcon } from '@heroicons/react/solid';
+import { useState } from 'react';
+import { ShopAgent } from '../../app/models/shopAgent';
+import { ShopAgentType } from '../../app/models/shopAgentType';
+import { agentsSelectors, updateShopAgent } from '../../app/slices/agentsSlice';
+import { useAppDispatch, useAppSelector } from '../../app/store/configureStore';
 import AppButton from '../common/AppButton';
 import AgentForm from '../forms/AgentForm';
 import PaymentDialog from '../payment/PaymentDialog';
@@ -33,7 +33,7 @@ export default function AgentDetails({ agentId, onClose }: Props) {
 
   if (addPayment)
     return (
-      <div className='relative select-none max-w-xl '>
+      <div className='relative max-w-xl select-none '>
         <PaymentDialog
           shopAgentId={agent.id}
           type={agent.type}
@@ -70,25 +70,25 @@ export default function AgentDetails({ agentId, onClose }: Props) {
       />
     );
   return (
-    <div className='relative select-none flex flex-col items-stretch  min-w-[50vw]'>
+    <div className='relative flex min-w-[40vw] select-none flex-col  items-stretch'>
       <div className=' mb-5'>
-        <small className=' font-secondary uppercase text-xs '>
+        <small className=' font-secondary text-xs uppercase '>
           {agent.type === ShopAgentType.client ? 'Client' : 'Fournisseur'}
         </small>
-        <p className=' font-Primary text-4xl font-thin mb-2 capitalize'>
+        <p className=' mb-2 font-Primary text-4xl font-thin capitalize'>
           {agent.name}
         </p>
         <div className=''>
-          <p className=' font-secondary uppercase text-sm '>{agent.address1}</p>
-          <p className=' font-secondary uppercase text-sm '>{agent.address2}</p>
-          <p className=' font-secondary uppercase text-sm '>{agent.email}</p>
-          <p className=' font-secondary uppercase text-sm '>
+          <p className=' font-secondary text-sm uppercase '>{agent.address1}</p>
+          <p className=' font-secondary text-sm uppercase '>{agent.address2}</p>
+          <p className=' font-secondary text-sm uppercase '>{agent.email}</p>
+          <p className=' font-secondary text-sm uppercase '>
             {agent.phone} {agent.mobile}
           </p>
         </div>
       </div>
 
-      <div className=' flex flex-row items-center justify-end gap-x-4 my-4'>
+      <div className=' my-4 flex flex-row items-center justify-end gap-x-4'>
         <AppButton
           onClick={() => setIsEdit(true)}
           type='button'
@@ -105,14 +105,14 @@ export default function AgentDetails({ agentId, onClose }: Props) {
         />
       </div>
 
-      <div className='grid grid-cols-3 py-5 border-y border-y-gray-300 '>
+      <div className='grid grid-cols-3 border-y border-y-gray-300 py-5 '>
         <div className={`text-center `}>
           <small className=' font-Primary text-sm font-thin uppercase'>
             Total
           </small>
           <p className=' font-Primary text-2xl font-light'>
             {agent.total.toFixed(2)}
-            <span className='font-secondary uppercase text-xs'> DA</span>
+            <span className='font-secondary text-xs uppercase'> DA</span>
           </p>
         </div>
         <div className=' text-center'>
@@ -121,7 +121,7 @@ export default function AgentDetails({ agentId, onClose }: Props) {
           </small>
           <p className=' font-Primary text-2xl font-light'>
             {agent.paid.toFixed(2)}
-            <span className='font-secondary uppercase text-xs'> DA</span>
+            <span className='font-secondary text-xs uppercase'> DA</span>
           </p>
         </div>
         <div className={`text-center `}>
@@ -131,12 +131,12 @@ export default function AgentDetails({ agentId, onClose }: Props) {
           <p
             className={`font-Primary text-2xl ${
               agent.debt > 0
-                ? ' text-red-600 font-bold'
-                : ' text-inherit font-light'
+                ? ' font-bold text-red-600'
+                : ' font-light text-inherit'
             }`}
           >
             <span>{agent.debt.toFixed(2)}</span>
-            <span className='font-secondary uppercase text-xs'> DA</span>
+            <span className='font-secondary text-xs uppercase'> DA</span>
           </p>
         </div>
       </div>
@@ -145,7 +145,7 @@ export default function AgentDetails({ agentId, onClose }: Props) {
         <AgentPaymentsList agentId={agent.id} />
       </div>
 
-      <div className=' flex flex-row items-center justify-end mt-10'>
+      <div className=' mt-10 flex flex-row items-center justify-end'>
         {agent.debt > 0 && (
           <AppButton
             onClick={() => setAddPayment(true)}

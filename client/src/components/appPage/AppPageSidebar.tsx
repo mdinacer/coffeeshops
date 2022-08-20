@@ -7,11 +7,11 @@ import {
   LogoutIcon,
   ViewListIcon,
 } from '@heroicons/react/outline';
-import {Link, useLocation} from 'react-router-dom';
-import {Shop} from '../../app/models/shop';
-import {User} from '../../app/models/user';
-import {signOut} from '../../app/slices/accountSlice';
-import {useAppDispatch} from '../../app/store/configureStore';
+import { Link, NavLink, useLocation } from 'react-router-dom';
+import { Shop } from '../../app/models/shop';
+import { User } from '../../app/models/user';
+import { signOut } from '../../app/slices/accountSlice';
+import { useAppDispatch } from '../../app/store/configureStore';
 
 interface Props {
   user: User | null;
@@ -36,32 +36,34 @@ export default function AppPageSidebar({ user, roles, shop, onClose }: Props) {
     return roles.some((role) => role === ADMIN_ROLE || role === MODERATOR_ROLE);
   };
 
-  const isActive = (path: string) => {
-    return pathname.includes(path);
+  const linkStyle = (isActive: boolean) => {
+    return `inline-flex items-center w-full hover:bg-sky-400 hover:opacity-100 hover:text-white py-1 px-4 rounded ${
+      isActive ? 'font-semibold opacity-100' : 'font-normal opacity-60'
+    }`;
   };
 
   function logOut() {
     dispatch(signOut());
   }
   return (
-    <div className='  w-full h-full flex flex-col p-5'>
-      <div className=' flex flex-row justify-between items-center flex-initial border-b border-b-gray-200 pb-5'>
+    <div className='  flex h-full w-full flex-col p-5'>
+      <div className=' flex flex-initial flex-row items-center justify-between border-b border-b-gray-200 pb-5'>
         <Link
           to={'/'}
-          className=' flex md:justify-center w-full items-center md:gap-x-5 gap-x-2'
+          className=' flex w-full items-center gap-x-2 md:justify-center md:gap-x-5'
         >
-          <div className=' h-14 w-14 md:h-28 md:w-28 overflow-hidden '>
+          <div className=' h-14 w-14 overflow-hidden md:h-28 md:w-28 '>
             <img
               src='/assets/logo.png'
               alt='Logo'
-              className=' object-cover h-full w-full'
+              className=' h-full w-full object-cover'
             />
           </div>
           <div className='w-'>
-            <small className='uppercase font-Primary font-thin text-base'>
+            <small className='font-Primary text-base font-thin uppercase'>
               Cafétéria
             </small>
-            <p className=' font-Bebas text-3xl md:text-3xl lg:text-4xl font-  first-letter:text-red-500'>
+            <p className=' font-Bebas font- text-3xl first-letter:text-red-500 md:text-3xl  lg:text-4xl'>
               {shop ? shop.name : 'CoffeeShops'}
             </p>
           </div>
@@ -74,43 +76,35 @@ export default function AppPageSidebar({ user, roles, shop, onClose }: Props) {
         </div>
       </div>
 
-      <div className='flex-auto flex flex-col  gap-y-4 mt-20 font-Secondary'>
+      <div className='mt-20 flex flex-auto  flex-col gap-y-4 font-Secondary'>
         <div className='flex flex-col  gap-y-4'>
           {pages.map(({ title, path, Icon }, index) => (
-            <Link
+            <NavLink
               onClick={onClose}
               key={index}
               to={path}
               state={{ from: pathname }}
-              className={` ${linkStyle}  ${
-                isActive(path)
-                  ? 'opacity-100 font-semibold'
-                  : 'opacity-60 font-normal'
-              }`}
+              className={({ isActive }) => linkStyle(isActive)}
             >
-              <Icon className='h-6 w-6 mr-5' />
+              <Icon className='mr-5 h-6 w-6' />
               <span className=' font-Secondary'>{title}</span>
-            </Link>
+            </NavLink>
           ))}
         </div>
 
         {user && shop && (
           <div className='flex flex-col  gap-y-4'>
             {memberPages.map(({ title, path, Icon }, index) => (
-              <Link
+              <NavLink
                 onClick={onClose}
                 key={index}
                 to={path}
                 state={{ from: pathname }}
-                className={` ${linkStyle}  ${
-                  isActive(path)
-                    ? 'opacity-100 font-semibold'
-                    : 'opacity-60 font-normal'
-                }`}
+                className={({ isActive }) => linkStyle(isActive)}
               >
-                <Icon className='h-6 w-6 mr-5' />
+                <Icon className='mr-5 h-6 w-6' />
                 <span className=' font-Secondary'>{title}</span>
-              </Link>
+              </NavLink>
             ))}
           </div>
         )}
@@ -119,25 +113,21 @@ export default function AppPageSidebar({ user, roles, shop, onClose }: Props) {
           <div className='flex flex-col  gap-y-4 py-1 px-4'>
             {moderatorPages.map(({ title, Icon, items }, index) => (
               <div className='w-full' key={index}>
-                <div className='inline-flex items-center w-full'>
-                  <Icon className='h-6 w-6 mr-5' />
+                <div className='inline-flex w-full items-center'>
+                  <Icon className='mr-5 h-6 w-6' />
                   <span className=' font-Secondary'>{title}</span>
                 </div>
                 <div className='ml-6'>
                   {items.map(({ title, path }, index) => (
-                    <Link
+                    <NavLink
                       onClick={onClose}
                       state={{ from: pathname }}
                       key={index}
                       to={path}
-                      className={` ${linkStyle}  ${
-                        isActive(path)
-                          ? 'opacity-100 font-semibold'
-                          : 'opacity-60 font-normal'
-                      }`}
+                      className={({ isActive }) => linkStyle(isActive)}
                     >
                       <span className=' font-Secondary'>{title}</span>
-                    </Link>
+                    </NavLink>
                   ))}
                 </div>
               </div>
@@ -148,33 +138,29 @@ export default function AppPageSidebar({ user, roles, shop, onClose }: Props) {
         {isAdmin() && (
           <div className='flex flex-col  gap-y-4'>
             {adminPage.map(({ title, path, Icon }, index) => (
-              <Link
+              <NavLink
                 onClick={onClose}
                 state={{ from: pathname }}
                 key={index}
                 to={path}
-                className={` ${linkStyle}  ${
-                  isActive(path)
-                    ? 'opacity-100 font-semibold'
-                    : 'opacity-60 font-normal'
-                }`}
+                className={({ isActive }) => linkStyle(isActive)}
               >
-                <Icon className='h-6 w-6 mr-5' />
+                <Icon className='mr-5 h-6 w-6' />
                 <span className=' font-Secondary'>{title}</span>
-              </Link>
+              </NavLink>
             ))}
           </div>
         )}
       </div>
 
-      <div className='flex-initial flex items-center justify-center'>
+      <div className='flex flex-initial items-center justify-center'>
         {user && (
           <button
             type='button'
             onClick={logOut}
             className=' inline-flex items-center'
           >
-            <LogoutIcon className='h-6 w-6 mr-2 text-red-600' />
+            <LogoutIcon className='mr-2 h-6 w-6 text-red-600' />
             <span className=' font-Secondary text-sm uppercase'>
               {LOGOUT_TEXT}
             </span>
@@ -184,9 +170,6 @@ export default function AppPageSidebar({ user, roles, shop, onClose }: Props) {
     </div>
   );
 }
-
-const linkStyle =
-  'inline-flex items-center w-full hover:bg-indigo-400 hover:opacity-100 hover:text-white py-1 px-4 rounded ';
 
 const reportItems = [
   { title: 'Opérations', path: 'reports/operations' },
@@ -198,6 +181,7 @@ const managementItems = [
   { title: 'Articles', path: 'management/products' },
   { title: 'Agents', path: 'management/agents' },
   { title: 'Transactions', path: 'management/transactions' },
+  { title: 'Historique', path: 'management/history' },
 ];
 
 const pages = [{ title: 'Accueil', path: '/', Icon: HomeIcon }];

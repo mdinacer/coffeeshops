@@ -3,6 +3,7 @@ using API.DTO;
 using API.Extensions;
 using API.Helpers;
 using API.Models;
+using API.Services;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Authorization;
@@ -16,14 +17,15 @@ namespace API.Controllers
     {
         private readonly DataContext _context;
         private readonly IMapper _mapper;
-        public AgentsController(DataContext context, IMapper mapper)
+        private readonly HistoryCacheService _history;
+        public AgentsController(DataContext context, IMapper mapper, HistoryCacheService history)
         {
+            _history = history;
             _mapper = mapper;
             _context = context;
+
         }
-
-
-        [HttpGet()]
+        [HttpGet]
         public async Task<ActionResult<PagedList<AgentFullDto>>> GetAgents([FromQuery] AgentsParams agentsParams)
         {
             var query = _context.Agents
@@ -36,7 +38,7 @@ namespace API.Controllers
             .AsQueryable();
 
             var agents =
-               await PagedList<AgentFullDto>.ToPagedList(query, agentsParams.PageNumber, agentsParams.PageSize);
+               await PagedList<AgentFullDto>.ToPagedListAsync(query, agentsParams.PageNumber, agentsParams.PageSize);
 
             //Response.AddPaginationHeader(agents.MetaData);
 
@@ -80,14 +82,21 @@ namespace API.Controllers
                 Paid = 0,
             };
 
-            _mapper.Map<CreateAgentDto, Agent>(createAgent, agent);
+            _mapper.Map(createAgent, agent);
 
             _context.Agents.Add(agent);
             var success = await _context.SaveChangesAsync() > 0;
 
-            return success
-            ? Ok(_mapper.Map<AgentDto>(agent))
-            : BadRequest(new ProblemDetails { Title = "Error creating agent" });
+
+            if (success)
+            {
+                CreateAgentHistoryElement(agent);
+                return Ok(_mapper.Map<AgentDto>(agent));
+            }
+            else
+            {
+                return BadRequest(new ProblemDetails { Title = "Error creating agent" });
+            }
         }
 
         [HttpPut("{id}")]
@@ -97,14 +106,20 @@ namespace API.Controllers
 
             if (agent == null) return NotFound("Agent not found");
 
-            _mapper.Map<EditAgentDto, Agent>(editAgent, agent);
+            _mapper.Map(editAgent, agent);
 
 
             var success = await _context.SaveChangesAsync() > 0;
 
-            return success
-            ? Ok(_mapper.Map<AgentDto>(agent))
-            : BadRequest(new ProblemDetails { Title = "Error updating agent" });
+            if (success)
+            {
+                CreateAgentHistoryElement(agent);
+                return Ok(_mapper.Map<AgentDto>(agent));
+            }
+            else
+            {
+                return BadRequest(new ProblemDetails { Title = "Error updating agent" });
+            }
         }
 
         [Authorize(Policy = "IsShopModerator")]
@@ -118,11 +133,22 @@ namespace API.Controllers
             _context.Agents.Remove(agent);
             var success = await _context.SaveChangesAsync() > 0;
 
-            return success
-            ? Ok(true)
-            : BadRequest(new ProblemDetails { Title = "Error deleting agent" });
+            if (success)
+            {
+                CreateAgentHistoryElement(agent);
+                return Ok(true);
+            }
+            else
+            {
+                return BadRequest(new ProblemDetails { Title = "Error deleting agent" });
+            }
         }
 
+        private async void CreateAgentHistoryElement(Agent agent)
+        {
+            if (string.IsNullOrEmpty(ShopId)) return;
+            await CreateHistoryElement(_context, _history, ShopId, agent);
+        }
     }
 }
 

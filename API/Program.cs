@@ -1,6 +1,7 @@
 using API.Data;
 using API.Extensions;
 using API.Middleware;
+using API.Services;
 using Microsoft.Net.Http.Headers;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -60,6 +61,11 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.MapFallbackToController("Index", "Fallback");
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+    endpoints.MapHub<Hubs>("/hubs/notifications");
+    endpoints.MapFallbackToController("Index", "Fallback");
+});
 
 app.Run();

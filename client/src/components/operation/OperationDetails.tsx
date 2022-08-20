@@ -1,10 +1,12 @@
-import {XIcon} from '@heroicons/react/solid';
-import {format} from 'date-fns';
-import {useEffect} from 'react';
-import {locale} from '../../app/layout/App';
-import {OperationType} from '../../app/models/OperationType';
-import {fetchOperationAsync, operationSelectors,} from '../../app/slices/operationSlice';
-import {useAppDispatch, useAppSelector} from '../../app/store/configureStore';
+import { format } from 'date-fns';
+import { useEffect } from 'react';
+import { locale } from '../../app/layout/App';
+import { OperationType } from '../../app/models/OperationType';
+import {
+  fetchOperationAsync,
+  operationSelectors,
+} from '../../app/slices/operationSlice';
+import { useAppDispatch, useAppSelector } from '../../app/store/configureStore';
 import AppButton from '../common/AppButton';
 import ResponsiveTable from '../common/ResponsiveTable';
 import ResponsiveTableRow from '../common/ResponsiveTableRow';
@@ -36,108 +38,91 @@ export default function OperationDetails({ operationId, onClose }: Props) {
       : 'Client';
   };
 
+  if (!operation)
+    return (
+      <div className='flex h-20 w-full items-center justify-center'>
+        <p className='font-Primary text-3xl font-light'>Aucune operation</p>
+      </div>
+    );
+
   return (
-    <>
-      {!operation && (
-        <div className='w-full flex items-center justify-center h-20'>
-          <p className='font-Primary text-3xl font-light'>Aucune operation</p>
+    <div className='relative  flex flex-col gap-y-5'>
+      <div className=' flex-initial border-b border-b-gray-200 pb-2'>
+        <p className='font-Primary text-3xl font-light'>{getTitle()}</p>
+      </div>
+
+      <div className=' flex-initial'>
+        <DetailItem
+          title='Date'
+          value={format(new Date(), 'PPPP', { locale })}
+        />
+        {operation.agentName && (
+          <DetailItem title={getAgentType()} value={operation.agentName} />
+        )}
+
+        <div className='my-4 grid grid-cols-3 border-y border-y-gray-200 py-2'>
+          <StatsItem title='Total' value={`${operation.total.toFixed(2)} Da`} />
+          <StatsItem title='Payé' value={`${operation.paid.toFixed(2)} Da`} />
+          <StatsItem
+            title='Dette'
+            value={`${operation.remain.toFixed(2)} Da`}
+            valueStyle={operation.remain > 0 ? 'text-red-600' : 'text-inherit'}
+          />
         </div>
-      )}
-      {operation && (
-        <div className='relative  flex flex-col gap-y-5'>
-          <button
-            type='button'
-            title='Fermer'
-            onClick={onClose}
-            className='absolute top-2 right-2 bg-gray-400 text-white rounded-full p-1'
-          >
-            <XIcon className='h-5 w-5' />
-          </button>
-          <div className='mt-5'>
-            <p className='font-Primary text-5xl font-light'>{getTitle()}</p>
-          </div>
+      </div>
 
-          <div className=''>
-            <DetailItem
-              title='Date'
-              value={format(new Date(), 'PPPP', { locale })}
-            />
-            {operation.agentName && (
-              <DetailItem title={getAgentType()} value={operation.agentName} />
-            )}
+      {operation.elements.length > 0 && (
+        <div className='flex-auto'>
+          <p className=' mb-2 flex-initial font-Primary text-2xl font-thin uppercase'>
+            éléments
+          </p>
 
-            <div className='grid grid-cols-3 py-2 border-y border-y-gray-200 my-4'>
-              <StatsItem
-                title='Total'
-                value={`${operation.total.toFixed(2)} Da`}
-              />
-              <StatsItem
-                title='Payé'
-                value={`${operation.paid.toFixed(2)} Da`}
-              />
-              <StatsItem
-                title='Dette'
-                value={`${operation.remain.toFixed(2)} Da`}
-                valueStyle={
-                  operation.remain > 0 ? 'text-red-600' : 'text-inherit'
-                }
-              />
-            </div>
+          <div className='flex-auto'>
+            <ResponsiveTable
+              headers={['article', 'quantité', 'total']}
+              children={operation.elements.map((element, index) => (
+                <ResponsiveTableRow
+                  key={element.id}
+                  cells={[
+                    {
+                      title: 'article',
+                      value: element.productName,
+                    },
+                    {
+                      title: 'quantité',
+                      value: element.quantity,
+                      align: 'center',
+                    },
 
-            {operation.elements.length > 0 && (
-              <div>
-                <p className=' font-Primary text-2xl mb-2 font-thin uppercase'>
-                  éléments
-                </p>
-
-                <ResponsiveTable
-                  headers={['article', 'quantité', 'total']}
-                  children={operation.elements.map((element, index) => (
-                    <ResponsiveTableRow
-                      key={element.id}
-                      cells={[
-                        {
-                          title: 'article',
-                          value: element.productName,
-                        },
-                        {
-                          title: 'quantité',
-                          value: element.quantity,
-                          align: 'center',
-                        },
-
-                        {
-                          title: 'total',
-                          value: element.total.toFixed(2),
-                          align: 'right',
-                        },
-                      ]}
-                    />
-                  ))}
+                    {
+                      title: 'total',
+                      value: element.total.toFixed(2),
+                      align: 'right',
+                    },
+                  ]}
                 />
-              </div>
-            )}
+              ))}
+            />
           </div>
         </div>
       )}
-
-      <div className=' mt-10'>
+      <div className=' mt-5 flex-initial'>
         <AppButton
           onClick={() => onClose()}
           label='Fermer'
           genre='secondary'
-          className='w-full'
+          className=' w-full '
         />
       </div>
-    </>
+    </div>
   );
 }
 
 function DetailItem({ title, value }: { title: string; value: string }) {
   return (
-    <div className='grid grid-cols-4 items-end font-Secondary'>
-      <p className='uppercase  text-base font-semibold'>{title}</p>
-      <p className='capitalize text-lg col-span-3'>{value}</p>
+    <div className='flex flex-row items-end justify-between font-Secondary text-base'>
+      <p className='uppercase'>{title}</p>
+      <p className='capitalize '>{value}</p>
     </div>
   );
 }
@@ -158,15 +143,15 @@ function StatsItem({
   titleStyle,
 }: StatsItemProps) {
   return (
-    <div className={'flex flex-col justify-center  items-center ' + className}>
+    <div className={'flex flex-col items-center  justify-center ' + className}>
       <p
-        className={' font-Primary uppercase font-light text-base ' + titleStyle}
+        className={' font-Primary text-base font-light uppercase ' + titleStyle}
       >
         {title}
       </p>
       <p
         className={
-          'capitalize col-span-3 font-Primary text-2xl font-thin ' + valueStyle
+          'col-span-3 font-Primary text-2xl font-thin capitalize ' + valueStyle
         }
       >
         {value}

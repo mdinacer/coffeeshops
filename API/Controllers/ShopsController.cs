@@ -3,10 +3,10 @@ using API.DTO;
 using API.Extensions;
 using API.Helpers;
 using API.Models;
+using API.Services;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,29 +17,28 @@ namespace API.Controllers
     {
         private readonly DataContext _context;
         private readonly IMapper _mapper;
-        private readonly UserManager<User> _userManager;
-        public ShopsController(DataContext context, IMapper mapper, UserManager<User> userManager)
+        private readonly HistoryCacheService _history;
+
+        public ShopsController(DataContext context, IMapper mapper, HistoryCacheService history)
         {
-            _userManager = userManager;
+            _history = history;
             _mapper = mapper;
             _context = context;
-        }
 
+        }
 
         [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<ActionResult<PagedList<ShopDto>>> GetShops([FromQuery] ShopParams shopParams)
         {
             var query = _context.Shops
-            .Include(s => s.Owner)
-            .ThenInclude(o => o.Profile)
             .Search(shopParams.SearchTerm)
             .Sort(shopParams.OrderBy)
             .ProjectTo<ShopDto>(_mapper.ConfigurationProvider)
             .AsQueryable();
 
             var shops =
-                await PagedList<ShopDto>.ToPagedList(query, shopParams.PageNumber, shopParams.PageSize);
+                await PagedList<ShopDto>.ToPagedListAsync(query, shopParams.PageNumber, shopParams.PageSize);
 
             //Response.AddPaginationHeader(shops.MetaData);
 
@@ -50,18 +49,15 @@ namespace API.Controllers
         [HttpGet("me")]
         public async Task<ActionResult<ShopDetailsDto>> GetShop()
         {
-            var username = User.Identity?.Name;
-
-            var user = await _context.Users
-           .SingleOrDefaultAsync(u => u.UserName == username);
+            var user = await GetUser(_context);
 
             if (user == null) return NotFound("User Not found");
 
             var shop = await _context.Shops
             .Include(s => s.Operations)
             .Include(s => s.Products)
-            .Include(s => s.Owner)
-            .ThenInclude(o => o.Profile)
+            // .Include(s => s.Owner)
+            // .ThenInclude(o => o.Profile)
             .SingleOrDefaultAsync(s => s.Id == user.ShopId);
 
             if (shop == null) return BadRequest("User is not assigned to any shop");
@@ -73,21 +69,16 @@ namespace API.Controllers
         }
 
 
+
         [Authorize()]
         [HttpPost]
         public async Task<ActionResult<ShopDto>> CreateShop([FromForm] CreateShopDto createShop)
         {
-            var username = User.Identity?.Name;
-
-            var user = await _context.Users
-           .Include(u => u.Shop)
-           .SingleOrDefaultAsync(u => u.UserName == username);
-
+            var user = await GetUser(_context);
 
             if (user == null) return NotFound("User Not found and it's impossible");
             if (user.Shop != null) return BadRequest("User is already assigned to a shop");
 
-            var isOwner = await _userManager.IsInRoleAsync(user, "Owner");
             var shop = new Shop
             {
                 Id = Guid.NewGuid().ToString(),
@@ -104,6 +95,7 @@ namespace API.Controllers
             {
                 user.ShopId = shop.Id;
                 await _context.SaveChangesAsync();
+                CreateShopHistoryElement(shop);
                 return Ok(_mapper.Map<ShopDto>(shop));
             }
             else
@@ -130,9 +122,15 @@ namespace API.Controllers
 
             var success = await _context.SaveChangesAsync() > 0;
 
-            return success
-            ? Ok(_mapper.Map<ShopDto>(shop))
-            : BadRequest(new ProblemDetails { Title = "Error updating shop" });
+            if (success)
+            {
+                CreateShopHistoryElement(shop);
+                return Ok(_mapper.Map<ShopDto>(shop));
+            }
+            else
+            {
+                return BadRequest(new ProblemDetails { Title = "Error updating shop" });
+            }
         }
 
         [Authorize(Policy = "IsShopModerator")]
@@ -147,9 +145,15 @@ namespace API.Controllers
 
             var success = await _context.SaveChangesAsync() > 0;
 
-            return success
-            ? Ok(_mapper.Map<ShopDto>(shop))
-            : BadRequest(new ProblemDetails { Title = "Error updating shop" });
+            if (success)
+            {
+                CreateShopHistoryElement(shop);
+                return Ok(_mapper.Map<ShopDto>(shop));
+            }
+            else
+            {
+                return BadRequest(new ProblemDetails { Title = "Error updating shop" });
+            }
         }
 
 
@@ -165,10 +169,19 @@ namespace API.Controllers
 
             var success = await _context.SaveChangesAsync() > 0;
 
-
-            return success
-            ? Ok("Shop Delete")
-            : BadRequest(new ProblemDetails { Title = "Error updating shop" });
+            if (success)
+            {
+                CreateShopHistoryElement(shop);
+                return Ok("Shop Deleted");
+            }
+            else
+            {
+                return BadRequest(new ProblemDetails { Title = "Error deleting shop" });
+            }
+        }
+        private async void CreateShopHistoryElement(Shop shop)
+        {
+            await CreateHistoryElement(_context, _history, shop.Id, shop);
         }
 
     }

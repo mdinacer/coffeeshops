@@ -89,15 +89,10 @@ namespace API.Data.Migrations
                     b.Property<string>("PublicId")
                         .HasColumnType("text");
 
-                    b.Property<string>("ShopId")
-                        .HasColumnType("text");
-
                     b.Property<bool>("Validated")
                         .HasColumnType("boolean");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ShopId");
 
                     b.ToTable("Categories");
                 });
@@ -474,8 +469,7 @@ namespace API.Data.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex");
 
-                    b.HasIndex("ShopId")
-                        .IsUnique();
+                    b.HasIndex("ShopId");
 
                     b.ToTable("AspNetUsers", (string)null);
                 });
@@ -645,13 +639,6 @@ namespace API.Data.Migrations
                     b.Navigation("Shop");
                 });
 
-            modelBuilder.Entity("API.Models.Category", b =>
-                {
-                    b.HasOne("API.Models.Shop", null)
-                        .WithMany("Categories")
-                        .HasForeignKey("ShopId");
-                });
-
             modelBuilder.Entity("API.Models.MoneyTransaction", b =>
                 {
                     b.HasOne("API.Models.Agent", "Agent")
@@ -716,7 +703,7 @@ namespace API.Data.Migrations
             modelBuilder.Entity("API.Models.Product", b =>
                 {
                     b.HasOne("API.Models.Category", "Category")
-                        .WithMany("Products")
+                        .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -754,8 +741,8 @@ namespace API.Data.Migrations
             modelBuilder.Entity("API.Models.User", b =>
                 {
                     b.HasOne("API.Models.Shop", "Shop")
-                        .WithOne("Owner")
-                        .HasForeignKey("API.Models.User", "ShopId");
+                        .WithMany("Users")
+                        .HasForeignKey("ShopId");
 
                     b.Navigation("Shop");
                 });
@@ -827,11 +814,6 @@ namespace API.Data.Migrations
                     b.Navigation("Payments");
                 });
 
-            modelBuilder.Entity("API.Models.Category", b =>
-                {
-                    b.Navigation("Products");
-                });
-
             modelBuilder.Entity("API.Models.Operation", b =>
                 {
                     b.Navigation("Elements");
@@ -844,16 +826,13 @@ namespace API.Data.Migrations
 
             modelBuilder.Entity("API.Models.Shop", b =>
                 {
-                    b.Navigation("Categories");
-
                     b.Navigation("Operations");
-
-                    b.Navigation("Owner")
-                        .IsRequired();
 
                     b.Navigation("Products");
 
                     b.Navigation("Transactions");
+
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("API.Models.User", b =>

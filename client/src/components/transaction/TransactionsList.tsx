@@ -1,9 +1,9 @@
-import {ArrowDownIcon, ArrowUpIcon} from '@heroicons/react/solid';
-import {format} from 'date-fns';
-import {locale} from '../../app/layout/App';
-import {ShopTransaction} from '../../app/models/shopTransaction';
-import {TransactionDirection} from '../../app/models/TransactionDirection';
-import {TransactionType} from '../../app/models/TransactionType';
+import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/react/solid';
+import { format } from 'date-fns';
+import { locale } from '../../app/layout/App';
+import { ShopTransaction } from '../../app/models/shopTransaction';
+import { TransactionDirection } from '../../app/models/TransactionDirection';
+import { TransactionType } from '../../app/models/TransactionType';
 import ResponsiveTable from '../common/ResponsiveTable';
 import ResponsiveTableRow from '../common/ResponsiveTableRow';
 
@@ -34,11 +34,11 @@ export default function TransactionsList({
             {
               title: 'Name',
               value: (
-                <div className=' lg:w-full flex flex-row items-center text-base'>
+                <div className=' flex flex-row items-center text-base lg:w-full'>
                   {item.direction === TransactionDirection.outgoing ? (
-                    <ArrowDownIcon className='h-6 w-6 mr-2 dark:text-red-400 text-red-600' />
+                    <ArrowDownIcon className='mr-2 h-6 w-6 text-red-600 dark:text-red-400' />
                   ) : (
-                    <ArrowUpIcon className='h-6 w-6 mr-2 dark:text-green-400 text-green-600' />
+                    <ArrowUpIcon className='mr-2 h-6 w-6 text-green-600 dark:text-green-400' />
                   )}
                   <p className=' font-Secondary text-lg'>
                     {item.direction === TransactionDirection.incoming
@@ -66,9 +66,9 @@ export default function TransactionsList({
                 : '',
               align: 'right',
             },
-            { title: 'Description', value: item.description, align: 'right' },
+            { title: 'Description', value: item.description, align: 'left' },
             { title: 'Montant', value: item.amount.toFixed(2), align: 'right' },
-            { title: 'Utilisateur', value: item.user, align: 'right' },
+            { title: 'Utilisateur', value: item.user, align: 'center' },
           ]}
           onClick={() => onSelect(item)}
         />

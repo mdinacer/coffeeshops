@@ -1,17 +1,18 @@
-import {useCallback, useEffect} from 'react';
-import {EmptyOrder, Order, OrderElement} from '../models/order';
-import {useAppDispatch, useAppSelector} from '../store/configureStore';
+import { useCallback, useEffect } from 'react';
+import { EmptyOrder, Order, OrderElement } from '../models/order';
+import { useAppDispatch, useAppSelector } from '../store/configureStore';
 import agent from '../api/agent';
 import {
-    addOrder,
-    fetchCachedOrdersAsync,
-    initTables,
-    ordersSelectors,
-    removeOrder,
-    updateOrder,
-    updateTable,
+  addOrder,
+  fetchCachedOrdersAsync,
+  initTables,
+  ordersSelectors,
+  removeOrder,
+  updateOrder,
+  updateTable,
 } from '../slices/orderSlice';
-import {Product} from '../models/product';
+import { Product } from '../models/product';
+import useNotifications from './useNotifications';
 
 export default function useOrders() {
   const dispatch = useAppDispatch();
@@ -19,6 +20,7 @@ export default function useOrders() {
   const { ordersCacheLoaded, tables } = useAppSelector((state) => state.order);
   const orders = useAppSelector(ordersSelectors.selectAll);
   const tablesCount = shop?.tablesCount || 0;
+  const { sendMessage } = useNotifications();
 
   function updateTableState(tableId: number, values: any) {
     dispatch(updateTable({ tableId, values }));
@@ -133,9 +135,9 @@ export default function useOrders() {
               quantity: e.quantity,
             })),
           }));
-        if (list.length > 0) {
-          return await agent.Orders.update({ orders: list });
-        }
+        console.log(list);
+
+        return await agent.Orders.update({ orders: list });
       } catch (error) {
         console.log(error);
       }
@@ -144,7 +146,7 @@ export default function useOrders() {
   );
 
   function getTotal(order: Order | null) {
-    if (order) {
+    if (order && order.elements && order.elements.length > 0) {
       return order.elements.reduce(
         (sum, current) => sum + current.price * current.quantity,
         0
@@ -158,7 +160,6 @@ export default function useOrders() {
     const order = orders.find((o) => o.table === tableId);
     if (!order) return;
     dispatch(removeOrder(tableId));
-    dispatch(addOrder({ table: tableId, elements: [], total: 0 }));
     updateTableState(tableId, { active: false });
   }
 
@@ -172,8 +173,10 @@ export default function useOrders() {
   }, [dispatch, ordersCacheLoaded, tablesCount]);
 
   useEffect(() => {
-    cacheOrders(orders);
-  }, [orders, cacheOrders]);
+    if (ordersCacheLoaded) {
+      cacheOrders(orders);
+    }
+  }, [orders, ordersCacheLoaded]);
 
   return {
     tables,

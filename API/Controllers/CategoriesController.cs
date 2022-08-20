@@ -16,12 +16,13 @@ namespace API.Controllers
     {
         private readonly DataContext _context;
         private readonly IMapper _mapper;
+
         private readonly ImageService _imageService;
         public CategoriesController(DataContext context, IMapper mapper, ImageService imageService)
         {
-            _imageService = imageService;
             _mapper = mapper;
             _context = context;
+            _imageService = imageService;
         }
 
         [Cached(86400 * 365)]
