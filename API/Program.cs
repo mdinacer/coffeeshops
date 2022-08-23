@@ -20,6 +20,8 @@ builder.Services.AddAuthorizationConfig();
 builder.Services.AddResponseCompression(options => { options.EnableForHttps = true; });
 
 
+
+
 // Create and migrate database
 await DatabaseMigrator.Migrate(builder);
 
@@ -69,3 +71,4 @@ app.UseEndpoints(endpoints =>
 });
 
 app.Run();
+

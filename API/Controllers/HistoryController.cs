@@ -27,7 +27,7 @@ namespace API.Controllers
             .Sort(historyParams.OrderBy);
 
             var history =
-                 PagedList<HistoryElementDto>.ToPagedList(query, historyParams.PageNumber, historyParams.PageSize);
+                 PagedList<HistoryElementDto>.Create(query, historyParams.PageNumber, historyParams.PageSize);
 
             return Ok(history);
         }

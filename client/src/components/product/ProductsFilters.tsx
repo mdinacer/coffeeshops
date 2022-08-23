@@ -1,31 +1,33 @@
-import {ProductsManager} from '../../app/hooks/manager/useManageProducts';
+import { setPageSize, setProductParams } from '../../app/slices/productsSlice';
+import { useAppDispatch, useAppSelector } from '../../app/store/configureStore';
 import AppPageSize from '../common/AppPageSize';
 import AppSearch from '../common/AppSearch';
 import AppSort from '../common/AppSort';
 
-interface Props {
-  manager: ProductsManager;
-}
-
-export default function ProductsFilters({ manager }: Props) {
-  const { setParams, setPageSize } = manager;
-
+export default function ProductsFilters() {
+  const { productParams } = useAppSelector((state) => state.products);
+  const dispatch = useAppDispatch();
   function handleSort(value: string) {
-    setParams({ orderBy: value });
+    dispatch(setProductParams({ orderBy: value }));
   }
 
   const handleSearch = (value: string) => {
-    setParams({ searchTerm: value });
+    if (value !== productParams.searchTerm) {
+      dispatch(setProductParams({ searchTerm: value }));
+    }
   };
 
   const handlePageSizeChange = (count: number) => {
-    setPageSize(count);
+    dispatch(setPageSize(count));
   };
 
   return (
-    <div className=' flex flex-col lg:flex-row justify-start lg:justify-between items-end gap-5 w-full'>
-      <AppSearch onSearch={handleSearch} />
-      <div className='grid grid-cols-1  md:grid-cols-2 gap-5 lg:max-w-2xl items-end w-full'>
+    <div className=' flex w-full flex-col items-end justify-start gap-5 lg:flex-row lg:justify-between'>
+      <AppSearch
+        onSearch={handleSearch}
+        initialValue={productParams.searchTerm}
+      />
+      <div className='grid w-full  grid-cols-1 items-end gap-5 md:grid-cols-2 lg:max-w-2xl'>
         <AppSort items={orderFilters} onSort={handleSort} initialValue='name' />
         <AppPageSize onChange={handlePageSizeChange} />
       </div>

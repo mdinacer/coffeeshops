@@ -4,12 +4,13 @@ import {
   fetchCategoriesAsync,
   fetchProductsAsync,
   productSelectors,
-} from '../slices/shopSlice';
+} from '../slices/productsSlice';
 
 export default function useProducts() {
   const products = useAppSelector(productSelectors.selectAll);
-  const { shop, productsLoaded, categoriesLoaded, categories, metaData } =
-    useAppSelector((state) => state.shop);
+  const { shop } = useAppSelector((state) => state.shop);
+  const { productsLoaded, categoriesLoaded, categories, metaData } =
+    useAppSelector((state) => state.products);
   const dispatch = useAppDispatch();
 
   useEffect(() => {

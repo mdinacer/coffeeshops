@@ -14,6 +14,7 @@ import { ShopPayment } from "../models/shopPayment";
 import { ShopTransaction } from "../models/shopTransaction";
 import { ProductBatch } from "../models/ProductBatch";
 import { HistoryElement } from "../models/historyElement";
+import { PaginatedResponse } from "../models/pagination";
 
 const sleep = () => new Promise(resolve => setTimeout(resolve, 50));
 
@@ -44,11 +45,11 @@ axios.interceptors.response.use(async response => {
         await sleep();
     }
 
-    // const pagination = response.headers["pagination"];
-    // if (pagination) {
-    //     response.data = new PaginatedResponse(response.data, JSON.parse(pagination));
-    //     return response;
-    // }
+    const pagination = response.headers["pagination"];
+    if (pagination) {
+        response.data = new PaginatedResponse(response.data, JSON.parse(pagination));
+        return response;
+    }
 
     return response;
 }, (error: AxiosError<any>) => {
@@ -192,6 +193,8 @@ const Shops = {
     update: (values: any) => requests.putForm(`Shops`, createFormData(values)),
     delete: () => requests.delete(`Shops`),
     setOwner: (userId: string) => requests.put<Shop>(`Shops/setOwner`, { userId }),
+    listUsers: () => requests.get(`Shops/users`),
+    createUser: (values: any) => requests.post('Shops/users', values),
 }
 
 const Transactions = {

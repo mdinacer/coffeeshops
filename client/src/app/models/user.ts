@@ -1,6 +1,7 @@
-import {UserProfile} from "./userProfile";
+import { UserProfile } from "./userProfile";
 
 export interface User {
+    displayName: string,
     username: string,
     email: string,
     profile: UserProfile,

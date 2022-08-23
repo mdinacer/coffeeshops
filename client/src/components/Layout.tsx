@@ -1,31 +1,21 @@
 import { AnimatePresence } from 'framer-motion';
+import ModalDialog from './common/ModalDialog';
 
 interface Props {
   children: React.ReactNode;
   className?: string;
   dialogVisible?: boolean;
+  dialogTitle?: string;
   dialogContent?: React.ReactNode;
+  dialogOnClose?: () => void;
 }
 
-export default function Layout({
-  children,
-  className,
-  dialogVisible = false,
-  dialogContent,
-}: Props) {
+export default function Layout({ children, className }: Props) {
   return (
     <div
-      className={`relative mx-auto h-full  w-full select-none px-5 py-10 2xl:container ${className}`}
+      className={`relative mx-auto h-full w-full select-none px-5 py-10 2xl:container ${className}`}
     >
       {children}
-
-      <AnimatePresence exitBeforeEnter>
-        {dialogVisible && dialogContent && (
-          <div className='fixed top-0 left-0 right-0 bottom-0 z-10 flex flex-col items-stretch justify-center overflow-y-auto bg-black bg-opacity-60  md:items-center'>
-            {dialogContent}
-          </div>
-        )}
-      </AnimatePresence>
     </div>
   );
 }

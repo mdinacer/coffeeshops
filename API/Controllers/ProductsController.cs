@@ -40,7 +40,7 @@ namespace API.Controllers
         }
 
 
-        //[Cached(60 * 60)]
+        // [Cached(60 * 60)]
         [HttpGet()]
         public async Task<ActionResult<PagedList<ProductFullDto>>> GetProducts([FromQuery] ProductsParams productsParams)
         {
@@ -53,12 +53,14 @@ namespace API.Controllers
             .AsQueryable();
 
             var products =
-                await PagedList<ProductFullDto>.ToPagedListAsync(query, productsParams.PageNumber, productsParams.PageSize);
+                await PagedList<ProductFullDto>.CreateAsync(query, productsParams.PageNumber, productsParams.PageSize);
+
+            Response.AddPaginationHeader(products.MetaData);
 
             return Ok(products);
         }
 
-        [Cached(600)]
+        //[Cached(600)]
         [HttpGet("{id}")]
         public async Task<ActionResult<ProductFullDto>> GetProduct(string id)
         {

@@ -16,24 +16,21 @@ import { useAppDispatch } from '../../app/store/configureStore';
 interface Props {
   user: User | null;
   shop: Shop | null;
-  roles: Array<String>;
+  roles: Array<String> | null;
   onClose: () => void;
 }
 
 const ADMIN_ROLE = 'Admin';
-const MODERATOR_ROLE = 'Moderator';
+const OWNER_ROLE = 'Owner';
 const LOGOUT_TEXT = 'se déconnecter';
 
 export default function AppPageSidebar({ user, roles, shop, onClose }: Props) {
   const dispatch = useAppDispatch();
   const { pathname } = useLocation();
-
-  const isAdmin = () => {
-    return roles.includes(ADMIN_ROLE);
-  };
-
-  const isModerator = () => {
-    return roles.some((role) => role === ADMIN_ROLE || role === MODERATOR_ROLE);
+  const isOwner = () => {
+    return roles && Array.isArray(roles)
+      ? roles.includes(ADMIN_ROLE) || roles.includes(OWNER_ROLE)
+      : false;
   };
 
   const linkStyle = (isActive: boolean) => {
@@ -109,7 +106,7 @@ export default function AppPageSidebar({ user, roles, shop, onClose }: Props) {
           </div>
         )}
 
-        {isModerator() && (
+        {isOwner() && (
           <div className='flex flex-col  gap-y-4 py-1 px-4'>
             {moderatorPages.map(({ title, Icon, items }, index) => (
               <div className='w-full' key={index}>
@@ -135,7 +132,7 @@ export default function AppPageSidebar({ user, roles, shop, onClose }: Props) {
           </div>
         )}
 
-        {isAdmin() && (
+        {isOwner() && (
           <div className='flex flex-col  gap-y-4'>
             {adminPage.map(({ title, path, Icon }, index) => (
               <NavLink

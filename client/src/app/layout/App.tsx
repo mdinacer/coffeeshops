@@ -1,9 +1,6 @@
-import { lazy, Suspense, useCallback, useEffect, useState } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { fr } from 'date-fns/locale';
-import { useAppDispatch, useAppSelector } from '../store/configureStore';
-import { fetchShopAsync } from '../slices/shopSlice';
-import { fetchCurrentUser } from '../slices/accountSlice';
 import NotFound from '../../errors/NotFound';
 import HomePage from '../../pages/home/HomePage';
 import ServerError from '../../errors/ServerError';
@@ -14,70 +11,21 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import useNotifications from '../hooks/useNotifications';
 import { HubConnectionState } from '@microsoft/signalr';
+import useAppInitializer from '../hooks/useAppInitializer';
 
 export const locale = fr;
 
 function App() {
-  const dispatch = useAppDispatch();
-  const { shopId } = useAppSelector((state) => state.account);
-  const [loadingUser, setLoadingUser] = useState(true);
-  const [loadingShop, setLoadingShop] = useState(false);
-  const { connection, status, startConnection, stopConnection, sendMessage } =
-    useNotifications();
-
-  const initApp = useCallback(async () => {
-    try {
-      setLoadingUser(true);
-      await dispatch(fetchCurrentUser());
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoadingUser(false);
-    }
-  }, []);
-
-  const loadShop = useCallback(async () => {
-    try {
-      setLoadingShop(true);
-      await dispatch(fetchShopAsync());
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoadingShop(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    initApp().then(() => {});
-  }, []);
-
-  useEffect(() => {
-    if (shopId) {
-      loadShop().then(() => {});
-    }
-  }, [shopId]);
+  const { connection, startConnection } = useNotifications();
+  const { userLoaded, shopLoaded } = useAppInitializer();
 
   useEffect(() => {
     if (connection && connection.state === HubConnectionState.Disconnected) {
       startConnection(connection);
     }
-
-    // return () => {
-    //   if (connection && connection.state === HubConnectionState.Connected) {
-    //     stopConnection(connection);
-    //   }
-    // };
   }, [connection]);
 
-  // useEffect(() => {
-  //   if (shop) {
-  //     console.log('====================================');
-  //     console.log(tablesCount);
-  //     console.log('====================================');
-  //   }
-  // }, [shop, tablesCount]);
-
-  if (loadingUser || loadingShop)
+  if (!userLoaded && !shopLoaded)
     return (
       <div className=' fixed top-0 left-0 right-0 bottom-0 z-50 flex select-none items-center justify-center border-sky-500 bg-gray-900 text-white'>
         <div className='flex flex-col items-center justify-center'>
@@ -88,6 +36,14 @@ function App() {
         </div>
       </div>
     );
+
+  // if (false)
+  //   return (
+  //     <div>
+  //       <ShopWizard onClose={() => setIsFirstLaunch(false)} />
+  //     </div>
+  //   );
+
   return (
     <AppPage>
       <ToastContainer position='bottom-right' hideProgressBar theme='colored' />
@@ -138,6 +94,16 @@ function App() {
             />
           </Route>
           <Route path='management'>
+            <Route
+              index
+              element={
+                <Suspense>
+                  <PrivateRoute>
+                    <ManagerPage />
+                  </PrivateRoute>
+                </Suspense>
+              }
+            />
             <Route
               path='shop'
               element={
@@ -241,6 +207,15 @@ function App() {
                 </Suspense>
               }
             />
+
+            <Route
+              path='verifyEmail'
+              element={
+                <Suspense fallback={<div />}>
+                  <ConfirmEmail />
+                </Suspense>
+              }
+            />
           </Route>
           <Route
             path='/server-error'
@@ -262,6 +237,7 @@ export default App;
 
 const LoginPage = lazy(() => import('../../pages/account/LoginPage'));
 const RegisterPage = lazy(() => import('../../pages/account/RegisterPage'));
+const ConfirmEmail = lazy(() => import('../../pages/account/ConfirmEmail'));
 const ProfilePage = lazy(() => import('../../pages/account/ProfilePage'));
 const OrderPage = lazy(() => import('../../pages/order/OrderPage'));
 const ShopFormPage = lazy(() => import('../../pages/shop/ShopFormPage'));
@@ -284,6 +260,8 @@ const TransactionsManager = lazy(
 const HistoryManager = lazy(
   () => import('../../pages/manager/HistoryManagerPage')
 );
+
+const ManagerPage = lazy(() => import('../../pages/manager/ManagerPage'));
 
 const ProductDetails = lazy(
   () => import('../../pages/product/ProductDetailsPage')

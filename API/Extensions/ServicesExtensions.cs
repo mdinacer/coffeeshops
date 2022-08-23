@@ -17,7 +17,7 @@ namespace API.Extensions
             services.AddScoped<IResponseCacheService, ResponseCacheService>();
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSignalR();
-            // services.AddTransient<IMailService, MailService>();
+            services.AddScoped<EmailSender>();
             //services.AddScoped<PaymentService>();
 
             services.AddSignalR(e => { e.MaximumReceiveMessageSize = 102400000; });

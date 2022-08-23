@@ -7,8 +7,10 @@ using API.Services;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Slugify;
 
 namespace API.Controllers
 {
@@ -18,9 +20,11 @@ namespace API.Controllers
         private readonly DataContext _context;
         private readonly IMapper _mapper;
         private readonly HistoryCacheService _history;
+        private readonly UserManager<User> _userManager;
 
-        public ShopsController(DataContext context, IMapper mapper, HistoryCacheService history)
+        public ShopsController(DataContext context, IMapper mapper, HistoryCacheService history, UserManager<User> userManager)
         {
+            _userManager = userManager;
             _history = history;
             _mapper = mapper;
             _context = context;
@@ -38,9 +42,9 @@ namespace API.Controllers
             .AsQueryable();
 
             var shops =
-                await PagedList<ShopDto>.ToPagedListAsync(query, shopParams.PageNumber, shopParams.PageSize);
+                await PagedList<ShopDto>.CreateAsync(query, shopParams.PageNumber, shopParams.PageSize);
 
-            //Response.AddPaginationHeader(shops.MetaData);
+            Response.AddPaginationHeader(shops.MetaData);
 
             return shops;
         }
@@ -102,6 +106,90 @@ namespace API.Controllers
             {
                 return BadRequest(new ProblemDetails { Title = "Error creating shop" });
             }
+        }
+
+        [Authorize(Policy = "IsShopOwner")]
+        [HttpGet("Users")]
+        public async Task<ActionResult<List<ShopUserDto>>> GetUsers()
+        {
+            var currentUser = await GetUser(_context);
+
+            if (currentUser == null) return NotFound("User Not found");
+
+            var users = await _context.Users
+            .Where(u => u.ShopId == ShopId && u.Id != currentUser.Id)
+            .ToListAsync();
+
+            var shopUsers = users.Select(u =>
+            {
+                var roles = _userManager.GetRolesAsync(u).Result;
+                var userDto = new ShopUserDto
+                {
+                    DisplayName = u.DisplayName,
+                    Username = u.UserName,
+                    Email = u.Email,
+                    Role = roles.FirstOrDefault()!,
+                };
+                return userDto;
+            }).ToList();
+
+            return Ok(shopUsers);
+        }
+
+        [Authorize(Policy = "IsShopOwner")]
+        [HttpPost("users")]
+        public async Task<ActionResult<ShopUserDto>> AddShopUser(CreateShopUserDto createUser)
+        {
+            var shop = await _context.Shops.AsNoTracking().SingleOrDefaultAsync(s => s.Id == ShopId);
+            if (shop == null) return BadRequest(new ProblemDetails { Title = "Error fetching shop" });
+
+            var helper = new SlugHelper();
+            var slug = helper.GenerateSlug(shop.Name);
+            var email = $"{createUser.Username}@{slug}.com";
+
+            if (await _userManager.Users.AnyAsync(x => x.Email == email))
+            {
+                ModelState.AddModelError("email", "Email pris");
+                return ValidationProblem();
+            }
+
+            if (await _userManager.Users.AnyAsync(x => x.UserName == createUser.Username))
+            {
+                ModelState.AddModelError("username", "Le nom d'utilisateur est deja pris");
+                return ValidationProblem();
+            }
+
+            var user = new User
+            {
+                DisplayName = createUser.DisplayName,
+                UserName = createUser.Username,
+                Email = email,
+                EmailConfirmed = true,
+                ShopId = ShopId,
+            };
+
+            var result = await _userManager.CreateAsync(user, createUser.Password);
+
+            await _userManager.AddToRoleAsync(user, "Agent");
+            if (!result.Succeeded)
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(error.Code, error.Description);
+                }
+
+                return ValidationProblem();
+            }
+
+            return Ok(
+                new ShopUserDto
+                {
+                    DisplayName = user.DisplayName,
+                    Username = user.UserName,
+                    Email = user.Email,
+                    Role = "Agent",
+                }
+            );
         }
 
         [Authorize(Policy = "IsShopOwner")]

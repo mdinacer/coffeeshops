@@ -15,6 +15,7 @@ import AgentForm from '../../components/forms/AgentForm';
 import PaymentDialog from '../../components/payment/PaymentDialog';
 import { fetchAgentAsync } from '../../app/slices/agentsSlice';
 import NotFound from '../../errors/NotFound';
+import ModalDialog from '../../components/common/ModalDialog';
 
 export default function AgentDetailsPage() {
   const { id } = useParams<{ id: string }>();
@@ -45,85 +46,77 @@ export default function AgentDetailsPage() {
   }
 
   return (
-    <ListPageLayout
-      title={agent.name}
-      stats={getStats(agent)}
-      header={<Header agent={agent} />}
-      list={<AgentPaymentsList agentId={agent.id} />}
-      metaData={null}
-      onPageChange={(page) => {}}
-      actionButton={
-        <div className=' my-4 flex flex-row items-center justify-end gap-x-4'>
-          <AppButton
-            onClick={() => setIsEdit(true)}
-            type='button'
-            label='Modifier'
-            Icon={PencilAltIcon}
-            genre='warning'
-          />
-          <AppButton
-            onClick={() => setIsDelete(true)}
-            type='button'
-            label='Supprimer'
-            Icon={TrashIcon}
-            genre={'error'}
-          />
-          {agent.debt > 0 && (
+    <>
+      <ModalDialog title='' active={isDelete}>
+        <AgentDeleteDialog
+          shopAgent={agent}
+          onClose={() => {
+            setIsDelete(false);
+          }}
+        />
+      </ModalDialog>
+
+      <ModalDialog title='' active={isEdit}>
+        <AgentForm
+          shopAgent={agent}
+          type={agent.type}
+          onClose={(value) => {
+            if (value) {
+              handleUpdate(value);
+            }
+            setIsEdit(false);
+          }}
+        />
+      </ModalDialog>
+
+      <ModalDialog title='Ajouter un paiement' active={addPayment}>
+        <PaymentDialog
+          shopAgentId={agent.id}
+          type={agent.type}
+          onClose={(value) => {
+            if (value) {
+            }
+            setAddPayment(false);
+          }}
+        />
+      </ModalDialog>
+
+      <ListPageLayout
+        title={agent.name}
+        stats={getStats(agent)}
+        header={<Header agent={agent} />}
+        list={<AgentPaymentsList agentId={agent.id} />}
+        metaData={null}
+        onPageChange={(page) => {}}
+        actionButton={
+          <div className=' my-4 flex flex-row items-center justify-end gap-x-4'>
             <AppButton
-              onClick={() => setAddPayment(true)}
+              onClick={() => setIsEdit(true)}
               type='button'
-              label='Ajouter un paiement'
-              genre='primary'
-              Icon={PlusIcon}
+              label='Modifier'
+              Icon={PencilAltIcon}
+              genre='warning'
             />
-          )}
-        </div>
-      }
-      dialogVisible={isEdit || isDelete || addPayment}
-      dialogContent={
-        <>
-          {isDelete && (
-            <AppDialog className=' md:min-w-[30vw]'>
-              <AgentDeleteDialog
-                shopAgent={agent}
-                onClose={() => {
-                  setIsDelete(false);
-                }}
+            <AppButton
+              onClick={() => setIsDelete(true)}
+              type='button'
+              label='Supprimer'
+              Icon={TrashIcon}
+              genre={'error'}
+            />
+            {agent.debt > 0 && (
+              <AppButton
+                onClick={() => setAddPayment(true)}
+                type='button'
+                label='Ajouter un paiement'
+                genre='primary'
+                Icon={PlusIcon}
               />
-            </AppDialog>
-          )}
-
-          {isEdit && (
-            <AppDialog className='md:min-w-[30vw]'>
-              <AgentForm
-                shopAgent={agent}
-                type={agent.type}
-                onClose={(value) => {
-                  if (value) {
-                    handleUpdate(value);
-                  }
-                  setIsEdit(false);
-                }}
-              />
-            </AppDialog>
-          )}
-
-          {addPayment && (
-            <AppDialog className='md:min-w-[30vw]'>
-              <PaymentDialog
-                shopAgentId={agent.id}
-                type={agent.type}
-                onClose={(value) => {
-                  if (value) {
-                  }
-                  setAddPayment(false);
-                }}
-              />
-            </AppDialog>
-          )}
-        </>
-      }
-    />
+            )}
+          </div>
+        }
+      />
+    </>
   );
 }
 

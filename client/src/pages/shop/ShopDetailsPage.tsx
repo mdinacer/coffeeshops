@@ -7,7 +7,6 @@ import Layout from '../../components/Layout';
 import ShopProductsList from '../../components/product/ShopProductsList';
 import ShopDetailsHeader from '../../components/shop/ShopDetailsHeader';
 import ShopDetailsOwner from '../../components/shop/ShopDetailsOwner';
-import ShopUsersForm from '../../components/shop/ShopUsersForm';
 
 export default function ShopDetailsPage() {
   const { shop } = useAppSelector((state) => state.shop);
@@ -75,10 +74,6 @@ export default function ShopDetailsPage() {
             </div>
             <ShopProductsList onSelect={handleSelectProduct} />
           </div>
-        </div>
-
-        <div className=' h-72 flex-initial bg-blue-500'>
-          <ShopUsersForm />
         </div>
       </Layout>
 

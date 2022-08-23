@@ -6,7 +6,6 @@ import {
 } from '@heroicons/react/outline';
 import { BellIcon, MenuAlt1Icon, SearchIcon } from '@heroicons/react/solid';
 import { Link, useLocation } from 'react-router-dom';
-import useNotifications from '../../app/hooks/useNotifications';
 import { User } from '../../app/models/user';
 import { signOut } from '../../app/slices/accountSlice';
 import { useAppDispatch } from '../../app/store/configureStore';
@@ -28,7 +27,6 @@ export default function AppPageHeader({
   const dispatch = useAppDispatch();
   const { state }: any | null = useLocation();
   const from = state?.from || null;
-  const { connection } = useNotifications();
 
   return (
     <div
@@ -57,10 +55,6 @@ export default function AppPageHeader({
         )}
       </div>
 
-      <div>
-        <p>{JSON.stringify(connection?.state)}</p>
-      </div>
-
       <div className=' flex flex-row gap-x-5'>
         <div className='grid grid-cols-2'>
           <button type='button' className='p-2'>
@@ -77,9 +71,9 @@ export default function AppPageHeader({
               toPath='/account/profile'
               labelStyle=' capitalize hidden md:block'
               Icon={UserCircleIcon}
-              label={user.profile.fullName || user.username}
+              label={user.displayName || user.username}
               noHover
-              className=' hover:text-inherit  hover:underline hover:underline-offset-2 '
+              className=' items-center  gap-x-2 hover:text-inherit hover:underline hover:underline-offset-2 '
             />
             <AppButton
               Icon={LogoutIcon}

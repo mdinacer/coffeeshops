@@ -1,7 +1,7 @@
 import agent from '../../app/api/agent';
-import {Product} from '../../app/models/product';
-import {removeProduct} from '../../app/slices/shopSlice';
-import {useAppDispatch} from '../../app/store/configureStore';
+import { Product } from '../../app/models/product';
+import { removeProduct } from '../../app/slices/productsSlice';
+import { useAppDispatch } from '../../app/store/configureStore';
 import AppButton from '../common/AppButton';
 
 interface Props {
@@ -24,8 +24,8 @@ export default function ProductDeleteDialog({ product, onClose }: Props) {
     }
   }
   return (
-    <div className='max-w-lg w-full flex flex-col '>
-      <div className='mb-4 flex flex-row flex-initial'>
+    <div className='flex w-full max-w-lg flex-col '>
+      <div className='mb-4 flex flex-initial flex-row'>
         <div className='px-5'>
           <img
             src={product.pictureUrl}
@@ -45,7 +45,7 @@ export default function ProductDeleteDialog({ product, onClose }: Props) {
 
       <div className='py-5  font-Secondary'>
         <p className=' '>
-          <span className='text-red-600 font-semibold uppercase'>
+          <span className='font-semibold uppercase text-red-600'>
             Attention!
           </span>{' '}
           cette action est irreversible.
@@ -53,7 +53,7 @@ export default function ProductDeleteDialog({ product, onClose }: Props) {
         <p>Êtes vous sure de vouloir supprimer ce produit?</p>
       </div>
 
-      <div className=' w-full grid grid-cols-2 gap-4 flex-initial'>
+      <div className=' grid w-full flex-initial grid-cols-2 gap-4'>
         <AppButton
           label='Oui'
           type='button'

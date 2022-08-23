@@ -11,8 +11,6 @@ interface Props {
   filters?: React.ReactNode;
   metaData: MetaData | null;
   onPageChange: (page: number) => void;
-  dialogVisible?: boolean;
-  dialogContent?: React.ReactNode;
 }
 
 export default function ListPageLayout({
@@ -24,15 +22,9 @@ export default function ListPageLayout({
   filters,
   metaData,
   onPageChange,
-  dialogVisible,
-  dialogContent,
 }: Props) {
   return (
-    <Layout
-      dialogContent={dialogContent}
-      dialogVisible={dialogVisible}
-      className=' flex flex-col items-stretch gap-y-4 md:gap-y-5'
-    >
+    <Layout className=' flex flex-col items-stretch gap-y-4 md:gap-y-5'>
       {(title || actionButton) && (
         <div className='mb-5 flex w-full flex-col items-center justify-start gap-y-5 md:flex-row md:items-center md:justify-between '>
           {title && (

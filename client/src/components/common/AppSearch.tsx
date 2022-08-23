@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import TextField from '../fields/TextField';
 
 interface Props {
-  initialValue?: string;
+  initialValue?: string | null;
   onSearch: (value: string) => void;
 }
 

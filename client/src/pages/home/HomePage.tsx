@@ -1,24 +1,35 @@
+import { useState } from 'react';
 import { useAppSelector } from '../../app/store/configureStore';
 import AppLink from '../../components/common/AppLink';
+import ModalDialog from '../../components/common/ModalDialog';
 import Layout from '../../components/Layout';
 
 export default function HomePage() {
   const { user } = useAppSelector((state) => state.account);
   const random = Math.floor(Math.random() * 4);
+  const [visible, setVisible] = useState(false);
 
   return (
-    <Layout className='relative block min-h-screen w-screen snap-y snap-mandatory   overflow-x-hidden bg-black px-0 py-0 xl:max-w-none'>
-      <video
+    <Layout className=' w-scree relative block min-h-screen overflow-x-hidden bg-black px-0 py-0 xl:max-w-none'>
+      <ModalDialog
+        title='Test title'
+        onClose={() => setVisible(false)}
+        active={visible}
+      >
+        test
+      </ModalDialog>
+
+      {/* <video
         autoPlay
         loop
         playsInline
         muted
-        className='fixed top-0 left-0 hidden h-screen w-screen object-cover object-center md:block'
+        className='fixed top-0 left-0 hidden h-full w-full object-cover object-center md:block'
         src={`/assets/videos/hero${random + 1}.mp4`}
-      />
+      /> */}
 
-      <div className='fixed top-0 left-0 right-0 bottom-0 h-screen w-screen bg-gradient-to-br from-[#3B9AE1] via-[#876445] to-[#100720] bg-fixed opacity-60' />
-      <div className=' top-0 left-0 bottom-0 right-0 flex h-screen w-screen flex-auto snap-center items-center justify-center overflow-hidden'>
+      <div className='fixed top-0 left-0 right-0 bottom-0 h-full w-full bg-gradient-to-br from-[#3B9AE1] via-[#876445] to-[#100720] bg-fixed opacity-60' />
+      <div className=' top-0 left-0 bottom-0 right-0 flex h-screen w-full flex-auto snap-center items-center justify-center overflow-hidden'>
         <div className='  flex w-full max-w-xl  flex-col  items-center rounded-2xl  bg-black bg-opacity-10  p-12 text-white  backdrop-blur-lg '>
           <div className='mb-5 flex flex-col items-center justify-center text-9xl opacity-60'>
             <p className='font-Primary font-thin uppercase '>Coffee</p>
@@ -39,6 +50,7 @@ export default function HomePage() {
                 toPath={'/order'}
                 className={` ${buttonStyle}  hover:border-sky-400 hover:bg-sky-500 hover:shadow-sky-600`}
               />
+              <button onClick={() => setVisible((prev) => !prev)}>test</button>
             </div>
           ) : (
             <div className=' mt-10 grid grid-cols-2 gap-4 '>

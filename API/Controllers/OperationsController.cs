@@ -41,7 +41,9 @@ namespace API.Controllers
             .AsQueryable();
 
             var operations =
-               await PagedList<OperationDto>.ToPagedListAsync(query, operationParams.PageNumber, operationParams.PageSize);
+               await PagedList<OperationDto>.CreateAsync(query, operationParams.PageNumber, operationParams.PageSize);
+
+            Response.AddPaginationHeader(operations.MetaData);
 
             return operations;
         }

@@ -26,6 +26,7 @@ namespace API.Data
                 {
                     UserName = "admin",
                     Email = "admin@test.com",
+                    DisplayName = "Abdenasser Mohammedi",
                     Profile = new UserProfile
                     {
                         FirstName = "Abdenasser",
@@ -43,6 +44,7 @@ namespace API.Data
                 {
                     UserName = "moderator",
                     Email = "moderator@test.com",
+                    DisplayName = "Bob Bobbity",
                     Profile = new UserProfile
                     {
                         FirstName = "Bob",
@@ -60,6 +62,7 @@ namespace API.Data
                 {
                     UserName = "Agent",
                     Email = "agent@test.com",
+                    DisplayName = "Tom Tommity",
                     Profile = new UserProfile
                     {
                         FirstName = "Tom",

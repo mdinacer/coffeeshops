@@ -135,7 +135,6 @@ export default function useOrders() {
               quantity: e.quantity,
             })),
           }));
-        console.log(list);
 
         return await agent.Orders.update({ orders: list });
       } catch (error) {

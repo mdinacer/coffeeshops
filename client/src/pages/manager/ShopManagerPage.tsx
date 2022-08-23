@@ -1,8 +1,6 @@
 import { useAppSelector } from '../../app/store/configureStore';
 import Layout from '../../components/Layout';
 import ShopDetailsHeader from '../../components/shop/ShopDetailsHeader';
-import ShopDetailsOwner from '../../components/shop/ShopDetailsOwner';
-import ShopUsersForm from '../../components/shop/ShopUsersForm';
 
 export default function ShopManagerPage() {
   const { shop } = useAppSelector((state) => state.shop);
@@ -20,9 +18,6 @@ export default function ShopManagerPage() {
         <p className=' font-Primary text-2xl font-thin uppercase'>
           Propriétaire
         </p>
-        <div className='grid w-full lg:grid-cols-2 '>
-          <ShopUsersForm />
-        </div>
       </div>
     </Layout>
   );

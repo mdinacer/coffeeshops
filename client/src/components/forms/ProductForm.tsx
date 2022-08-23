@@ -13,7 +13,7 @@ import DropDown from '../input/DropDown';
 import NumberInput from '../input/NumberInput';
 import ImageDropZone from '../input/ImageDropZone';
 import agent from '../../app/api/agent';
-import { setProduct, updateProduct } from '../../app/slices/shopSlice';
+import { setProduct, updateProduct } from '../../app/slices/productsSlice';
 import { ViewGridAddIcon } from '@heroicons/react/solid';
 
 import TextArea from '../input/TextArea';

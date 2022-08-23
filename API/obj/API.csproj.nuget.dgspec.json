@@ -68,6 +68,10 @@
               "target": "Package",
               "version": "[9.28.1, )"
             },
+            "Slugify.Core": {
+              "target": "Package",
+              "version": "[3.0.0, )"
+            },
             "StackExchange.Redis": {
               "target": "Package",
               "version": "[2.6.48, )"

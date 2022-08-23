@@ -172,7 +172,7 @@ export default function PurchaseOperationForm({ operation, onClose }: Props) {
     <div className='flex max-w-lg flex-col items-stretch gap-y-5 '>
       <form
         onSubmit={handleSubmit(submitData)}
-        className='flex w-full flex-col gap-y-4 rounded-2xl bg-gray-200 px-5 py-5'
+        className='flex w-full flex-col gap-y-4 rounded-2xl bg-gray-200  py-5'
       >
         <div className=' w-full '>
           <DropDown
@@ -233,7 +233,7 @@ export default function PurchaseOperationForm({ operation, onClose }: Props) {
 
         <AppButton
           type='submit'
-          genre='secondary'
+          genre='info'
           disabled={!isValid || !isDirty || isSubmitting}
           label={'Ajouter'}
         />
@@ -243,42 +243,47 @@ export default function PurchaseOperationForm({ operation, onClose }: Props) {
           éléments
         </p>
 
-        <div className='h-[30vh] flex-auto  overflow-y-auto overflow-x-hidden'>
-          <ResponsiveTable
-            headers={['article', 'quantité', 'total']}
-            children={elements.map((element, index) => (
-              <ResponsiveTableRow
-                key={element.productId}
-                cells={[
-                  {
-                    title: 'article',
-                    value: element.productName,
-                  },
-                  {
-                    title: 'quantité',
-                    value: element.quantity,
-                    align: 'center',
-                  },
+        <div className='max-h-[30vh] flex-auto  overflow-y-auto overflow-x-hidden'>
+          {elements.length > 0 ? (
+            <ResponsiveTable
+              headers={['article', 'quantité', 'total']}
+              children={elements.map((element, index) => (
+                <ResponsiveTableRow
+                  key={element.productId}
+                  cells={[
+                    {
+                      title: 'article',
+                      value: element.productName,
+                    },
+                    {
+                      title: 'quantité',
+                      value: element.quantity,
+                      align: 'center',
+                    },
 
-                  {
-                    title: 'total',
-                    value: element.total.toFixed(2),
-                    align: 'right',
-                  },
-                ]}
-                onClick={() => handleRemoveElement(element.productId)}
-              />
-            ))}
-          />
+                    {
+                      title: 'total',
+                      value: element.total.toFixed(2),
+                      align: 'right',
+                    },
+                  ]}
+                  onClick={() => handleRemoveElement(element.productId)}
+                />
+              ))}
+            />
+          ) : (
+            <div></div>
+          )}
         </div>
       </div>
-      <div className=' grid w-full grid-cols-2 gap-x-5'>
+      <div className=' grid w-full grid-cols-2'>
+        <AppButton label='Fermer' onClick={() => onClose()} genre='secondary' />
         <AppButton
           disabled={elements.length === 0}
           label='Enregistrer'
           onClick={() => setValidateOperation(true)}
+          genre='success'
         />
-        <AppButton label='Fermer' onClick={() => onClose()} genre='secondary' />
       </div>
     </div>
   );

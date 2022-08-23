@@ -18,10 +18,10 @@ export default function ProductGalleryForm({ onExit }: Props) {
             .includes(query.toLowerCase().replace(/\s+/g, ''))
         );
   return (
-    <div className='relative flex max-h-screen  flex-1 flex-col gap-y-5 md:p-5 '>
+    <div className='relative flex max-h-full  flex-1 flex-col gap-y-5  '>
       <button
         type='button'
-        className='top-4 right-4  ml-auto md:absolute md:ml-0'
+        className='top-0 right-4  ml-auto md:absolute md:ml-0'
         onClick={() => onExit()}
       >
         <XIcon className='h-6 w-6' />

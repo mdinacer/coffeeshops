@@ -1,20 +1,23 @@
-import {yupResolver} from '@hookform/resolvers/yup/dist/yup';
-import {useEffect} from 'react';
-import {FieldValues, useForm} from 'react-hook-form';
-import {useNavigate} from 'react-router-dom';
+import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
+import { useEffect } from 'react';
+import { FieldValues, useForm } from 'react-hook-form';
 import agent from '../../app/api/agent';
-import {setShopId} from '../../app/slices/accountSlice';
-import {setShop} from '../../app/slices/shopSlice';
-import {useAppDispatch, useAppSelector} from '../../app/store/configureStore';
-import {CreateShopSchema} from '../../app/validation/shopValidationSchema';
+import { setShopId } from '../../app/slices/accountSlice';
+import { setShop } from '../../app/slices/shopSlice';
+import { useAppDispatch, useAppSelector } from '../../app/store/configureStore';
+import { CreateShopSchema } from '../../app/validation/shopValidationSchema';
+import AppButton from '../common/AppButton';
 import NumberInput from '../input/NumberInput';
 import TextInput from '../input/TextInput';
 
-export default function ShopForm() {
+interface Props {
+  onClose?: () => void;
+}
+
+export default function ShopForm({ onClose }: Props) {
   const { shop } = useAppSelector((state) => state.shop);
   const isEdit = !!shop;
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   const {
     control,
@@ -48,17 +51,20 @@ export default function ShopForm() {
 
       if (result && result.id) {
         dispatch(setShop(result));
-        navigate('/management/');
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      if (onClose) {
+        onClose();
+      }
     }
   }
 
   return (
     <form
       onSubmit={handleSubmit(submitData)}
-      className='flex flex-col gap-y-4 w-full'
+      className='flex w-full flex-col gap-y-4'
     >
       <TextInput
         control={control}
@@ -74,19 +80,21 @@ export default function ShopForm() {
         showButtons
       />
 
-      <div className='w-full grid grid-cols-2 gap-x-5 mt-5'>
-        <input type='button' value='Annuler' className={`${buttonStyle}`} />
-        <input
-          disabled={!isValid || !isDirty || isSubmitting}
+      <div className='mt-5 grid w-full grid-cols-2 gap-x-5'>
+        <AppButton
+          type='button'
+          label='Annuler'
+          genre='secondary'
+          onClick={() => !!onClose && onClose()}
+        />
+        <AppButton
+          disabled={!isValid || !isDirty}
+          loading={isSubmitting}
           type='submit'
-          value='Enregistrer'
-          className={`${buttonStyle} ${
-            isValid ? 'bg-gray-800 text-white' : ' bg-gray-400 text-gray-300'
-          }`}
+          label='Enregistrer'
+          genre='info'
         />
       </div>
     </form>
   );
 }
-const buttonStyle =
-  'border border-gray-400 font-Primary uppercase font-thin py-1';

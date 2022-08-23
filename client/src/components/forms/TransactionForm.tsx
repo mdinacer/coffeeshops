@@ -2,7 +2,6 @@ import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 import { FieldValues, useForm } from 'react-hook-form';
 import agent from '../../app/api/agent';
 import { ShopTransaction } from '../../app/models/shopTransaction';
-import { TransactionDirection } from '../../app/models/TransactionDirection';
 import { TransactionValidationSchema } from '../../app/validation/transactionValidationSchema';
 import AppButton from '../common/AppButton';
 import AppButtonSelect from '../common/AppButtonSelect';
@@ -48,10 +47,9 @@ export default function TransactionForm({ onClose }: Props) {
   }
   return (
     <div>
-      <p className=' text-3xl'>Ajouter une transaction</p>
       <form
         onSubmit={handleSubmit(handleSubmitData)}
-        className='my-5 flex flex-col items-stretch gap-y-5'
+        className=' flex flex-col items-stretch gap-y-5'
       >
         <NumberInput
           control={control}
@@ -86,7 +84,7 @@ export default function TransactionForm({ onClose }: Props) {
             onClick={() => onClose()}
             type='button'
             genre='secondary'
-            label='Annuler'
+            label='Fermer'
           />
           <AppButton
             disabled={isSubmitting || !isValid}

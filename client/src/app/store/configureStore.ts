@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { accountSlice } from "../slices/accountSlice";
 import { shopSlice } from "../slices/shopSlice";
+import { productsSlice } from "../slices/productsSlice";
 import { operationSlice } from "../slices/operationSlice";
 import { orderSlice } from "../slices/orderSlice";
 import { agentSlice } from "../slices/agentsSlice";
@@ -13,6 +14,7 @@ export const store = configureStore({
         account: accountSlice.reducer,
         agent: agentSlice.reducer,
         shop: shopSlice.reducer,
+        products: productsSlice.reducer,
         operation: operationSlice.reducer,
         order: orderSlice.reducer,
         notifications: notificationsSlice.reducer,

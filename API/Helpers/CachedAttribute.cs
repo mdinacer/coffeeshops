@@ -32,12 +32,17 @@ namespace API.Helpers
                 return;
             }
 
+            if (context.HttpContext.Request.Method != "GET")
+            {
+                await cacheService.ClearCachedResponseAsync(cacheKey);
+            }
+
             switch (context.HttpContext.Request.Method)
             {
                 case "POST":
                 case "PUT":
                 case "DELETE":
-                    await cacheService.ClearCachedResponseAsync(cacheKey);
+
                     break;
             };
 
@@ -45,13 +50,19 @@ namespace API.Helpers
 
             if (executedContext.Result is OkObjectResult okObjectResult)
             {
-                await cacheService.CacheResponseAsync(cacheKey, okObjectResult.Value, TimeSpan.FromSeconds(_timeToLiveSeconds));
+                await cacheService.CacheResponseAsync(cacheKey, okObjectResult.Value!, TimeSpan.FromSeconds(_timeToLiveSeconds));
             }
         }
 
         private string GenerateCacheKeyFromRequest(HttpRequest request)
         {
+            var shopId = request.Headers["X-SHOP"].ToString();
+
             var keyBuilder = new StringBuilder();
+            if (!string.IsNullOrEmpty(shopId) && request.Path.HasValue && !request.Path.Value.Contains("Categories"))
+            {
+                keyBuilder.Append($"{shopId} |");
+            }
             keyBuilder.Append($"{request.Path}");
 
             foreach (var (key, value) in request.Query.OrderBy(x => x.Key))

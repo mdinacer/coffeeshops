@@ -44,11 +44,12 @@ export default function ProfilePage() {
                 <span className=' font-semibold uppercase '>
                   {shop.name} -{' '}
                 </span>
-                {roles.map((role, index) => (
-                  <span className='uppercase' key={index}>
-                    {getRoleName(role)}
-                  </span>
-                ))}
+                {roles &&
+                  roles.map((role, index) => (
+                    <span className='uppercase' key={index}>
+                      {getRoleName(role)}
+                    </span>
+                  ))}
               </p>
             )}
           </div>

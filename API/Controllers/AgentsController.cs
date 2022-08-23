@@ -38,9 +38,9 @@ namespace API.Controllers
             .AsQueryable();
 
             var agents =
-               await PagedList<AgentFullDto>.ToPagedListAsync(query, agentsParams.PageNumber, agentsParams.PageSize);
+               await PagedList<AgentFullDto>.CreateAsync(query, agentsParams.PageNumber, agentsParams.PageSize);
 
-            //Response.AddPaginationHeader(agents.MetaData);
+            Response.AddPaginationHeader(agents.MetaData);
 
             return agents;
         }

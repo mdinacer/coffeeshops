@@ -4,8 +4,8 @@ import useManageTransactions from '../../app/hooks/manager/useManageTransactions
 import ListPageLayout from '../../app/layout/ListPageLayout';
 import { ShopTransaction } from '../../app/models/shopTransaction';
 import AppButton from '../../components/common/AppButton';
-import AppDialog from '../../components/common/AppDialog';
 import CollapsibleMenu from '../../components/common/CollapsibleMenu';
+import ModalDialog from '../../components/common/ModalDialog';
 import TransactionForm from '../../components/forms/TransactionForm';
 import TransactionsFilter from '../../components/transaction/TransactionsFilter';
 import TransactionsList from '../../components/transaction/TransactionsList';
@@ -52,47 +52,51 @@ export default function TransactionsManagerPage() {
     },
   ];
   return (
-    <ListPageLayout
-      title={'Transactions Monétaires'}
-      list={
-        <TransactionsList
-          transactions={transactions}
-          onSelect={(transaction) => {
-            setSelectedTransaction(transaction);
-          }}
-        />
-      }
-      stats={stats()}
-      filters={
-        <CollapsibleMenu title='Filtres'>
-          <TransactionsFilter setParams={setParams} />
-        </CollapsibleMenu>
-      }
-      metaData={metaData}
-      onPageChange={handlePageChange}
-      actionButton={
-        <AppButton
-          label={'Ajouter'}
-          Icon={PlusIcon}
-          genre='info'
-          rounded
-          onClick={() => setTransactionDialogVisible(true)}
-        />
-      }
-      dialogVisible={transactionDialogVisible}
-      dialogContent={
-        <AppDialog className=' md:min-w-[30vw]'>
-          <TransactionForm
-            onClose={(value) => {
-              if (value) {
-                refresh();
-                console.log(value);
-              }
-              setTransactionDialogVisible(false);
+    <>
+      <ListPageLayout
+        title={'Transactions Monétaires'}
+        list={
+          <TransactionsList
+            transactions={transactions}
+            onSelect={(transaction) => {
+              setSelectedTransaction(transaction);
             }}
           />
-        </AppDialog>
-      }
-    />
+        }
+        stats={stats()}
+        filters={
+          <CollapsibleMenu title='Filtres'>
+            <TransactionsFilter setParams={setParams} />
+          </CollapsibleMenu>
+        }
+        metaData={metaData}
+        onPageChange={handlePageChange}
+        actionButton={
+          <AppButton
+            label={'Ajouter'}
+            Icon={PlusIcon}
+            genre='info'
+            rounded
+            onClick={() => setTransactionDialogVisible(true)}
+          />
+        }
+      />
+
+      <ModalDialog
+        title='Ajouter une transaction'
+        active={transactionDialogVisible}
+        contentStyle={'p-5'}
+      >
+        <TransactionForm
+          onClose={(value) => {
+            if (value) {
+              refresh();
+              console.log(value);
+            }
+            setTransactionDialogVisible(false);
+          }}
+        />
+      </ModalDialog>
+    </>
   );
 }

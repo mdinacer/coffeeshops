@@ -1,17 +1,17 @@
-import useManageProducts, {
-  ProductsManager,
-} from '../../app/hooks/manager/useManageProducts';
+import useProducts from '../../app/hooks/useProducts';
 import ListPageLayout from '../../app/layout/ListPageLayout';
+import { setPageNumber } from '../../app/slices/productsSlice';
+import { useAppDispatch } from '../../app/store/configureStore';
 import CollapsibleMenu from '../../components/common/CollapsibleMenu';
 import InventoryList from '../../components/inventory/InventoryList';
 import ProductsFilters from '../../components/product/ProductsFilters';
 
 export default function InventoryPage() {
-  const manager: ProductsManager = useManageProducts();
-  const { products, metaData, setPageNumber } = manager;
+  const dispatch = useAppDispatch();
+  const { products, metaData } = useProducts();
 
   async function handlePageChange(page: number) {
-    setPageNumber(page);
+    dispatch(setPageNumber(page));
   }
   return (
     <ListPageLayout
@@ -19,7 +19,7 @@ export default function InventoryPage() {
       list={<InventoryList products={products} />}
       filters={
         <CollapsibleMenu title='Filtres'>
-          <ProductsFilters manager={manager} />
+          <ProductsFilters />
         </CollapsibleMenu>
       }
       metaData={metaData}

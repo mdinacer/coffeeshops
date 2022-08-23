@@ -1,8 +1,8 @@
 import agent from '../../app/api/agent';
-import {ShopAgent} from '../../app/models/shopAgent';
-import {ShopAgentType} from '../../app/models/shopAgentType';
-import {removeProduct} from '../../app/slices/shopSlice';
-import {useAppDispatch} from '../../app/store/configureStore';
+import { ShopAgent } from '../../app/models/shopAgent';
+import { ShopAgentType } from '../../app/models/shopAgentType';
+import { removeProduct } from '../../app/slices/productsSlice';
+import { useAppDispatch } from '../../app/store/configureStore';
 import AppButton from '../common/AppButton';
 
 interface Props {
@@ -27,8 +27,8 @@ export default function AgentDeleteDialog({ shopAgent, onClose }: Props) {
     }
   }
   return (
-    <div className='max-w-lg w-full flex flex-col '>
-      <div className='mb-4 flex flex-row flex-initial'>
+    <div className='flex w-full max-w-lg flex-col '>
+      <div className='mb-4 flex flex-initial flex-row'>
         <div>
           <small className=' font-Primary text-sm font-thin uppercase'>
             {shopAgent.type === ShopAgentType.client ? 'client' : 'fournisseur'}
@@ -41,7 +41,7 @@ export default function AgentDeleteDialog({ shopAgent, onClose }: Props) {
 
       <div className='py-5  font-Secondary'>
         <p className=' '>
-          <span className='text-red-600 font-semibold uppercase'>
+          <span className='font-semibold uppercase text-red-600'>
             Attention!
           </span>{' '}
           cette action est irreversible.
@@ -52,7 +52,7 @@ export default function AgentDeleteDialog({ shopAgent, onClose }: Props) {
         </p>
       </div>
 
-      <div className=' w-full grid grid-cols-2 gap-4 flex-initial'>
+      <div className=' grid w-full flex-initial grid-cols-2 gap-4'>
         <AppButton
           label=' Oui'
           type='button'

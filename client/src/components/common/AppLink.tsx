@@ -32,32 +32,20 @@ export default function AppLink({
   const buttonColorsStyle = () => {
     switch (genre) {
       case 'primary':
-        return ` hover:text-white border-indigo-500 border-2 text-indigo-600  hover:bg-indigo-500 hover:border-indigo-400 hover:shadow-indigo-700 ${
-          !noHover && buttonHoverStyle
-        } `;
+        return ` bg-indigo-100 text-indigo-900 hover:bg-indigo-200 focus-visible:ring-indigo-500 `;
       case 'secondary':
-        return ` hover:text-white border-gray-500 border-2 text-gray-600  hover:bg-gray-500 hover:border-gray-400 hover:shadow-gray-700 ${
-          !noHover && buttonHoverStyle
-        } `;
+        return ` bg-gray-100 text-gray-900 hover:bg-gray-200 focus-visible:ring-gray-500} `;
       case 'outline':
         return ' hover:text-white bg-transparent border-gray-500 hover:bg-transparent';
 
       case 'info':
-        return ` hover:text-white border-sky-500 border-2 text-sky-600  hover:bg-sky-500 hover:border-sky-400 hover:shadow-sky-700 ${
-          !noHover && buttonHoverStyle
-        } `;
+        return ` bg-blue-100 text-blue-900 hover:bg-blue-200 focus-visible:ring-blue-500 `;
       case 'success':
-        return ` hover:text-white border-green-500 border-2 text-green-600  hover:bg-green-500 hover:border-green-400 hover:shadow-green-700 ${
-          !noHover && buttonHoverStyle
-        } `;
+        return ` bg-green-100 text-green-900 hover:bg-green-200 focus-visible:ring-green-500 `;
       case 'warning':
-        return ` hover:text-white border-orange-500 border-2 text-orange-600  hover:bg-orange-500 hover:border-orange-400 hover:shadow-orange-700 ${
-          !noHover && buttonHoverStyle
-        } `;
+        return ` bg-orange-100 text-orange-900 hover:bg-orange-200 focus-visible:ring-orange-500 `;
       case 'error':
-        return ` hover:text-white border-red-500 border-2 text-red-600  hover:bg-red-500 hover:border-red-400 hover:shadow-red-700 ${
-          !noHover && buttonHoverStyle
-        } `;
+        return ` bg-red-100 text-red-900 hover:bg-red-200 focus-visible:ring-red-500 `;
       case 'none':
         return customColors;
     }
@@ -86,6 +74,4 @@ export default function AppLink({
   );
 }
 const buttonStyle =
-  ' inline-flex items-center border  justify-center gap-x-2 md:py-2  px-4 transition-all duration-300 ';
-
-const buttonHoverStyle = ' hover:shadow-md hover:-translate-y-1 text-white ';
+  ' inline-flex justify-center rounded-md border border-transparent transition-all duration-300 px-4 py-2 text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ';

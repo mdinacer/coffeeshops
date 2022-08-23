@@ -14,22 +14,25 @@ const url = process.env.REACT_APP_CHAT_URL;
 
 export default function useNotifications() {
   const dispatch = useAppDispatch();
-  const { user } = useAppSelector((state) => state.account);
+  const { token } = useAppSelector((state) => state.account);
   const { connection, status } = useAppSelector((state) => state.notifications);
 
-  const initConnection = useCallback((token: string) => {
-    const connect = new HubConnectionBuilder()
-      .withUrl(url!, {
-        accessTokenFactory: () => token,
-        skipNegotiation: true,
-        transport: HttpTransportType.WebSockets,
-        withCredentials: true,
-      })
-      .withAutomaticReconnect()
-      .build();
+  const initConnection = useCallback(
+    (token: string) => {
+      const connect = new HubConnectionBuilder()
+        .withUrl(url!, {
+          accessTokenFactory: () => token,
+          skipNegotiation: true,
+          transport: HttpTransportType.WebSockets,
+          withCredentials: true,
+        })
+        .withAutomaticReconnect()
+        .build();
 
-    dispatch(setConnection(connect));
-  }, []);
+      dispatch(setConnection(connect));
+    },
+    [dispatch]
+  );
 
   const startConnection = useCallback(
     (connection: HubConnection) => {
@@ -62,10 +65,10 @@ export default function useNotifications() {
   );
 
   useEffect(() => {
-    if (user && user.token && !connection) {
-      initConnection(user.token);
+    if (token && !connection) {
+      initConnection(token);
     }
-  }, [connection, initConnection, user]);
+  }, [connection, token]);
 
   const sendMessage = async (message: string) => {
     if (connection) await connection.send('SendMessage', { message });

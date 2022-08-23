@@ -14,6 +14,7 @@ import AppButton from '../../components/common/AppButton';
 import AppDialog from '../../components/common/AppDialog';
 import AppLink from '../../components/common/AppLink';
 import CollapsibleMenu from '../../components/common/CollapsibleMenu';
+import ModalDialog from '../../components/common/ModalDialog';
 import PurchaseOperationForm from '../../components/forms/PurchaseOperationForm';
 import OperationDetails from '../../components/operation/OperationDetails';
 import OperationsFilters from '../../components/operation/OperationsFilters';
@@ -53,79 +54,91 @@ export default function OperationsPage() {
     dispatch(setOperationParams(initParams()));
   }, [dispatch]);
   return (
-    <ListPageLayout
-      title={getTypeTitle()}
-      metaData={metaData}
-      stats={[
-        { title: 'total', value: operationsTotal().toFixed(2) },
-        { title: 'payé', value: operationsPaidTotal().toFixed(2) },
-        { title: 'dettes', value: operationsRemainTotal().toFixed(2) },
-      ]}
-      onPageChange={handlePageChange}
-      filters={
-        <CollapsibleMenu title='Filtres'>
-          <OperationsFilters />
-        </CollapsibleMenu>
-      }
-      list={
-        <OperationsList
-          operations={operations}
-          type={operationType}
-          onSelect={(operation) => {
-            setSelectedOperation(operation);
+    <>
+      <ListPageLayout
+        title={getTypeTitle()}
+        metaData={metaData}
+        stats={[
+          { title: 'total', value: operationsTotal().toFixed(2) },
+          { title: 'payé', value: operationsPaidTotal().toFixed(2) },
+          { title: 'dettes', value: operationsRemainTotal().toFixed(2) },
+        ]}
+        onPageChange={handlePageChange}
+        filters={
+          <CollapsibleMenu title='Filtres'>
+            <OperationsFilters />
+          </CollapsibleMenu>
+        }
+        list={
+          <OperationsList
+            operations={operations}
+            type={operationType}
+            onSelect={(operation) => {
+              setSelectedOperation(operation);
+            }}
+          />
+        }
+        actionButton={
+          operationType === OperationType[1] ? (
+            <AppLink
+              className=' w-full md:w-auto '
+              label={'Ajouter une vente'}
+              Icon={PlusIcon}
+              toPath={'/order'}
+              genre='info'
+              noHover
+              rounded
+            />
+          ) : (
+            <AppButton
+              className=' w-full md:w-auto'
+              label={'Ajouter un achat'}
+              Icon={PlusIcon}
+              onClick={() => setPurchaseFormVisible(true)}
+              genre='info'
+              noHover
+              rounded
+            />
+          )
+        }
+      />
+
+      <ModalDialog
+        active={purchaseFormVisible}
+        title='Ajouter un achat'
+        contentStyle='p-5'
+      >
+        <PurchaseOperationForm
+          onClose={(value) => {
+            if (value) {
+              dispatch(addOperation(value));
+            }
+            setPurchaseFormVisible(false);
           }}
         />
-      }
-      actionButton={
-        operationType === OperationType[1] ? (
-          <AppLink
-            className=' w-full md:w-auto '
-            label={'Ajouter une vente'}
-            Icon={PlusIcon}
-            toPath={'/order'}
-            genre='info'
-            noHover
-            rounded
-          />
-        ) : (
-          <AppButton
-            className=' w-full md:w-auto'
-            label={'Ajouter un achat'}
-            Icon={PlusIcon}
-            onClick={() => setPurchaseFormVisible(true)}
-            genre='info'
-            noHover
-            rounded
-          />
-        )
-      }
-      dialogVisible={purchaseFormVisible || !!selectedOperation}
-      dialogContent={
-        <>
-          {purchaseFormVisible && (
-            <AppDialog buttonsVisible={false} className=''>
-              <PurchaseOperationForm
-                onClose={(value) => {
-                  if (value) {
-                    dispatch(addOperation(value));
-                  }
-                  setPurchaseFormVisible(false);
-                }}
-              />
-            </AppDialog>
-          )}
+      </ModalDialog>
 
-          {selectedOperation && (
-            <AppDialog className=' w-full   md:min-w-[42rem]'>
-              <OperationDetails
-                operationId={selectedOperation.id}
-                onClose={() => setSelectedOperation(null)}
-              />
-            </AppDialog>
-          )}
-        </>
-      }
-    />
+      <ModalDialog
+        active={selectedOperation != null}
+        title={
+          'Détails de' +
+          ` ${
+            selectedOperation &&
+            selectedOperation!.type === OperationType.purchase
+              ? "l'Achat"
+              : 'la Vente'
+          }`
+        }
+        contentStyle='p-5'
+      >
+        {selectedOperation && (
+          <OperationDetails
+            operationId={selectedOperation!.id}
+            onClose={() => setSelectedOperation(null)}
+          />
+        )}
+      </ModalDialog>
+    </>
   );
 }
 

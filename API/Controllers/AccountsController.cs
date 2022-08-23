@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using System.Text;
 using API.Data;
 using API.DTO;
@@ -18,38 +19,53 @@ namespace API.Controllers
         private readonly TokenService _tokenService;
         private readonly DataContext _context;
         private readonly IMapper _mapper;
+        private readonly EmailSender _emailSender;
+        private readonly SignInManager<User> _signInManager;
 
-        public AccountController(UserManager<User> userManager, TokenService tokenService, DataContext context, IMapper mapper)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, TokenService tokenService, DataContext context, IMapper mapper, EmailSender emailSender)
         {
+            _signInManager = signInManager;
+            _emailSender = emailSender;
             _context = context;
             _mapper = mapper;
             _tokenService = tokenService;
             _userManager = userManager;
         }
 
+        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
             var user = await _context.Users
             .Include(u => u.Profile)
-            .SingleOrDefaultAsync(u => u.UserName == loginDto.Username);
-            //_userManager.FindByNameAsync(loginDto.Username);
+            .SingleOrDefaultAsync(u => u.Email == loginDto.Email);
 
-            if (user == null || !await _userManager.CheckPasswordAsync(user, loginDto.Password))
-            {
-                return Unauthorized();
-            }
+            if (user == null) return Unauthorized("Invalid email");
 
+            if (user.UserName == "admin") user.EmailConfirmed = true;
 
-            return new UserDto
+            if (!user.EmailConfirmed) return Unauthorized("Email not confirmed");
+
+            var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
+
+            var userDto = new UserDto
             {
                 Username = user.UserName,
                 Email = user.Email,
                 Profile = _mapper.Map<UserProfileDto>(user.Profile) ?? null,
                 Token = await _tokenService.CreateToken(user),
             };
+
+            if (result.Succeeded)
+            {
+                await SetRefreshToken(user);
+                return userDto;
+            }
+
+            return Unauthorized("Invalid password");
         }
 
+        [AllowAnonymous]
         [HttpPost("register")]
         public async Task<ActionResult> Register([FromForm] RegisterDto registerDto)
         {
@@ -69,6 +85,10 @@ namespace API.Controllers
 
             var result = await _userManager.CreateAsync(user, registerDto.Password);
 
+            await _userManager.AddToRoleAsync(user, "Owner");
+
+            //if (!result.Succeeded) return BadRequest("Problem registering user");
+
             if (!result.Succeeded)
             {
                 foreach (var error in result.Errors)
@@ -86,9 +106,9 @@ namespace API.Controllers
             var verifyUrl = $"{origin}/account/verifyEmail?token={token}&email={user.Email}";
             var message = $"<p>Please click the below link to verify your email address:</p><p><a href='{verifyUrl}'>Click to verify email</a></p>";
 
-            await _userManager.AddToRoleAsync(user, "Owner");
+            await _emailSender.SendEmailAsync(user.Email, "Please verify email", message);
 
-            return Ok(user);
+            return Ok("Registration success - please verify email");
         }
 
         [AllowAnonymous]
@@ -116,10 +136,39 @@ namespace API.Controllers
                     u.UserName == User.Identity!.Name);
 
             if (user == null) return BadRequest(new ProblemDetails { Title = "You must be logged in" });
-
+            await SetRefreshToken(user);
             var profile = user.Profile != null ? _mapper.Map<UserProfileDto>(user.Profile) : null;
             return new UserDto
             {
+                DisplayName = user.DisplayName,
+                Username = user.UserName,
+                Email = user.Email,
+                Profile = profile,
+                Token = await _tokenService.CreateToken(user),
+            };
+        }
+
+        [Authorize]
+        [HttpPost("refreshToken")]
+        public async Task<ActionResult<UserDto>> RefreshToken()
+        {
+            var refreshToken = Request.Cookies["refreshToken"];
+            var user = await _userManager.Users
+                .Include(r => r.RefreshTokens)
+                .Include(p => p.Profile)
+                .FirstOrDefaultAsync(x => x.UserName == User.FindFirstValue(ClaimTypes.Name));
+
+            if (user == null) return Unauthorized();
+
+            var oldToken = user.RefreshTokens.SingleOrDefault(x => x.Token == refreshToken);
+
+            if (oldToken != null && !oldToken.IsActive) return Unauthorized();
+
+            var profile = user.Profile != null ? _mapper.Map<UserProfileDto>(user.Profile) : null;
+
+            return new UserDto
+            {
+                DisplayName = user.DisplayName,
                 Username = user.UserName,
                 Email = user.Email,
                 Profile = profile,
@@ -181,6 +230,21 @@ namespace API.Controllers
             : BadRequest(new ProblemDetails { Title = "Error creating profile" });
         }
 
+        private async Task SetRefreshToken(User user)
+        {
+            var refreshToken = _tokenService.GenerateRefreshToken();
+
+            user.RefreshTokens.Add(refreshToken);
+            await _userManager.UpdateAsync(user);
+
+            var cookieOptions = new CookieOptions
+            {
+                HttpOnly = false,
+                Expires = DateTime.UtcNow.AddDays(7)
+            };
+
+            Response.Cookies.Append("refreshToken", refreshToken.Token, cookieOptions);
+        }
 
     }
 }

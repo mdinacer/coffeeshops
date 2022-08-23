@@ -28,10 +28,6 @@ export default function OperationDetails({ operationId, onClose }: Props) {
     }
   }, [dispatch, operation, operationId]);
 
-  const getTitle = () => {
-    return operation?.type === OperationType.purchase ? 'Achat' : 'Vente';
-  };
-
   const getAgentType = () => {
     return operation?.type === OperationType.purchase
       ? 'Fournisseur'
@@ -47,10 +43,6 @@ export default function OperationDetails({ operationId, onClose }: Props) {
 
   return (
     <div className='relative  flex flex-col gap-y-5'>
-      <div className=' flex-initial border-b border-b-gray-200 pb-2'>
-        <p className='font-Primary text-3xl font-light'>{getTitle()}</p>
-      </div>
-
       <div className=' flex-initial'>
         <DetailItem
           title='Date'

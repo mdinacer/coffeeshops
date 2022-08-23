@@ -29,7 +29,7 @@ export default function LoginPage() {
   async function submitForm(data: FieldValues) {
     try {
       await dispatch(signInUser(data));
-      navigate(from);
+      navigate('/');
     } catch (error: any) {
       setError('Email or password incorrect');
       console.log(error);
@@ -56,12 +56,12 @@ export default function LoginPage() {
             className='flex w-full flex-col  gap-y-4'
           >
             <TextInput
-              autoComplete='username'
-              type='text'
+              autoComplete='email'
+              type='email'
               control={control}
-              label={`Nom d'utilisateur`}
-              name='username'
-              placeholder="Tapez votre nom d'utilisateur"
+              label={`Email`}
+              name='email'
+              placeholder='Tapez votre email'
             />
 
             <PasswordInput

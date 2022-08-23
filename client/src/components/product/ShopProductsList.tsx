@@ -1,9 +1,13 @@
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import agent from '../../app/api/agent';
 import useProducts from '../../app/hooks/useProducts';
-import {Product} from '../../app/models/product';
-import {removeProduct, setPageNumber, setProductParams,} from '../../app/slices/shopSlice';
-import {useAppDispatch} from '../../app/store/configureStore';
+import { Product } from '../../app/models/product';
+import {
+  removeProduct,
+  setPageNumber,
+  setProductParams,
+} from '../../app/slices/productsSlice';
+import { useAppDispatch } from '../../app/store/configureStore';
 import ProductForm from '../forms/ProductForm';
 import Pagination from '../input/Pagination';
 import Layout from '../Layout';
@@ -45,8 +49,8 @@ export default function ShopProductsList({ onSelect }: Props) {
 
   return (
     <>
-      <div className='flex flex-col flex-1'>
-        <div className='gap-y-5 md:gap-y-2 grid grid-cols-3 gap-5'>
+      <div className='flex flex-1 flex-col'>
+        <div className='grid grid-cols-3 gap-5 gap-y-5 md:gap-y-2'>
           {products.map((product) => (
             <ShopProductCard
               product={product}
@@ -73,8 +77,8 @@ export default function ShopProductsList({ onSelect }: Props) {
         <Layout className='fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-black bg-opacity-70 '>
           <div>
             {deleteDialogVisible && (
-              <div className=' bg-white dark:bg-gray-800 rounded-md py-5 px-10 max-w-lg w-full flex flex-col '>
-                <div className='mb-4 flex flex-row flex-initial'>
+              <div className=' flex w-full max-w-lg flex-col rounded-md bg-white py-5 px-10 dark:bg-gray-800 '>
+                <div className='mb-4 flex flex-initial flex-row'>
                   <div className='px-5'>
                     <img
                       src={selectedProduct.pictureUrl}
@@ -94,7 +98,7 @@ export default function ShopProductsList({ onSelect }: Props) {
 
                 <div className='py-5  font-Secondary'>
                   <p className=' '>
-                    <span className='text-red-600 font-semibold uppercase'>
+                    <span className='font-semibold uppercase text-red-600'>
                       Attention!
                     </span>{' '}
                     cette action est irreversible.
@@ -102,11 +106,11 @@ export default function ShopProductsList({ onSelect }: Props) {
                   <p>Êtes vous sure de vouloir supprimer ce produit?</p>
                 </div>
 
-                <div className=' w-full grid grid-cols-2 gap-4 flex-initial'>
+                <div className=' grid w-full flex-initial grid-cols-2 gap-4'>
                   <button
                     type='button'
                     onClick={() => handleDelete(selectedProduct)}
-                    className={buttonStyle + 'bg-red-600 rounded-md'}
+                    className={buttonStyle + 'rounded-md bg-red-600'}
                   >
                     Oui
                   </button>
@@ -114,7 +118,7 @@ export default function ShopProductsList({ onSelect }: Props) {
                   <button
                     onClick={() => setDeleteDialogVisible(false)}
                     type='button'
-                    className={buttonStyle + ' bg-gray-700 rounded-md'}
+                    className={buttonStyle + ' rounded-md bg-gray-700'}
                   >
                     Non
                   </button>
@@ -123,7 +127,7 @@ export default function ShopProductsList({ onSelect }: Props) {
             )}
 
             {editDialogVisible && (
-              <div className=' bg-white dark:bg-gray-800  rounded-md py-5 px-10'>
+              <div className=' rounded-md bg-white  py-5 px-10 dark:bg-gray-800'>
                 <ProductForm
                   product={selectedProduct}
                   onClose={() => setEditDialogVisible(false)}
