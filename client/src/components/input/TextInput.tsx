@@ -26,7 +26,7 @@ export default function TextInput({
   return (
     <div className='w-full'>
       <ComponentWrapper
-        className={className}
+        className={' overflow-hidden ' + className}
         label={props.label}
         element={
           <input

@@ -78,6 +78,12 @@ export default function useOrders() {
     let list = order.elements.filter((e) => e.productId !== productId);
 
     dispatch(updateOrder({ id: tableId, changes: { elements: list } }));
+
+    if (order.elements.length === 0) {
+      clearOrder(tableId);
+    } else {
+      dispatch(updateOrder({ id: tableId, changes: { elements: list } }));
+    }
   }
 
   function changeQuantity(
@@ -118,7 +124,12 @@ export default function useOrders() {
         }
       })
       .filter((o) => o.quantity > 0);
-    dispatch(updateOrder({ id: tableId, changes: { elements: list } }));
+
+    if (list.length === 0) {
+      clearOrder(tableId);
+    } else {
+      dispatch(updateOrder({ id: tableId, changes: { elements: list } }));
+    }
   }
 
   const cacheOrders = useCallback(

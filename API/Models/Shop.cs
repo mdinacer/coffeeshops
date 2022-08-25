@@ -10,6 +10,5 @@ namespace API.Models
         public List<Product> Products { get; set; } = new();
         public List<Operation> Operations { get; set; } = new();
         public List<MoneyTransaction> Transactions { get; set; } = new();
-
     }
 }

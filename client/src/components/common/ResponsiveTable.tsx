@@ -3,12 +3,13 @@ import { IResponsiveTable } from './tableModels';
 
 const styles = {
   header:
-    'font-thin font-Primary uppercase text-lg border border-gray-300 py-1 ',
+    'font-thin font-Primary uppercase text-lg border border-stone-400 py-1 ',
 };
 
 export default function ResponsiveTable({
   headers,
   children,
+  fixed = false,
 }: IResponsiveTable) {
   return (
     <motion.table
@@ -16,9 +17,11 @@ export default function ResponsiveTable({
       initial='hidden'
       animate='show'
       exit='close'
-      className='  w-full table-auto border-collapse border-slate-300'
+      className={`w-full border-collapse ${
+        fixed ? 'table-fixed' : 'table-auto'
+      }`}
     >
-      <thead className='hidden border border-gray-500 bg-gray-300 text-center drop-shadow-md md:table-header-group '>
+      <thead className='hidden border border-stone-700 bg-stone-400 text-center text-stone-900 drop-shadow-md md:table-header-group '>
         <tr>
           {headers.map((header, index) => (
             <th key={index} className={styles.header}>
@@ -37,8 +40,7 @@ const tableContainer = {
   show: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.3,
-      delayChildren: 0.5,
+      staggerChildren: 0.2,
     },
   },
   close: {},

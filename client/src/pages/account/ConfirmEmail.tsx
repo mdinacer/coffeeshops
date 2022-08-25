@@ -90,8 +90,8 @@ export default function ConfirmEmail() {
   }
 
   return (
-    <Layout className=' flex items-center justify-center bg-gray-200'>
-      <div className=' rounded-2xl bg-white p-6'>
+    <Layout className=' flex items-center justify-center bg-gray-200 2xl:max-w-none'>
+      <div className=' rounded-2xl bg-stone-300 p-6'>
         <div className=' mb-5 inline-flex items-center'>
           <MailIcon className='mr-2 h-7 w-7' />
           <p className=' font-Secondary text-2xl'>Vérification de l'E-mail</p>

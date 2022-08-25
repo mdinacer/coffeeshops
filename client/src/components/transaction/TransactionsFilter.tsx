@@ -16,7 +16,7 @@ export default function TransactionFilters({ setParams }: Props) {
   const [startDate, setStartDate] = useState<Date | null | undefined>(
     new Date()
   );
-  const [endDate, setEndDate] = useState<Date | null | undefined>(new Date());
+  const [endDate, setEndDate] = useState<Date | null | undefined>();
   const [selectedType, setSelectedType] = useState<TransactionType | null>(-1);
   const [selectedDirection, setSelectedDirection] =
     useState<TransactionDirection | null>(-1);
@@ -30,7 +30,7 @@ export default function TransactionFilters({ setParams }: Props) {
   };
 
   return (
-    <div className='grid xl:grid-cols-6 md:grid-cols-3 gap-4'>
+    <div className='grid gap-4 md:grid-cols-3 '>
       <div>
         <DropDown
           items={typeFilters}

@@ -1,13 +1,10 @@
 import DatePicker, { ReactDatePickerCustomHeaderProps } from 'react-datepicker';
 import { forwardRef } from 'react';
 import { format } from 'date-fns';
-import {
-  CalendarIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-} from '@heroicons/react/solid';
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid';
 import { locale } from '../../app/layout/App';
 import ComponentWrapper from '../common/ComponentWrapper';
+import { XIcon } from '@heroicons/react/outline';
 
 interface Props {
   label: string;
@@ -34,13 +31,14 @@ export default function AppDatePicker(props: Props) {
         <DatePicker
           todayButton={
             <div className=' my-2 px-5'>
-              <button className='w-full  uppercase bg-sky-500 font-Primary text-base py-1 px-2 rounded-md font-thin text-white'>
+              <button className='w-full  rounded-md bg-yellow-500 py-1 px-2 font-Primary text-base font-thin uppercase text-stone-100'>
                 aujourd’hui
               </button>
             </div>
           }
           locale={locale}
           placeholderText='Select date'
+          shouldCloseOnSelect
           onChange={handleOnChange}
           selected={props.selectedDate}
           ref={null}
@@ -61,7 +59,7 @@ export default function AppDatePicker(props: Props) {
             onClick={() => handleOnChange(null)}
             className='h-full px-2 py-1'
           >
-            <CalendarIcon className='h-6 w-6 text-red-600' />
+            <XIcon className='h-6 w-6 text-stone-600' />
           </button>
         )
       }
@@ -89,9 +87,9 @@ function CustomHeader({
           className={`${
             prevMonthButtonDisabled && 'cursor-not-allowed opacity-50'
           } 
-                  inline-flex p-1 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-blue-500 `}
+                  inline-flex rounded border border-gray-300 bg-stone-200 p-1 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-0 `}
         >
-          <ChevronLeftIcon className='w-5 h-5 text-gray-600' />
+          <ChevronLeftIcon className='h-5 w-5 text-gray-600' />
         </button>
 
         <button
@@ -100,9 +98,9 @@ function CustomHeader({
           type='button'
           className={` ${
             nextMonthButtonDisabled && 'cursor-not-allowed opacity-50'
-          } inline-flex p-1 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-blue-500 `}
+          } inline-flex rounded border border-gray-300 bg-stone-200 p-1 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-0 `}
         >
-          <ChevronRightIcon className='w-5 h-5 text-gray-600' />
+          <ChevronRightIcon className='h-5 w-5 text-gray-600' />
         </button>
       </div>
     </div>
@@ -114,12 +112,12 @@ const ButtonInput = forwardRef<HTMLButtonElement, any>((props, ref) => (
     ref={ref}
     onClick={props.onClick}
     type='button'
-    className=' outline-none focus:outline-none text-center w-full focus:border-none gap-x-2 font-Secondary py-2 '
+    className=' w-full gap-x-2 py-2 text-center font-Secondary outline-none focus:border-none focus:outline-none '
   >
     {props.value ? (
       <span>{format(new Date(props.value), 'P', { locale: locale })}</span>
     ) : (
-      <span className='opacity-40 text-sm uppercase'>aucune date</span>
+      <span className='text-sm uppercase opacity-40'>aucune date</span>
     )}
   </button>
 ));

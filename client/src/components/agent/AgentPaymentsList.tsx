@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 import agent from '../../app/api/agent';
 import { locale } from '../../app/layout/App';
 import { ShopPayment } from '../../app/models/shopPayment';
+import { formatNumber } from '../../app/utils/utils';
 import ResponsiveTable from '../common/ResponsiveTable';
 import ResponsiveTableRow from '../common/ResponsiveTableRow';
 
@@ -40,9 +41,11 @@ export default function AgentPaymentsList({ agentId }: Props) {
 
   return (
     <div className=' flex flex-auto flex-col overflow-hidden'>
-      <p className=' mb-3 flex-initial font-Primary text-2xl font-thin uppercase '>
-        Paiements
-      </p>
+      {payments.length > 0 && (
+        <p className=' mb-3 flex-initial font-Primary text-2xl font-thin uppercase '>
+          Paiements
+        </p>
+      )}
 
       {paymentsLoaded && payments.length > 0 && (
         <ResponsiveTable
@@ -60,13 +63,15 @@ export default function AgentPaymentsList({ agentId }: Props) {
                 },
                 {
                   title: 'montant',
-                  value: element.amount.toFixed(2),
+                  value: formatNumber(element.amount),
                   align: 'right',
                 },
 
                 {
                   title: 'description',
-                  value: element.description,
+                  value: (
+                    <span className=' text-sm'>{element.description}</span>
+                  ),
                   align: 'left',
                 },
               ]}

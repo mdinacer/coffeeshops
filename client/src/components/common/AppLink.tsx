@@ -8,11 +8,10 @@ interface Props {
   state?: any;
   className?: string;
   iconStyle?: string;
+  iconRight?: boolean;
   labelStyle?: string;
   genre?: buttonGenre;
   customColors?: string;
-  noHover?: boolean;
-  rounded?: boolean;
 }
 
 export default function AppLink({
@@ -25,47 +24,45 @@ export default function AppLink({
   labelStyle,
   genre,
   customColors,
-  noHover,
-  rounded,
+  iconRight = false,
 }: Props) {
   const { pathname } = useLocation();
   const buttonColorsStyle = () => {
     switch (genre) {
       case 'primary':
-        return ` bg-indigo-100 text-indigo-900 hover:bg-indigo-200 focus-visible:ring-indigo-500 `;
+        return ` bg-stone-700 text-stone-200 border-stone-700 hover:bg-stone-500 hover:text-stone-200 focus-visible:ring-stone-500 `;
       case 'secondary':
-        return ` bg-gray-100 text-gray-900 hover:bg-gray-200 focus-visible:ring-gray-500} `;
+        return ` bg-transparent border-stone-400 border hover:text-stone-200 hover:bg-stone-400 focus-visible:ring-stone-500 `;
       case 'outline':
-        return ' hover:text-white bg-transparent border-gray-500 hover:bg-transparent';
-
+        return ' hover:text-stone-100 bg-transparent border-stone-500 hover:bg-transparent';
       case 'info':
-        return ` bg-blue-100 text-blue-900 hover:bg-blue-200 focus-visible:ring-blue-500 `;
+        return ` bg-yellow-500 text-yellow-50 hover:bg-yellow-400 hover:text-yellow-800 focus-visible:ring-yellow-500 `;
       case 'success':
-        return ` bg-green-100 text-green-900 hover:bg-green-200 focus-visible:ring-green-500 `;
+        return ` bg-green-700 text-green-200 border-green-700 hover:bg-green-500 hover:text-green-200 focus-visible:ring-green-500 `;
       case 'warning':
-        return ` bg-orange-100 text-orange-900 hover:bg-orange-200 focus-visible:ring-orange-500 `;
+        return ` bg-orange-500 text-orange-50 hover:bg-orange-400 hover:text-orange-800 focus-visible:ring-orange-500 `;
       case 'error':
-        return ` bg-red-100 text-red-900 hover:bg-red-200 focus-visible:ring-red-500 `;
+        return `  bg-red-500 text-red-50 hover:bg-red-400 hover:text-red-800 focus-visible:ring-red-500`;
       case 'none':
         return customColors;
     }
   };
 
-  const buttonStateStyle = ` cursor-pointer ${buttonColorsStyle()} `;
+  const buttonStateStyle = ` cursor-pointer  ${buttonColorsStyle()} `;
   return (
     <Link
       to={toPath}
       state={state || { from: pathname }}
-      className={`   ${
-        rounded && ' rounded-xl '
-      }  ${buttonStyle} ${buttonStateStyle} ${className}  `}
+      className={` ${buttonStyle} ${
+        iconRight ? ' flex-row-reverse' : 'flex-row'
+      } ${buttonStateStyle} ${className}  `}
     >
-      <div className='h-full'>
-        {Icon && <Icon className={`h-6 w-6  ${iconStyle}`} />}
+      <div className='flex h-full items-center justify-center'>
+        {Icon && <Icon className={`h-5 w-5  ${iconStyle}`} />}
       </div>
       {label && (
         <span
-          className={` ${labelStyle} font-Secondary text-sm font-normal uppercase  `}
+          className={` font-Primary text-lg font-thin uppercase  ${labelStyle}`}
         >
           {label}
         </span>
@@ -74,4 +71,4 @@ export default function AppLink({
   );
 }
 const buttonStyle =
-  ' inline-flex justify-center rounded-md border border-transparent transition-all duration-300 px-4 py-2 text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ';
+  ' flex justify-center gap-x-2 items-center  border transition-all duration-300 px-3 py-2 text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ';

@@ -18,22 +18,23 @@ export default function Pagination({ metaData, onPageChange }: Props) {
   }
 
   return (
-    <div className='border-b-4 px-5 pt-1 border-b-sky-500 w-auto h-auto'>
+    <div className='h-auto w-full border-b-4 border-b-stone-400 px-5 pt-1'>
       {metaData && (
-        <div className='flex flex-col lg:flex-row justify-between items-center gap-y-2 lg:gap-y-0'>
-          <p className='font-Primary font-thin text-lg lg:text-xl'>
+        <div className='flex flex-col items-center justify-between gap-y-2 lg:flex-row lg:gap-y-0'>
+          <p className='font-Primary text-lg font-thin lg:text-xl'>
             Affichage de {(currentPage - 1) * pageSize + 1} {' à '}
             {currentPage * pageSize > totalCount
               ? totalCount
               : currentPage * pageSize}{' '}
             sur {totalCount} articles
           </p>
-          {metaData.totalPages > 1 && (
+
+          {metaData && (
             <ReactPaginate
               forcePage={pageNumber}
-              className='flex flex-row items-center gap-x-3 py-2  w-auto '
+              className='flex w-auto flex-row items-center gap-x-3 py-2 '
               pageClassName='font-thin'
-              activeClassName='font-normal bg-sky-500 rounded-md text-white'
+              activeClassName='font-normal bg-stone-500 rounded-md text-stone-100'
               pageLinkClassName={'p-2 font-Primary  text-inherit text-xl'}
               breakLabel='...'
               nextLabel={<ChevronRightIcon className='h-6 w-6' />}

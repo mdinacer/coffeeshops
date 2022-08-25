@@ -228,7 +228,7 @@ namespace API.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<OperationDto>> EditOperation(string id)
         {
-            var user = await GetUser(_context);
+            var user = await UserAccessor.GetUser(HttpContext, _context);
 
             if (user == null || string.IsNullOrEmpty(ShopId)) return BadRequest("Must be authenticated");
             var operation = await _context.Operations.SingleOrDefaultAsync(o => o.Id == id && o.ShopId == ShopId);
@@ -252,8 +252,9 @@ namespace API.Controllers
 
         private async void CreateOperationHistoryElement(Operation operation)
         {
-            if (string.IsNullOrEmpty(ShopId)) return;
-            await CreateHistoryElement(_context, _history, ShopId, operation);
+            var user = await UserAccessor.GetUser(HttpContext, _context);
+            if (string.IsNullOrEmpty(ShopId) || user == null) return;
+            await _history.CreateHistoryElement(HttpContext, user, ShopId, operation);
         }
     }
 

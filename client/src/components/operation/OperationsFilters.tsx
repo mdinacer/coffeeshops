@@ -13,7 +13,7 @@ export default function OperationsFilters() {
   const [startDate, setStartDate] = useState<Date | null | undefined>(
     new Date()
   );
-  const [endDate, setEndDate] = useState<Date | null | undefined>(new Date());
+  const [endDate, setEndDate] = useState<Date | null | undefined>();
   const [selectedType, setSelectedType] = useState(OperationType.sale);
 
   const typeFilters = [

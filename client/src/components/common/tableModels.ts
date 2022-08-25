@@ -4,6 +4,7 @@ export interface IResponsiveTable {
 
     headers: Array<string>,
     children: React.ReactNode;
+    fixed?: boolean
 }
 export interface ITableRow {
     cells: ITableCell[],

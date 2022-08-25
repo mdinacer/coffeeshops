@@ -1,6 +1,7 @@
-import {PencilAltIcon, TrashIcon} from '@heroicons/react/solid';
-import {motion} from 'framer-motion';
-import {Product} from '../../app/models/product';
+import { PencilAltIcon, TrashIcon } from '@heroicons/react/solid';
+import { motion } from 'framer-motion';
+import { Product } from '../../app/models/product';
+import { formatNumber } from '../../app/utils/utils';
 
 interface Props {
   product: Product;
@@ -12,9 +13,9 @@ export default function ShopProductCard({ product, onEdit, onDelete }: Props) {
   return (
     <motion.div
       layout
-      className='bg-gray-100  flex flex-row  rounded-lg overflow-hidden select-none'
+      className='flex  select-none flex-row  overflow-hidden rounded-lg bg-stone-300 text-stone-600'
     >
-      <div className='flex flex-row  py-2 px-5 flex-auto '>
+      <div className='flex flex-auto  flex-row py-2 px-5 '>
         <div className='px-5'>
           <img
             src={product.pictureUrl}
@@ -30,22 +31,22 @@ export default function ShopProductCard({ product, onEdit, onDelete }: Props) {
             {product.name}
           </p>
           <p className=' font-Primary text-base font-thin capitalize'>
-            {product.price.toFixed(2)} Da
+            {formatNumber(product.price)} Da
           </p>
         </div>
       </div>
-      <div className='  flex flex-col  flex-initial  h-full justify-evenly'>
+      <div className='  flex h-full  flex-initial  flex-col justify-evenly'>
         <button
           onClick={() => onDelete(product)}
           type='button'
-          className={buttonStyle + ' bg-gray-400  hover:bg-red-500 '}
+          className={buttonStyle + ' bg-stone-400  hover:bg-red-500 '}
         >
           <TrashIcon className='h-6 w-6 ' />
         </button>
         <button
           onClick={() => onEdit(product)}
           type='button'
-          className={buttonStyle + ' bg-gray-500  hover:bg-orange-500 '}
+          className={buttonStyle + ' bg-stone-500  hover:bg-orange-500 '}
         >
           <PencilAltIcon className='h-6 w-6 ' />
         </button>
@@ -55,4 +56,4 @@ export default function ShopProductCard({ product, onEdit, onDelete }: Props) {
 }
 
 const buttonStyle =
-  'py-1 px-5 uppercase font-Secondary h-full font-normal text-base text-white inline-flex justify-center items-center hover:text-white ';
+  'py-1 px-5 uppercase font-Secondary h-full font-normal text-base  text-stone-200 inline-flex justify-center items-center ';

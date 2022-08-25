@@ -47,7 +47,9 @@ axios.interceptors.response.use(async response => {
 
     const pagination = response.headers["pagination"];
     if (pagination) {
+
         response.data = new PaginatedResponse(response.data, JSON.parse(pagination));
+
         return response;
     }
 
@@ -128,9 +130,9 @@ const Account = {
     editProfile: (values: any) => requests.putForm('account/profile', createFormData(values)),
     refreshToken: () => requests.post<User>('/account/refreshToken', {}),
     verifyEmail: (token: string, email: string) =>
-        requests.post<void>(`/account/verifyEmail?token=${token}&email=${email}`, {}),
+        requests.post<void>(`/Account/verifyEmail?token=${token}&email=${email}`, {}),
     resendEmailConfirm: (email: string) =>
-        requests.get(`/account/resendEmailConfirmationLink?email=${email}`)
+        requests.get(`/Account/resendEmailConfirmationLink?email=${email}`)
 }
 
 const Agents = {
@@ -194,6 +196,7 @@ const Shops = {
     delete: () => requests.delete(`Shops`),
     setOwner: (userId: string) => requests.put<Shop>(`Shops/setOwner`, { userId }),
     listUsers: () => requests.get(`Shops/users`),
+    fetchStats: () => requests.get(`Shops/stats`),
     createUser: (values: any) => requests.post('Shops/users', values),
 }
 

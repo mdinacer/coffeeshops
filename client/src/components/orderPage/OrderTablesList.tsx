@@ -23,11 +23,11 @@ export default function OrderTablesList({
                 <button
                   onClick={() => onSelect(0)}
                   type='button'
-                  className={`flex h-10 w-full snap-center  items-center justify-center rounded-full py-0   px-3 transition-all hover:bg-gray-600 hover:text-white  ${
+                  className={`flex h-10 w-full snap-center  items-center justify-center rounded-full py-0 px-3 transition-all hover:bg-red-700 hover:text-stone-100  ${
                     selectedTable === 0
-                      ? 'bg-gray-800 text-white'
-                      : 'bg-gray-300'
-                  } ${table.active && ' border-4 border-red-500'}  `}
+                      ? 'bg-red-500 text-stone-100'
+                      : 'bg-stone-300'
+                  } ${table.active && ' border-2 border-red-500'}  `}
                 >
                   <span className=' font-Primary text-base font-thin uppercase'>
                     Comptoir
@@ -54,7 +54,7 @@ export default function OrderTablesList({
 }
 
 const buttonStyle =
-  'h-10 w-10 rounded-full flex items-center justify-center   hover:bg-gray-600 transition-all hover:text-white ';
+  'h-10 w-10 rounded-full flex items-center justify-center hover:bg-red-700 transition-all hover:text-stone-100 ';
 
 interface TableItemProps {
   table: Table;
@@ -68,8 +68,8 @@ function TableItem({ table, isSelected, onSelect }: TableItemProps) {
         onClick={() => onSelect(table.id)}
         type='button'
         className={` snap-start  ${
-          isSelected ? 'bg-gray-900 text-white' : 'bg-gray-300'
-        } ${buttonStyle} ${table.active && ' border-4 border-gray-900'}  `}
+          isSelected ? 'bg-red-500 text-stone-100' : 'bg-stone-300'
+        } ${buttonStyle} ${table.active && ' border-2 border-red-600'}  `}
       >
         <span className=' font-Primary text-lg font-thin uppercase'>
           {table.id}

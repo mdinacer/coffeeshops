@@ -1,6 +1,6 @@
-import {MinusIcon, PlusIcon, XIcon} from '@heroicons/react/solid';
-import {motion} from 'framer-motion';
-import {OrderElement} from '../../app/models/order';
+import { MinusIcon, PlusIcon, XIcon } from '@heroicons/react/solid';
+import { motion } from 'framer-motion';
+import { OrderElement } from '../../app/models/order';
 
 interface Props {
   element: OrderElement;
@@ -21,14 +21,14 @@ export default function OrderElementsListItem({
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -50 }}
       layout
-      className='w-full py-1 px-4   flex flex-row items-end md:items-center bg-gray-00 rounded-md'
+      className='bg-gray-00 flex w-full   flex-row items-end rounded border-y border-y-stone-300 bg-stone-200 py-1 px-4 text-stone-900  md:items-center'
     >
-      <div className='grid md:grid-cols-5 gap-y-2  flex-auto items-center'>
-        <p className=' md:col-span-3 capitalize text-lg'>
+      <div className='grid flex-auto items-center  gap-y-2 md:grid-cols-5'>
+        <p className='  font-Secondary text-xl font-light capitalize md:col-span-3'>
           {element.productName}
         </p>
-        <div className=' grid grid-cols-4 md:col-span-2 mx-auto'>
-          <div className=' w-full flex items-center justify-center'>
+        <div className=' mx-auto grid grid-cols-4 md:col-span-2'>
+          <div className=' flex w-full items-center justify-center'>
             <button
               type='button'
               className={buttonStyle}
@@ -37,12 +37,12 @@ export default function OrderElementsListItem({
               <MinusIcon className={iconStyle} />
             </button>
           </div>
-          <div className=' col-span-2 w-full flex items-center'>
-            <p className=' font-Primary text-lg  w-full text-center'>
+          <div className=' col-span-2 flex w-full items-center'>
+            <p className=' w-full text-center  font-Primary text-lg'>
               {element.quantity}
             </p>
           </div>
-          <div className=' w-full flex items-center justify-center'>
+          <div className=' flex w-full items-center justify-center'>
             <button
               type='button'
               className={buttonStyle}
@@ -56,7 +56,7 @@ export default function OrderElementsListItem({
       <div>
         <button
           type='button'
-          className={buttonStyle + 'bg-gray-500 text-white ml-2'}
+          className={buttonStyle + 'ml-2 bg-stone-400 text-stone-100'}
           onClick={() => onRemove(element.productId)}
         >
           <XIcon className={iconStyle} />
@@ -66,5 +66,5 @@ export default function OrderElementsListItem({
   );
 }
 
-const buttonStyle = 'p-1  rounded-full text-gray-100  bg-gray-400 ';
+const buttonStyle = 'p-1 rounded-full text-gray-100  bg-stone-400 ';
 const iconStyle = 'h-5 w-5';

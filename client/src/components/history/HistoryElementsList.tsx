@@ -9,10 +9,7 @@ interface Props {
   onSelect: (element: HistoryElement) => void;
 }
 
-export default function HistoryElementsList({
-  elements = [],
-  onSelect,
-}: Props) {
+export default function HistoryElementsList({ elements, onSelect }: Props) {
   return (
     <ResponsiveTable headers={['date', 'action', 'élément', 'utilisateur']}>
       {elements.map((item, index) => (

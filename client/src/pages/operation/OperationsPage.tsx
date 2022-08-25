@@ -10,8 +10,8 @@ import {
   setPageNumber,
 } from '../../app/slices/operationSlice';
 import { useAppDispatch } from '../../app/store/configureStore';
+import { formatNumber } from '../../app/utils/utils';
 import AppButton from '../../components/common/AppButton';
-import AppDialog from '../../components/common/AppDialog';
 import AppLink from '../../components/common/AppLink';
 import CollapsibleMenu from '../../components/common/CollapsibleMenu';
 import ModalDialog from '../../components/common/ModalDialog';
@@ -59,9 +59,23 @@ export default function OperationsPage() {
         title={getTypeTitle()}
         metaData={metaData}
         stats={[
-          { title: 'total', value: operationsTotal().toFixed(2) },
-          { title: 'payé', value: operationsPaidTotal().toFixed(2) },
-          { title: 'dettes', value: operationsRemainTotal().toFixed(2) },
+          { title: 'total', value: formatNumber(operationsTotal()) },
+          { title: 'payé', value: formatNumber(operationsPaidTotal()) },
+          {
+            title: 'dettes',
+            value: (
+              <p
+                className={` ${
+                  operationsRemainTotal() > 0
+                    ? ' font-semibold text-red-500'
+                    : 'text-inherit'
+                }`}
+              >
+                <span>{formatNumber(operationsRemainTotal())}</span>
+                <span className='font-secondary text-xs uppercase'> DA</span>
+              </p>
+            ),
+          },
         ]}
         onPageChange={handlePageChange}
         filters={
@@ -86,8 +100,6 @@ export default function OperationsPage() {
               Icon={PlusIcon}
               toPath={'/order'}
               genre='info'
-              noHover
-              rounded
             />
           ) : (
             <AppButton
@@ -95,9 +107,7 @@ export default function OperationsPage() {
               label={'Ajouter un achat'}
               Icon={PlusIcon}
               onClick={() => setPurchaseFormVisible(true)}
-              genre='info'
-              noHover
-              rounded
+              genre='primary'
             />
           )
         }
@@ -145,7 +155,7 @@ export default function OperationsPage() {
 function initParams() {
   return {
     pageNumber: 1,
-    pageSize: 10,
+    pageSize: 20,
     orderBy: 'dateDesc',
     showcase: undefined,
   };

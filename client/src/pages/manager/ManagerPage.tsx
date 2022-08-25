@@ -7,8 +7,8 @@ import ShopManagerPage from '../../pages/manager/ShopManagerPage';
 export default function ManagerPage() {
   const [selectedIndex, setSelectedIndex] = useState(0);
   return (
-    <div className='relative flex h-full w-full flex-col items-stretch overflow-hidden rounded-2xl  bg-white'>
-      <div className='  mx-auto flex w-auto flex-initial items-center justify-center rounded-b-full bg-sky-900 px-20  text-white'>
+    <div className='relative flex h-full w-full flex-col items-stretch overflow-hidden rounded-2xl  bg-stone-200'>
+      <div className='  mx-auto flex w-auto flex-initial items-center justify-center rounded-b-full bg-yellow-900 px-20  text-stone-100'>
         <ul className=' grid list-none grid-cols-3 gap-5'>
           {['Shop', 'Profile', 'Products'].map((item, index) => (
             <li key={index} className=' list-item'>
@@ -20,7 +20,7 @@ export default function ManagerPage() {
                   <motion.div
                     layoutId='underline'
                     layout
-                    className='absolute top-0 left-0 flex h-full w-full  bg-sky-400'
+                    className='absolute top-0 left-0 flex h-full w-full  bg-yellow-400'
                   ></motion.div>
                 )}
                 <span className='relative'>{item}</span>

@@ -6,4 +6,3 @@ namespace API.Models
         transaction,
     }
 }
-

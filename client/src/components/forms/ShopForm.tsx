@@ -67,6 +67,7 @@ export default function ShopForm({ onClose }: Props) {
       className='flex w-full flex-col gap-y-4'
     >
       <TextInput
+        autoComplete='organization'
         control={control}
         placeholder={''}
         label='Nom du cafeteria'
@@ -79,6 +80,15 @@ export default function ShopForm({ onClose }: Props) {
         label='Nombre de tables'
         showButtons
       />
+
+      {!isEdit && (
+        <NumberInput
+          control={control}
+          placeholder={''}
+          name={'initialAmount'}
+          label='Montant initial'
+        />
+      )}
 
       <div className='mt-5 grid w-full grid-cols-2 gap-x-5'>
         <AppButton

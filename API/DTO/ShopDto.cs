@@ -33,6 +33,7 @@ namespace API.DTO
     {
         public string Name { get; set; }
         public int TablesCount { get; set; }
+        public decimal InitialAmount { get; set; }
     }
 
     public class UpdateShopDto

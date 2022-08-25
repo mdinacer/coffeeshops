@@ -9,6 +9,7 @@ import { OperationType } from '../../app/models/OperationType';
 import { Product, ProductSmall } from '../../app/models/product';
 import { addOperation } from '../../app/slices/operationSlice';
 import { useAppDispatch } from '../../app/store/configureStore';
+import { formatNumber } from '../../app/utils/utils';
 import { OperationValidationSchema } from '../../app/validation/operationValidationSchema';
 import AppButton from '../common/AppButton';
 import ResponsiveTable from '../common/ResponsiveTable';
@@ -172,7 +173,7 @@ export default function PurchaseOperationForm({ operation, onClose }: Props) {
     <div className='flex max-w-lg flex-col items-stretch gap-y-5 '>
       <form
         onSubmit={handleSubmit(submitData)}
-        className='flex w-full flex-col gap-y-4 rounded-2xl bg-gray-200  py-5'
+        className='flex w-full flex-col gap-y-4 rounded-2xl '
       >
         <div className=' w-full '>
           <DropDown
@@ -222,6 +223,7 @@ export default function PurchaseOperationForm({ operation, onClose }: Props) {
         <AppDatePicker
           label={'péremption'}
           minDate={new Date()}
+          initialDate={undefined}
           selectedDate={expiryDate}
           onChange={(value) => {
             setExpiryDate(value);
@@ -263,7 +265,7 @@ export default function PurchaseOperationForm({ operation, onClose }: Props) {
 
                     {
                       title: 'total',
-                      value: element.total.toFixed(2),
+                      value: formatNumber(element.total),
                       align: 'right',
                     },
                   ]}
@@ -276,13 +278,13 @@ export default function PurchaseOperationForm({ operation, onClose }: Props) {
           )}
         </div>
       </div>
-      <div className=' grid w-full grid-cols-2'>
+      <div className=' grid w-full grid-cols-2 gap-4'>
         <AppButton label='Fermer' onClick={() => onClose()} genre='secondary' />
         <AppButton
           disabled={elements.length === 0}
           label='Enregistrer'
           onClick={() => setValidateOperation(true)}
-          genre='success'
+          genre='primary'
         />
       </div>
     </div>

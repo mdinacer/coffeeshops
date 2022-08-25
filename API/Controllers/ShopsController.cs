@@ -3,6 +3,7 @@ using API.DTO;
 using API.Extensions;
 using API.Helpers;
 using API.Models;
+using API.Models.ShopChartsData;
 using API.Services;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -53,7 +54,7 @@ namespace API.Controllers
         [HttpGet("me")]
         public async Task<ActionResult<ShopDetailsDto>> GetShop()
         {
-            var user = await GetUser(_context);
+            var user = await UserAccessor.GetUser(HttpContext, _context);
 
             if (user == null) return NotFound("User Not found");
 
@@ -78,7 +79,7 @@ namespace API.Controllers
         [HttpPost]
         public async Task<ActionResult<ShopDto>> CreateShop([FromForm] CreateShopDto createShop)
         {
-            var user = await GetUser(_context);
+            var user = await UserAccessor.GetUser(HttpContext, _context);
 
             if (user == null) return NotFound("User Not found and it's impossible");
             if (user.Shop != null) return BadRequest("User is already assigned to a shop");
@@ -92,6 +93,23 @@ namespace API.Controllers
             };
 
             _context.Shops.Add(shop);
+
+
+
+            if (createShop.InitialAmount > 0)
+            {
+                var transaction = new MoneyTransaction
+                {
+                    Amount = createShop.InitialAmount,
+                    // Shop = shop,
+                    Description = "Somme Caisse initiale",
+                    Type = TransactionType.transaction,
+                    Direction = TransactionDirection.incoming,
+                    User = user
+                };
+
+                shop.Transactions.Add(transaction);
+            }
 
             var success = await _context.SaveChangesAsync() > 0;
 
@@ -109,10 +127,27 @@ namespace API.Controllers
         }
 
         [Authorize(Policy = "IsShopOwner")]
+        [HttpGet("Stats")]
+        public async Task<ActionResult<ShopStats>> GetStats()
+        {
+
+
+            var shop = await _context.Shops
+            .Include(s => s.Operations)
+            .Include(s => s.Transactions)
+            .SingleOrDefaultAsync(s => s.Id == ShopId);
+
+            if (shop == null) return NotFound("Shop Not found");
+
+            var stats = shop.GetStats();
+            return Ok(stats);
+        }
+
+        [Authorize(Policy = "IsShopOwner")]
         [HttpGet("Users")]
         public async Task<ActionResult<List<ShopUserDto>>> GetUsers()
         {
-            var currentUser = await GetUser(_context);
+            var currentUser = await UserAccessor.GetUser(HttpContext, _context);
 
             if (currentUser == null) return NotFound("User Not found");
 
@@ -269,7 +304,9 @@ namespace API.Controllers
         }
         private async void CreateShopHistoryElement(Shop shop)
         {
-            await CreateHistoryElement(_context, _history, shop.Id, shop);
+            var user = await UserAccessor.GetUser(HttpContext, _context);
+            if (string.IsNullOrEmpty(ShopId) || user == null) return;
+            await _history.CreateHistoryElement(HttpContext, user, shop.Id, shop);
         }
 
     }

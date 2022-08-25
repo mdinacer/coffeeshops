@@ -19,11 +19,15 @@ namespace API.Helpers
 
         public MetaData MetaData { get; set; }
 
-        public static async Task<PagedList<T>> CreateAsync(IQueryable<T> query, int pageNumber, int pageSize)
+        public static async Task<PagedList<T>> CreateAsync(IQueryable<T> query, int pageNumber, int pageSize, bool? paginate = true)
         {
             var count = await query.CountAsync();
-            var items = await query.Skip((pageNumber - 1) * pageSize)
-                .Take(pageSize).ToListAsync();
+            if (paginate == true)
+            {
+                query = query.Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize);
+            }
+            var items = await query.ToListAsync();
 
             return new PagedList<T>(items, count, pageNumber, pageSize);
         }

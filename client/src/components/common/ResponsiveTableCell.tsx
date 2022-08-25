@@ -9,12 +9,12 @@ export default function ResponsiveTableCell({
   return (
     <td
       align={align}
-      className={`inline-flex h-full w-full items-end justify-between px-0 py-1 md:table-cell md:w-auto md:border md:border-gray-200 md:px-5  ${className}`}
+      className={`inline-flex h-full w-full items-end justify-between px-0 py-1 md:table-cell md:w-auto md:border md:border-stone-400 md:px-5  ${className}`}
     >
       <span className='block font-Primary text-base font-thin uppercase md:hidden'>
         {title}
       </span>
-      <div className='font-Secondary text-base font-light capitalize'>
+      <div className=' whitespace-pre-line font-Secondary text-base font-light capitalize'>
         {value}
       </div>
     </td>

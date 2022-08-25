@@ -80,7 +80,7 @@ export const fetchAgentAsync = createAsyncThunk<
 function initParams(): AgentParams {
     return {
         pageNumber: 1,
-        pageSize: 10,
+        pageSize: 20,
         orderBy: 'name',
         type: ShopAgentType[0],
         debtOnly: null

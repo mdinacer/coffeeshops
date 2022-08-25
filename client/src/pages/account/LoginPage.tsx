@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 import { useAppDispatch } from '../../app/store/configureStore';
 import { loginValidationSchema } from './accountValidations';
@@ -8,17 +8,15 @@ import { signInUser } from '../../app/slices/accountSlice';
 import TextInput from '../../components/input/TextInput';
 import PasswordInput from '../../components/input/PasswordInput';
 import Layout from '../../components/Layout';
+import AppButton from '../../components/common/AppButton';
 
 export default function LoginPage() {
   const dispatch = useAppDispatch();
-  const { state }: any | null = useLocation();
-  const from = state?.from || '/';
   const navigate = useNavigate();
   const [error, setError] = useState('');
 
   const {
     control,
-    setValue,
     handleSubmit,
     formState: { isSubmitting, isValid },
   } = useForm({
@@ -36,15 +34,8 @@ export default function LoginPage() {
     }
   }
 
-  useEffect(() => {
-    const username = state?.username;
-    if (username) {
-      setValue('username', username);
-    }
-  }, [setValue, state?.username]);
-
   return (
-    <Layout className='flex h-full w-full items-center justify-center'>
+    <Layout className='flex h-full w-full items-center justify-center 2xl:max-w-none'>
       <div className='flex h-auto w-full items-center justify-center p-5 lg:p-20'>
         <div className='w-full lg:max-w-md '>
           <p className=' pb-10 text-center font-Primary text-4xl uppercase lg:text-7xl'>
@@ -53,7 +44,7 @@ export default function LoginPage() {
 
           <form
             onSubmit={handleSubmit(submitForm)}
-            className='flex w-full flex-col  gap-y-4'
+            className='mb-5 flex w-full  flex-col gap-y-4'
           >
             <TextInput
               autoComplete='email'
@@ -72,15 +63,11 @@ export default function LoginPage() {
               placeholder='Tapez votre mot de passe'
             />
             <p className=' w-full text-center text-sm text-red-500'>{error}</p>
-            <input
+            <AppButton
               disabled={!isValid}
-              className={`${
-                isValid
-                  ? ' cursor-pointer bg-sky-500 text-white '
-                  : ' bg-gray-200 text-gray-500 '
-              }   mb-5 w-full py-2 px-5 uppercase`}
+              genre='primary'
               type='submit'
-              value={isSubmitting ? 'Connexion en cours' : 'Se connecter'}
+              label={isSubmitting ? 'Connexion en cours' : 'Se connecter'}
             />
           </form>
 

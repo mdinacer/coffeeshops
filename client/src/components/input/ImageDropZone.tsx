@@ -37,7 +37,7 @@ export default function ImageDropZone(props: Props) {
         <div className=' flex flex-col items-center justify-center'>
           <svg
             aria-hidden='true'
-            className='mb-3 h-10 w-10 text-gray-400'
+            className='mb-3 h-10 w-10 text-stone-500'
             fill='none'
             stroke='currentColor'
             viewBox='0 0 24 24'
@@ -50,7 +50,7 @@ export default function ImageDropZone(props: Props) {
               d='M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12'
             ></path>
           </svg>
-          <p className='mb-2 flex flex-col text-center font-Secondary text-xs text-gray-500 dark:text-gray-400 md:text-sm'>
+          <p className='mb-2 flex flex-col text-center font-Secondary text-xs text-stone-500 dark:text-stone-400 md:text-sm'>
             <span className='font-semibold'>Cliquez pour télécharger</span>
             <span>ou faites glisser et déposez</span>
           </p>

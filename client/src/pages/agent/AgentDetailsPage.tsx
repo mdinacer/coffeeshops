@@ -9,13 +9,13 @@ import { useAppDispatch, useAppSelector } from '../../app/store/configureStore';
 import AgentDeleteDialog from '../../components/agent/AgentDeleteDialog';
 import AgentPaymentsList from '../../components/agent/AgentPaymentsList';
 import AppButton from '../../components/common/AppButton';
-import AppDialog from '../../components/common/AppDialog';
 import LoadingComponent from '../../components/common/LoadingComponent';
 import AgentForm from '../../components/forms/AgentForm';
 import PaymentDialog from '../../components/payment/PaymentDialog';
 import { fetchAgentAsync } from '../../app/slices/agentsSlice';
 import NotFound from '../../errors/NotFound';
 import ModalDialog from '../../components/common/ModalDialog';
+import { formatNumber } from '../../app/utils/utils';
 
 export default function AgentDetailsPage() {
   const { id } = useParams<{ id: string }>();
@@ -47,7 +47,7 @@ export default function AgentDetailsPage() {
 
   return (
     <>
-      <ModalDialog title='' active={isDelete}>
+      <ModalDialog title='Suppression' active={isDelete}>
         <AgentDeleteDialog
           shopAgent={agent}
           onClose={() => {
@@ -56,7 +56,7 @@ export default function AgentDetailsPage() {
         />
       </ModalDialog>
 
-      <ModalDialog title='' active={isEdit}>
+      <ModalDialog title='Modification' active={isEdit}>
         <AgentForm
           shopAgent={agent}
           type={agent.type}
@@ -82,6 +82,7 @@ export default function AgentDetailsPage() {
       </ModalDialog>
 
       <ListPageLayout
+        className='m-auto h-auto text-stone-600 2xl:max-w-6xl'
         title={agent.name}
         stats={getStats(agent)}
         header={<Header agent={agent} />}
@@ -125,7 +126,7 @@ const getStats = (agent: ShopAgent) => [
     title: 'total',
     value: (
       <p className=''>
-        {agent.total.toFixed(2)}
+        {formatNumber(agent.total)}
         <span className='font-secondary text-xs uppercase'> DA</span>
       </p>
     ),
@@ -134,7 +135,7 @@ const getStats = (agent: ShopAgent) => [
     title: 'payé',
     value: (
       <p className=''>
-        {agent.paid.toFixed(2)}
+        {formatNumber(agent.paid)}
         <span className='font-secondary text-xs uppercase'> DA</span>
       </p>
     ),
@@ -144,10 +145,10 @@ const getStats = (agent: ShopAgent) => [
     value: (
       <p
         className={` ${
-          agent.debt > 0 ? ' font-semibold text-red-600' : 'text-inherit'
+          agent.debt > 0 ? ' font-semibold text-red-500' : 'text-inherit'
         }`}
       >
-        <span>{agent.debt.toFixed(2)}</span>
+        <span>{formatNumber(agent.debt)}</span>
         <span className='font-secondary text-xs uppercase'> DA</span>
       </p>
     ),

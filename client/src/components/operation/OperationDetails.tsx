@@ -1,5 +1,6 @@
 import { format } from 'date-fns';
 import { useEffect } from 'react';
+import agent from '../../app/api/agent';
 import { locale } from '../../app/layout/App';
 import { OperationType } from '../../app/models/OperationType';
 import {
@@ -7,7 +8,9 @@ import {
   operationSelectors,
 } from '../../app/slices/operationSlice';
 import { useAppDispatch, useAppSelector } from '../../app/store/configureStore';
+import { formatNumber } from '../../app/utils/utils';
 import AppButton from '../common/AppButton';
+import AppLink from '../common/AppLink';
 import ResponsiveTable from '../common/ResponsiveTable';
 import ResponsiveTableRow from '../common/ResponsiveTableRow';
 
@@ -49,15 +52,32 @@ export default function OperationDetails({ operationId, onClose }: Props) {
           value={format(new Date(), 'PPPP', { locale })}
         />
         {operation.agentName && (
-          <DetailItem title={getAgentType()} value={operation.agentName} />
+          <DetailItem
+            title={getAgentType()}
+            value={
+              <AppLink
+                label={operation.agentName}
+                toPath={`/management/agents/${operation.agentId}`}
+                genre='none'
+                className=' gap-x-0 px-0  py-0 hover:underline'
+                labelStyle=' text-lg capitalize font-normal font-Secondary'
+              />
+            }
+          />
         )}
 
-        <div className='my-4 grid grid-cols-3 border-y border-y-gray-200 py-2'>
-          <StatsItem title='Total' value={`${operation.total.toFixed(2)} Da`} />
-          <StatsItem title='Payé' value={`${operation.paid.toFixed(2)} Da`} />
+        <div className='my-4 grid grid-cols-3 border-y border-y-stone-200 py-2'>
+          <StatsItem
+            title='Total'
+            value={`${formatNumber(operation.total)} Da`}
+          />
+          <StatsItem
+            title='Payé'
+            value={`${formatNumber(operation.paid)} Da`}
+          />
           <StatsItem
             title='Dette'
-            value={`${operation.remain.toFixed(2)} Da`}
+            value={`${formatNumber(operation.remain)} Da`}
             valueStyle={operation.remain > 0 ? 'text-red-600' : 'text-inherit'}
           />
         </div>
@@ -88,7 +108,7 @@ export default function OperationDetails({ operationId, onClose }: Props) {
 
                     {
                       title: 'total',
-                      value: element.total.toFixed(2),
+                      value: formatNumber(element.total),
                       align: 'right',
                     },
                   ]}
@@ -110,11 +130,11 @@ export default function OperationDetails({ operationId, onClose }: Props) {
   );
 }
 
-function DetailItem({ title, value }: { title: string; value: string }) {
+function DetailItem({ title, value }: { title: string; value: any }) {
   return (
-    <div className='flex flex-row items-end justify-between font-Secondary text-base'>
-      <p className='uppercase'>{title}</p>
-      <p className='capitalize '>{value}</p>
+    <div className='flex flex-row items-end justify-start font-Secondary text-base'>
+      <p className='min-w-[5rem] font-medium uppercase'>{title}</p>
+      <div className='text-lg capitalize '>{value}</div>
     </div>
   );
 }

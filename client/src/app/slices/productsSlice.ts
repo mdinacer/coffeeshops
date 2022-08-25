@@ -21,6 +21,12 @@ const productsAdapter = createEntityAdapter<Product>({
 
 export function getAxiosProductParams(productParams: ProductParams) {
     const params = new URLSearchParams();
+    if (!productParams.paginate) {
+        params.append('paginate', false.toString());
+    }
+    else {
+        params.delete('paginate');
+    }
     params.append('pageNumber', productParams.pageNumber.toString());
     params.append('pageSize', productParams.pageSize.toString());
     params.append('orderBy', productParams.orderBy);
@@ -55,7 +61,7 @@ export const fetchProductsAsync = createAsyncThunk<
     const params = getAxiosProductParams(productParams);
     try {
         const response: any = await agent.Products.list(params);
-        const { items, ...metaData } = response;
+        const { items, metaData } = response;
         thunkApi.dispatch(setMetaData(metaData));
         return items;
     } catch (error: any) {
@@ -80,6 +86,7 @@ function initParams() {
         pageSize: 15,
         orderBy: 'name',
         showcase: true,
+        paginate: false,
     };
 }
 
@@ -102,6 +109,11 @@ export const productsSlice = createSlice({
                 ...action.payload,
                 pageNumber: 1,
             };
+        },
+
+        setPaginate: (state, action) => {
+            state.productsLoaded = false;
+            state.productParams = { ...state.productParams, paginate: action.payload };
         },
 
         setPageNumber: (state, action) => {
@@ -177,6 +189,7 @@ export const {
     setProductParams,
     resetProductParams,
     setMetaData,
+    setPaginate,
     setPageNumber,
     setPageSize,
     setCategory,

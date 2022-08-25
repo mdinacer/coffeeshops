@@ -7,5 +7,6 @@ namespace API.Helpers
         public string? CategoryId { get; set; }
         public bool? Showcase { get; set; }
         public bool? UseInventory { get; set; }
+        public bool Paginate { get; set; } = true;
     }
 }

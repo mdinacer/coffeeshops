@@ -24,10 +24,10 @@ export default function AppButtonSelect({
 
   const isSelected = (value: any) => selectedValue === value;
   return (
-    <div className='flex flex-row items-center gap-x-3'>
+    <div className='flex h-full flex-row items-center gap-x-3'>
       {label && (
         <div className='flex-initial'>
-          <p className='w-max flex-initial overflow-hidden border-r  border-gray-400  pr-2 text-sm uppercase opacity-50  hover:text-sky-900'>
+          <p className='w-max flex-initial overflow-hidden border-r  border-stone-400  pr-2 text-sm uppercase opacity-50  hover:text-yellow-900'>
             {label}
           </p>
         </div>
@@ -38,15 +38,15 @@ export default function AppButtonSelect({
           <button
             key={index}
             type='button'
-            className={`relative inline-flex  items-center justify-center gap-x-2 rounded-md bg-gray-100 py-1  px-2  ${
-              isSelected(item.value) ? ' text-white' : '  text-inherit'
+            className={`relative inline-flex  items-center justify-center gap-x-2 rounded-md bg-stone-300 py-1  px-2  ${
+              isSelected(item.value) ? ' text-stone-700' : '  text-inherit'
             }`}
             onClick={() => handleSelectionChange(item)}
           >
             {isSelected(item.value) && (
               <motion.div
                 layoutId={`${label}Highlight`}
-                className=' absolute top-0 left-0 right-0 bottom-0 z-[1] rounded-md bg-sky-500'
+                className=' absolute top-0 left-0 right-0 bottom-0 z-[1] rounded-md bg-yellow-500'
               ></motion.div>
             )}
             {Icon && <Icon className='  z-[2] h-5 w-5 text-inherit' />}

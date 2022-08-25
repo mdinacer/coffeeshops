@@ -10,6 +10,7 @@ interface Props {
   actionButton?: React.ReactNode;
   filters?: React.ReactNode;
   metaData: MetaData | null;
+  className?: string;
   onPageChange: (page: number) => void;
 }
 
@@ -21,10 +22,13 @@ export default function ListPageLayout({
   actionButton,
   filters,
   metaData,
+  className,
   onPageChange,
 }: Props) {
   return (
-    <Layout className=' flex flex-col items-stretch gap-y-4 md:gap-y-5'>
+    <Layout
+      className={` ${className} ax-h-full flex flex-col items-stretch  gap-y-4 md:gap-y-5 `}
+    >
       {(title || actionButton) && (
         <div className='mb-5 flex w-full flex-col items-center justify-start gap-y-5 md:flex-row md:items-center md:justify-between '>
           {title && (
@@ -39,7 +43,7 @@ export default function ListPageLayout({
       )}
       {header && <div>{header}</div>}
       {stats && (
-        <div className='flex flex-initial flex-col items-center justify-center gap-4 rounded-md  bg-gray-300 md:flex-row md:bg-transparent '>
+        <div className='flex flex-initial flex-col items-center justify-center gap-4 rounded-md border-y border-stone-300  py-3 md:flex-row  '>
           {stats.length > 0 && (
             <div className=' grid w-full py-2 px-4 md:w-auto md:p-0 lg:grid-flow-col lg:gap-5'>
               {stats.map((item, index) => (
@@ -52,9 +56,9 @@ export default function ListPageLayout({
 
       {filters && <div className='flex-initial'>{filters}</div>}
 
-      <div className='flex-auto'>{list}</div>
+      <div className='flex-auto overflow-y-auto pr-3'>{list}</div>
 
-      {metaData && metaData.totalPages > 0 && (
+      {metaData && (
         <div className='flex-initial'>
           <Pagination metaData={metaData} onPageChange={onPageChange} />
         </div>
@@ -74,9 +78,9 @@ function StatItem({ title, value }: ItemProps) {
       <p className=' font-Secondary text-base uppercase'>{title}</p>
 
       {typeof value === 'string' ? (
-        <p className=' font-Primary text-lg uppercase lg:text-2xl'>{value}</p>
+        <p className=' font-Primary text-lg uppercase lg:text-4xl'>{value}</p>
       ) : (
-        <div className='font-Primary text-lg uppercase lg:text-2xl'>
+        <div className='font-Primary text-lg uppercase lg:text-4xl'>
           {value}
         </div>
       )}

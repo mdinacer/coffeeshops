@@ -140,10 +140,43 @@ export const accountSlice = createSlice({
       throw action.payload;
     });
 
+    builder.addCase(signInUser.fulfilled, (state, action) => {
+
+      state.token = action.payload.token;
+      const data = action.payload.token.split('.')[1];
+
+      if (data) {
+        let claims = JSON.parse(atob(data));
+        let shopId = claims['shopId'];
+        if (shopId) {
+          state.shopId = shopId;
+        }
+        let roles = claims['role'];
+        state.user = {
+          ...action.payload,
+          roles: typeof roles === 'string' ? [roles] : roles,
+        };
+        state.roles = typeof roles === 'string' ? [roles] : roles;
+
+        if (action.payload.profile) {
+          state.profile = action.payload.profile;
+        }
+        if (state.user && !state.shopId) {
+          customHistory.push('/wizard');
+        }
+        if (state.user && shopId) {
+          customHistory.push('/');
+        }
+      } else {
+        state.user = action.payload;
+      }
+
+    });
+
     builder.addMatcher(
       isAnyOf(
         signUpUser.fulfilled,
-        signInUser.fulfilled,
+
         fetchCurrentUser.fulfilled,
         refreshToken.fulfilled
       ),
@@ -167,6 +200,10 @@ export const accountSlice = createSlice({
           if (action.payload.profile) {
             state.profile = action.payload.profile;
           }
+
+
+
+
 
           // if (!state.user.profile) {
           //   customHistory.push('/account/profile/');

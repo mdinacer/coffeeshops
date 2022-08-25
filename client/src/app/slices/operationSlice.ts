@@ -54,8 +54,7 @@ export const fetchOperationsAsync = createAsyncThunk<
   const params = getAxiosOperationParams(operationParams);
   try {
     const response: any = await agent.Operations.list(params);
-
-    const { items, ...metaData } = response
+    const { items, metaData } = response
 
     thunkApi.dispatch(setMetaData(metaData));
     return items;
@@ -79,11 +78,10 @@ export const fetchOperationAsync = createAsyncThunk<Operation, string>(
 function initParams(): OperationParams {
   return {
     pageNumber: 1,
-    pageSize: 10,
+    pageSize: 20,
     orderBy: 'name',
     type: OperationType.sale,
     startDate: new Date().toUTCString(),
-    endDate: new Date().toUTCString(),
   };
 }
 

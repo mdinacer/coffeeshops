@@ -41,7 +41,7 @@ export default function TextField({
       element={
         <input
           onKeyDown={handleKeyDown}
-          className={`${inputStyles} form-input font-Secondary first-letter:uppercase  border-none focus:border-none focus:outline-none bg-transparent py-2 px-5 placeholder:first-letter:uppercase placeholder:text-gray-400 w-full `}
+          className={`${inputStyles} form-input w-full border-none  bg-transparent py-2 px-5 font-Secondary first-letter:uppercase placeholder:text-stone-400 placeholder:first-letter:uppercase focus:border-none focus:outline-none `}
           aria-label={props.label}
           type={props.type}
           {...props}

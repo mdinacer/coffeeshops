@@ -53,7 +53,7 @@ namespace API.Controllers
             .AsQueryable();
 
             var products =
-                await PagedList<ProductFullDto>.CreateAsync(query, productsParams.PageNumber, productsParams.PageSize);
+                await PagedList<ProductFullDto>.CreateAsync(query, productsParams.PageNumber, productsParams.PageSize, productsParams.Paginate);
 
             Response.AddPaginationHeader(products.MetaData);
 
@@ -299,8 +299,9 @@ namespace API.Controllers
 
         private async void CreateProductHistoryElement(Product product)
         {
-            if (string.IsNullOrEmpty(ShopId)) return;
-            await CreateHistoryElement(_context, _history, ShopId, product);
+            var user = await UserAccessor.GetUser(HttpContext, _context);
+            if (string.IsNullOrEmpty(ShopId) || user == null) return;
+            await _history.CreateHistoryElement(HttpContext, user, ShopId, product);
         }
     }
 }

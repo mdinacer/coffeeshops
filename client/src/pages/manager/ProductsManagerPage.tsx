@@ -5,6 +5,7 @@ import ListPageLayout from '../../app/layout/ListPageLayout';
 import { Product } from '../../app/models/product';
 import {
   setPageNumber,
+  setPaginate,
   setProductParams,
 } from '../../app/slices/productsSlice';
 import { useAppDispatch } from '../../app/store/configureStore';
@@ -40,7 +41,9 @@ export default function ProductsManagerPage() {
   // useEffect(() => {
   //   dispatch(setProductParams({ pageSize: 1000 }));
   // }, []);
-
+  useEffect(() => {
+    dispatch(setPaginate(true));
+  }, []);
   return (
     <>
       <ModalDialog active={addProductForm} title='Ajouter un produit'>
@@ -105,7 +108,6 @@ export default function ProductsManagerPage() {
             Icon={PlusIcon}
             type='button'
             onClick={() => addNewProduct()}
-            genre={'info'}
           />
         }
       />

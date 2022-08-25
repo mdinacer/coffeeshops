@@ -4,6 +4,7 @@ import { locale } from '../../app/layout/App';
 import { ShopTransaction } from '../../app/models/shopTransaction';
 import { TransactionDirection } from '../../app/models/TransactionDirection';
 import { TransactionType } from '../../app/models/TransactionType';
+import { formatNumber } from '../../app/utils/utils';
 import ResponsiveTable from '../common/ResponsiveTable';
 import ResponsiveTableRow from '../common/ResponsiveTableRow';
 
@@ -67,7 +68,11 @@ export default function TransactionsList({
               align: 'right',
             },
             { title: 'Description', value: item.description, align: 'left' },
-            { title: 'Montant', value: item.amount.toFixed(2), align: 'right' },
+            {
+              title: 'Montant',
+              value: formatNumber(item.amount),
+              align: 'right',
+            },
             { title: 'Utilisateur', value: item.user, align: 'center' },
           ]}
           onClick={() => onSelect(item)}

@@ -21,7 +21,7 @@ export default function OrderProductsPagination({ metaData }: Props) {
               {metaData.currentPage === item + 1 && (
                 <motion.div
                   layoutId='highlight'
-                  className={`h-6 w-6 rounded-full border-2  border-gray-400     bg-sky-500`}
+                  className={`h-6 w-6 rounded-full border-2  border-gray-400     bg-yellow-500`}
                 ></motion.div>
               )}
             </div>

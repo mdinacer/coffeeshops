@@ -12,8 +12,8 @@ export default function ResponsiveTableRow({ cells, onClick }: ITableRow) {
           onClick();
         }
       }}
-      className={`grid gap-y-0 rounded-2xl border border-gray-100 bg-gray-200  py-2 px-5 md:table-row ${
-        onClick && 'cursor-pointer hover:bg-sky-500  hover:text-white '
+      className={`grid gap-y-0 rounded-2xl border border-stone-100 bg-stone-300 py-2 px-5 text-stone-700 md:table-row ${
+        onClick && 'cursor-pointer hover:bg-yellow-500  hover:text-stone-700 '
       }`}
     >
       {cells.map((cell, index) => (

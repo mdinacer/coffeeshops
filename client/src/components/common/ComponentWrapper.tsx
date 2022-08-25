@@ -13,19 +13,19 @@ export default function ComponentWrapper({
 }: Props) {
   return (
     <div
-      className={` relative flex flex-row items-stretch  bg-gray-100 border border-gray-300 rounded-lg pl-4 ${className}`}
+      className={` relative flex flex-row items-stretch  rounded-lg border border-stone-400 bg-stone-300 pl-4 ${className}`}
     >
-      <label className={`flex-auto flex flex-row w-full gap-x-2 items-center `}>
+      <label className={`flex w-full flex-auto flex-row items-center gap-x-2 `}>
         <div className='flex-initial'>
           {label && (
-            <p className=' min-w-[4rem] w-full text-sm uppercase  opacity-50 border-r border-gray-400 pr-2  hover:text-sky-900'>
+            <p className=' w-full min-w-[4rem] border-r border-stone-400  pr-2 text-sm uppercase  hover:text-yellow-900'>
               {label}
             </p>
           )}
         </div>
         <div className='flex-auto'>{element}</div>
       </label>
-      <div className='flex-initial flex items-stretch'>
+      <div className='flex flex-initial items-stretch'>
         {!!button && button}
       </div>
     </div>

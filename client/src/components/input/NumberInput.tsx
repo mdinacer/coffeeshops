@@ -35,20 +35,20 @@ export default function NumberInput({
   };
 
   return (
-    <div className='w-full'>
+    <div className='w-full text-stone-600'>
       <ComponentWrapper
         label={props.label}
         element={
-          <div className='flex flex-auto flex-row items-center'>
+          <div className='flex flex-auto flex-row items-center overflow-hidden'>
             <input
-              className={`form-input w-full border-none bg-transparent py-2 text-center  font-Secondary  placeholder:text-gray-400 placeholder:first-letter:uppercase focus:border focus:outline-none`}
+              className={`form-input w-full border-none bg-transparent py-1 text-center font-Primary  text-lg  placeholder:text-stone-400 placeholder:first-letter:uppercase focus:border focus:outline-none`}
               aria-label={props.label}
               type={'number'}
               {...props}
               {...field}
             />
             {prefix && (
-              <p className=' flex-initial pr-2 font-Secondary text-sm text-gray-500'>
+              <p className=' flex-initial pr-2 font-Primary text-lg text-stone-400'>
                 {prefix}
               </p>
             )}
@@ -56,14 +56,14 @@ export default function NumberInput({
         }
         button={
           showButtons && (
-            <div className='flex h-full flex-row items-stretch  justify-evenly  '>
+            <div className='flex h-full flex-row items-stretch  justify-evenly overflow-hidden rounded-2xl  '>
               <button
                 onClick={handleDecrease}
                 disabled={+field.value <= (props.min || 0)}
                 type='button'
                 className={`${buttonStyle} ${
                   +field.value <= (props.min || 0)
-                    ? 'bg-gray-100 text-gray-200'
+                    ? 'bg-stone-200 text-stone-400'
                     : ''
                 }`}
               >
@@ -93,4 +93,4 @@ export default function NumberInput({
 }
 
 const buttonStyle =
-  ' flex items-center justify-center bg-gray-300 px-1 md:px-2 ';
+  ' flex items-center justify-center bg-stone-300  px-1 md:px-2 ';

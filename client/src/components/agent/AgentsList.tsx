@@ -1,4 +1,5 @@
-import {ShopAgent} from '../../app/models/shopAgent';
+import { ShopAgent } from '../../app/models/shopAgent';
+import { formatNumber } from '../../app/utils/utils';
 import ResponsiveTable from '../common/ResponsiveTable';
 import ResponsiveTableRow from '../common/ResponsiveTableRow';
 
@@ -15,9 +16,9 @@ export default function AgentsList({ agents, onSelect }: Props) {
           key={index}
           cells={[
             { title: 'Name', value: item.name },
-            { title: 'Total', value: item.total.toFixed(2), align: 'right' },
-            { title: 'Payé', value: item.paid.toFixed(2), align: 'right' },
-            { title: 'Dettes', value: item.debt.toFixed(2), align: 'right' },
+            { title: 'Total', value: formatNumber(item.total), align: 'right' },
+            { title: 'Payé', value: formatNumber(item.paid), align: 'right' },
+            { title: 'Dettes', value: formatNumber(item.debt), align: 'right' },
           ]}
           onClick={() => onSelect(item)}
         />

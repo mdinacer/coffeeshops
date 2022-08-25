@@ -1,4 +1,4 @@
-import {Category} from '../../app/models/category';
+import { Category } from '../../app/models/category';
 
 interface Props {
   category: Category;
@@ -8,12 +8,12 @@ export default function OrderCategoryCard({ category }: Props) {
   return (
     <>
       {category.pictureUrl ? (
-        <div className='flex flex-row gap-x-5 items-center justify-center h-20 overflow-hidden '>
-          <div className='flex-initial w-1/3 overflow-hidden'>
+        <div className='flex h-20 flex-row items-center justify-center gap-x-5 overflow-hidden '>
+          <div className='w-1/3 flex-initial overflow-hidden'>
             <img
               src={category.pictureUrl}
               alt={category.name}
-              className=' object-scale-down h-20 w-full'
+              className=' h-20 w-full object-scale-down'
             />
           </div>
 
@@ -24,7 +24,7 @@ export default function OrderCategoryCard({ category }: Props) {
           </div>
         </div>
       ) : (
-        <div className='flex items-center justify-center h-20 '>
+        <div className='flex h-20 items-center justify-center '>
           <p className=' font-Primary text-2xl font-thin uppercase'>
             {category.name}
           </p>

@@ -7,19 +7,18 @@ interface Props {
   onSelect: (product: Product) => void;
 }
 
-export default function OrderProductsGrid({ products, onSelect }: Props) {
+export default function OrderProductsGrid({ products = [], onSelect }: Props) {
   return (
-    <div className='grid h-auto w-full grid-cols-2 gap-5 md:grid-cols-3 xl:grid-cols-3'>
+    <div className='grid h-auto max-h-full w-full grid-cols-2 gap-2 md:grid-cols-3 xl:grid-cols-4'>
       <AnimatePresence>
         {products.map((product) => (
           <motion.button
-            layout
             type='button'
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             key={product.id}
-            className='w-full'
+            className='w-full border border-stone-600'
             onClick={() => onSelect(product)}
           >
             <OrderProductCard product={product} />

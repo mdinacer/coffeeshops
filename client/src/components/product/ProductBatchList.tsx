@@ -1,6 +1,6 @@
-import {format, formatDuration, intervalToDuration} from 'date-fns';
-import {locale} from '../../app/layout/App';
-import {ProductBatch} from '../../app/models/ProductBatch';
+import { format, formatDuration, intervalToDuration } from 'date-fns';
+import { locale } from '../../app/layout/App';
+import { ProductBatch } from '../../app/models/ProductBatch';
 import ResponsiveTable from '../common/ResponsiveTable';
 import ResponsiveTableRow from '../common/ResponsiveTableRow';
 

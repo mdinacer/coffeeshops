@@ -1,7 +1,8 @@
 import { XIcon } from '@heroicons/react/outline';
 import { AnimatePresence, motion } from 'framer-motion';
-import React from 'react';
+import React, { useRef } from 'react';
 import ReactDOM from 'react-dom';
+import { useOutsideClick } from '../../app/utils/outsideClick';
 
 interface Props {
   title: string;
@@ -20,6 +21,15 @@ export default function ModalDialog({
   contentStyle,
   onClose,
 }: Props) {
+  const node = useRef(null);
+
+  const handleClose = () => {
+    if (onClose) {
+      onClose();
+    }
+  };
+
+  useOutsideClick(node, handleClose);
   return ReactDOM.createPortal(
     <AnimatePresence>
       {active && (
@@ -28,14 +38,15 @@ export default function ModalDialog({
           initial='hidden'
           animate='open'
           exit='close'
-          className='fixed top-0 left-0 z-50 flex h-screen w-screen items-center justify-center overscroll-none bg-black bg-opacity-80 backdrop-blur'
+          className='fixed top-0 left-0 z-50 h-screen w-screen select-none items-center justify-center overscroll-none bg-stone-900 bg-opacity-80 backdrop-blur md:flex'
         >
           <motion.div
+            ref={node}
             layout
             variants={itemVariants}
-            className={`${containerStyle} flex max-h-screen min-h-[20rem] w-auto max-w-screen-xl flex-col items-stretch overflow-hidden rounded bg-gray-100 md:min-w-[32rem]`}
+            className={`${containerStyle} in-h-[20rem] flex max-h-screen w-auto max-w-screen-xl flex-col items-stretch  rounded bg-stone-200 md:min-w-[32rem]`}
           >
-            <div className=' z-10 flex w-full flex-initial flex-row items-center justify-between border-b border-b-gray-400 bg-gray-300 px-6 py-2 drop-shadow-md'>
+            <div className=' z-10 flex w-full flex-initial flex-row items-center justify-between border-b border-b-stone-400 bg-stone-600 px-6 py-2 text-stone-400 drop-shadow-md'>
               <p className=' font-Primary text-2xl font-light uppercase'>
                 {title}
               </p>
@@ -46,7 +57,7 @@ export default function ModalDialog({
               )}
             </div>
             <div
-              className={`${contentStyle} flex-auto overflow-y-auto bg-gray-200 p-5`}
+              className={`${contentStyle}  flex-auto overflow-y-auto bg-stone-200 p-5 text-stone-700`}
             >
               {children}
             </div>
@@ -62,7 +73,7 @@ const containerVariants = {
   hidden: { opacity: 0 },
   open: {
     opacity: 1,
-    transition: { staggerChildren: 0.34, delayChildren: 0.4 },
+    transition: { staggerChildren: 0.2, delayChildren: 0.4 },
   },
   close: { opacity: 0, transition: { delay: 0.3 } },
 };

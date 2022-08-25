@@ -39,7 +39,7 @@ export default function OrderCategoriesList({
       animate={{ y: 0 }}
       exit={{ y: '-100%' }}
       transition={{ stiffness: 100 }}
-      className=' absolute top-0 left-0 right-0 bg-gray-200 px-5 py-5 md:rounded-2xl md:px-10'
+      className=' absolute top-0 left-0 right-0 bg-stone-500 px-5 py-5  md:px-10'
     >
       <div className=' grid grid-cols-1 gap-x-4 gap-y-2 md:grid-cols-2'>
         {categoriesList().map((category) => (
@@ -47,17 +47,17 @@ export default function OrderCategoriesList({
             key={category.id}
             onClick={() => handleClose(category)}
             type='button'
-            className={` w-full rounded-md text-left hover:bg-sky-400  ${
+            className={` w-full rounded-md text-left hover:bg-yellow-400  ${
               selectedCategory === category.id
-                ? 'bg-sky-700 text-white'
-                : 'bg-gray-100'
+                ? 'bg-yellow-600 text-stone-200'
+                : 'bg-stone-300 text-stone-600'
             }`}
           >
             <OrderCategoryCard category={category} />
           </button>
         ))}
       </div>
-      <div className='w-ful mt-5 flex items-center justify-center py-2'>
+      <div className='w-ful mt-5 flex items-center justify-center py-2  text-stone-300'>
         <button
           type='button'
           className=' inline-flex items-center'

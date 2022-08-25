@@ -111,7 +111,7 @@ export default function ShopUsersForm({ onClose }: Props) {
             <p className=' font-Primary text-lg uppercase'>
               {user.displayName}
             </p>
-            <div className=' w-full font-Secondary text-base capitalize'>
+            <div className=' w-full font-Secondary text-base  lowercase'>
               <p className='text-base'>{user.email}</p>
             </div>
           </li>

@@ -5,44 +5,24 @@ import { useAppSelector } from '../../app/store/configureStore';
 import { useOutsideClick } from '../../app/utils/outsideClick';
 import AppPageHeader from '../../components/appPage/AppPageHeader';
 import AppPageSidebar from '../../components/appPage/AppPageSidebar';
-import AppButton from '../../components/common/AppButton';
-import { CogIcon } from '@heroicons/react/outline';
-import ShopWizard from '../../components/shop/ShopWizard';
 
 interface Props {
   children: React.ReactNode;
 }
 
 export default function AppPage({ children }: Props) {
-  const { user, roles } = useAppSelector((state) => state.account);
+  const { user, shopId, roles } = useAppSelector((state) => state.account);
   const { shop } = useAppSelector((state) => state.shop);
   const [sidebarExpanded, setSidebarExpanded] = useState(false);
   const node = useRef(null);
   const { pathname } = useLocation();
-  const [firstLaunch, setFirstLaunch] = useState(false);
 
   useOutsideClick(node, () => setSidebarExpanded(false));
   return (
     <>
-      {user && !shop && (
-        <div className=' flex h-10 w-full items-center justify-center bg-green-600 text-white'>
-          <div className=' inline-flex items-center gap-x-5'>
-            <p className=' font-Secondary text-sm'>{`Bienvenu Mr ${user.displayName}, Ceci est votre premier lancement, vous devez d'abords configurer l'application pour pouvoir l'utiliser. `}</p>
-
-            <AppButton
-              label='Configurer'
-              Icon={CogIcon}
-              genre='outline'
-              onClick={() => setFirstLaunch((prev) => !prev)}
-              className=' rounded-none bg-green-700'
-            />
-          </div>
-        </div>
-      )}
-
       <motion.div
         layout
-        className='flex min-h-screen w-screen select-none flex-row items-stretch justify-start overflow-hidden bg-gray-50'
+        className='flex max-h-screen min-h-screen w-screen select-none flex-row items-stretch justify-start overflow-hidden bg-stone-400 text-stone-500'
       >
         <AnimatePresence exitBeforeEnter>
           {sidebarExpanded && (
@@ -58,7 +38,7 @@ export default function AppPage({ children }: Props) {
               style={{
                 transformOrigin: 'left',
               }}
-              className='absolute top-0 left-0 bottom-0 z-30 flex h-screen w-full overflow-hidden bg-white drop-shadow-md md:w-full md:max-w-[400px]'
+              className='absolute top-0 left-0 bottom-0 z-30 flex h-screen w-full overflow-hidden bg-stone-300 drop-shadow-md md:w-full md:max-w-[400px]'
             >
               <AppPageSidebar
                 shop={shop}
@@ -78,7 +58,7 @@ export default function AppPage({ children }: Props) {
               className=' absolute top-0 left-0 right-0 bottom-0 z-20 hidden bg-black bg-opacity-60  backdrop-blur md:block'
             />
           )}
-          {user && pathname !== '/' && (
+          {user && shopId && (
             <AppPageHeader
               sidebarExpanded={sidebarExpanded}
               user={user}
@@ -96,7 +76,7 @@ export default function AppPage({ children }: Props) {
                 transition={{
                   stiffness: 100,
                 }}
-                className=' relative h-full w-full flex-auto overflow-y-auto overflow-x-hidden'
+                className=' relative h-full w-full flex-auto overflow-y-auto overflow-x-hidden md:flex'
               >
                 {children}
               </motion.div>
@@ -104,12 +84,6 @@ export default function AppPage({ children }: Props) {
           </AnimatePresence>
         </div>
       </motion.div>
-
-      {firstLaunch && (
-        <div className=' fixed top-0 left-0 right-0 bottom-0 bg-black bg-opacity-60 backdrop-blur-md'>
-          <ShopWizard onClose={() => setFirstLaunch(false)} />
-        </div>
-      )}
     </>
   );
 }

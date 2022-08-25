@@ -22,7 +22,7 @@ export default function AppPasswordInput({ className, ...props }: Props) {
         label={props.label}
         element={
           <input
-            className={`form-input w-full border-none  bg-transparent py-2 px-5 font-Secondary first-letter:uppercase placeholder:text-gray-400 placeholder:first-letter:uppercase focus:border-none focus:outline-none`}
+            className={`form-input w-full border-none  bg-transparent py-2 px-5 font-Secondary first-letter:uppercase placeholder:text-stone-400 placeholder:first-letter:uppercase focus:border-none focus:outline-none`}
             aria-label={props.label}
             type={isVisible ? 'text' : 'password'}
             {...props}
@@ -34,7 +34,8 @@ export default function AppPasswordInput({ className, ...props }: Props) {
             onClick={() => setIsVisible((prev) => !prev)}
             type='button'
             genre='none'
-            iconStyle=' text-black opacity-50 '
+            className=' border-none'
+            iconStyle=' text-stone-700  opacity-50 '
             Icon={!isVisible ? EyeIcon : EyeOffIcon}
           />
         }
@@ -50,26 +51,5 @@ export default function AppPasswordInput({ className, ...props }: Props) {
         </div>
       )}
     </div>
-    // <label className='flex flex-col gap-y-1'>
-    //   {props.label && <span className=' text-sm uppercase'>{props.label}</span>}
-    //   <input
-    //     className={`form-input autofill:text-white autofill:bg-red-500 dark:autofill:text-white border border-gray-400 focus:border-gray-400 focus:outline-none  focus:border  bg-transparent py-1 px-5 placeholder:first-letter:uppercase placeholder:text-gray-400 w-full  ${
-    //       fieldState.error
-    //         ? 'border-red-400 focus:border-red-400'
-    //         : 'border-gray-400 focus:border-gray-400'
-    //     }`}
-    //     aria-label={props.label}
-    //     type={'password'}
-    //     {...props}
-    //     {...field}
-    //   />
-    //   {fieldState.error && (fieldState.isDirty || fieldState.isTouched) && (
-    //     <div className='py-1 w-full'>
-    //       <p className={`w-full text-sm text-red-500 first-letter:uppercase `}>
-    //         {fieldState.error.message}
-    //       </p>
-    //     </div>
-    //   )}
-    // </label>
   );
 }

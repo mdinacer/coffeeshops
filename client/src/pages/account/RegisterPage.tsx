@@ -12,6 +12,7 @@ import AppDialog from '../../components/common/AppDialog';
 import AppButton from '../../components/common/AppButton';
 import { toast } from 'react-toastify';
 import AppLink from '../../components/common/AppLink';
+import ModalDialog from '../../components/common/ModalDialog';
 
 export default function RegisterPage() {
   const [errors, setErrors] = useState<string[]>([]);
@@ -51,117 +52,107 @@ export default function RegisterPage() {
   }
 
   return (
-    <Layout
-      className=''
-      dialogVisible={success}
-      dialogContent={
-        <AppDialog
-          title='Enregistré avec succès!'
-          className='max-w-lg bg-white'
-        >
-          <div>
-            <p className=' mb-5 font-Secondary text-base'>
-              Veuillez vérifier votre boite e-mail (y compris le courrier
-              indésirable) pour l'e-mail de vérification
-            </p>
-
-            <small className=' font-Secondary text-sm '>
-              Vous n'avez pas reçu l'e-mail ? Cliquez sur le bouton ci-dessous
-              pour renvoyer
-            </small>
-
-            <div className='mt-10 flex flex-row items-center justify-between gap-x-5'>
-              <AppButton
-                label="Ré-envoyer l'email"
-                genre='warning'
-                onClick={() => handleConfirmEmailResend()}
-              />
-              <AppLink toPath='/' label='Fermer' genre='info' />
-            </div>
-          </div>
-        </AppDialog>
-      }
-    >
-      <div className='flex h-auto w-full items-center justify-center p-5 lg:p-20'>
-        <div className='w-full lg:max-w-md '>
-          <p className='pb-10 text-center text-4xl uppercase lg:text-7xl'>
-            Inscription
+    <>
+      <ModalDialog active={success} title='Success'>
+        <div>
+          <p className=' mb-5 font-Secondary text-base'>
+            Veuillez vérifier votre boite e-mail (y compris le courrier
+            indésirable) pour l'e-mail de vérification
           </p>
 
-          <form
-            autoComplete='name'
-            onSubmit={handleSubmit(submitForm)}
-            className='grid w-full grid-flow-row  gap-4'
-          >
-            <TextInput
-              autoComplete='name'
-              type='text'
-              control={control}
-              label='Nom'
-              name='displayName'
-              placeholder=''
-            />
-            <TextInput
-              autoComplete='username'
-              type='text'
-              control={control}
-              label="Nom d'utilisateur"
-              name='username'
-              placeholder=''
-            />
-            <TextInput
-              autoComplete='email'
-              type='email'
-              control={control}
-              label='Email'
-              name='email'
-              placeholder=''
-            />
+          <small className=' font-Secondary text-sm '>
+            Vous n'avez pas reçu l'e-mail ? Cliquez sur le bouton ci-dessous
+            pour renvoyer
+          </small>
 
-            <PasswordInput
-              autoComplete='new-password'
-              control={control}
-              label='Mot de passe'
-              name='password'
-              placeholder=''
+          <div className='mt-10 flex flex-row items-center justify-between gap-x-5'>
+            <AppButton
+              label="Ré-envoyer l'email"
+              genre='warning'
+              onClick={() => handleConfirmEmailResend()}
             />
-            <PasswordInput
-              autoComplete='repeat-password'
-              control={control}
-              label='Confirmation'
-              name='password2'
-              placeholder=''
-            />
-
-            <input
-              disabled={!isValid}
-              className={`${
-                isValid
-                  ? ' cursor-pointer bg-sky-500 text-white '
-                  : ' bg-gray-200 text-gray-500 '
-              }   mb-5 w-full py-2 px-5 uppercase`}
-              type='submit'
-              value={isSubmitting ? 'Inscription en cours' : 'Inscrire'}
-            />
-            <div className=' mb-5 text-red-500'>
-              {errors.map((error, index) => (
-                <p className='mb-1 text-sm' key={index}>
-                  {error}
-                </p>
-              ))}
-            </div>
-          </form>
-          <Link
-            to={loginPath}
-            className='text-center underline underline-offset-4'
-          >
-            <p className=' font-Secondary text-lg '>
-              Vous êtes deja inscrit, Connectez vous.
-            </p>
-          </Link>
+            <AppLink toPath='/' label='Fermer' genre='info' />
+          </div>
         </div>
-      </div>
-    </Layout>
+      </ModalDialog>
+      <Layout className=' flex items-center justify-center 2xl:max-w-none'>
+        <div className='flex h-auto w-full items-center justify-center p-5 lg:p-20'>
+          <div className='w-full lg:max-w-md '>
+            <p className='pb-10 text-center text-4xl uppercase lg:text-7xl'>
+              Inscription
+            </p>
+
+            <form
+              autoComplete='name'
+              onSubmit={handleSubmit(submitForm)}
+              className='grid w-full grid-flow-row  gap-4'
+            >
+              <TextInput
+                autoComplete='name'
+                type='text'
+                control={control}
+                label='Nom'
+                name='displayName'
+                placeholder=''
+              />
+              <TextInput
+                autoComplete='username'
+                type='text'
+                control={control}
+                label="Nom d'utilisateur"
+                name='username'
+                placeholder=''
+              />
+              <TextInput
+                autoComplete='email'
+                type='email'
+                control={control}
+                label='Email'
+                name='email'
+                placeholder=''
+              />
+
+              <PasswordInput
+                autoComplete='new-password'
+                control={control}
+                label='Mot de passe'
+                name='password'
+                placeholder=''
+              />
+              <PasswordInput
+                autoComplete='new-password'
+                control={control}
+                label='Confirmation'
+                name='password2'
+                placeholder=''
+              />
+
+              <AppButton
+                disabled={!isValid}
+                type='submit'
+                genre='primary'
+                label={isSubmitting ? 'Inscription en cours' : 'Inscrire'}
+              />
+              <div className=' mb-5 text-red-500'>
+                {errors.map((error, index) => (
+                  <p className='mb-1 text-sm' key={index}>
+                    {error}
+                  </p>
+                ))}
+              </div>
+            </form>
+            <Link
+              to={loginPath}
+              className='text-center underline underline-offset-4'
+            >
+              <p className=' font-Secondary text-lg '>
+                Vous êtes deja inscrit, Connectez vous.
+              </p>
+            </Link>
+          </div>
+        </div>
+      </Layout>
+    </>
   );
 }
 

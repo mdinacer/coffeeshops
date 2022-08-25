@@ -19,8 +19,8 @@ export default function useManagerHistory() {
       const params = getAxiosHistoryParams(historyParams);
       const result: any = await agent.ShopHistory.list(params);
       if (result) {
-        const { items, ...metaData } = result;
-        setHistory(items);
+        const { items, metaData } = result;
+        setHistory(result);
         setMetaData(metaData);
       }
       setHistoryLoaded(true);

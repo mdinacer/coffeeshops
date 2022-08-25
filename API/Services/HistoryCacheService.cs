@@ -1,5 +1,9 @@
+using System.ComponentModel.DataAnnotations;
 using System.Text.Json;
+using API.Data;
 using API.DTO;
+using API.Models;
+using Microsoft.OpenApi.Extensions;
 using StackExchange.Redis;
 
 namespace API.Services
@@ -61,6 +65,76 @@ namespace API.Services
 
             return await GetHistoryAsync(shopId);
         }
+
+
+        public async Task CreateHistoryElement(HttpContext httpContext, User user, string shopId, object entity)
+        {
+            ShopEntityType elementType;
+            string entityId;
+
+            switch (entity)
+            {
+                case Agent agent:
+                    elementType = agent.Type == AgentType.client ? ShopEntityType.client : ShopEntityType.provider;
+                    entityId = agent.Id;
+                    break;
+                case Operation operation:
+                    elementType = operation.Type == ShopOperationType.sale ? ShopEntityType.order : ShopEntityType.purchase;
+                    entityId = operation.Id;
+                    break;
+
+                case MoneyTransaction transaction:
+                    elementType = ShopEntityType.transaction;
+                    entityId = transaction.Id;
+                    break;
+
+                case Shop shop:
+                    elementType = ShopEntityType.shop;
+                    entityId = shop.Id;
+                    break;
+
+                case Product product:
+                    elementType = ShopEntityType.product;
+                    entityId = product.Id;
+                    break;
+
+                case UserProfile profile:
+                    elementType = ShopEntityType.profile;
+                    entityId = profile.Id;
+                    break;
+
+                default:
+                    elementType = ShopEntityType.order;
+                    entityId = string.Empty;
+                    break;
+            }
+
+
+            if (user == null) return;
+            var action = httpContext.Request.Method switch
+            {
+                "POST" => ShopEntityAction.create,
+                "PUT" => ShopEntityAction.update,
+                "DELETE" => ShopEntityAction.delete,
+                _ => ShopEntityAction.create
+            };
+
+            var element = new HistoryElementDto
+            {
+                Id = Guid.NewGuid().ToString(),
+                Date = DateTime.UtcNow,
+                UserId = user.Id,
+                Username = user.UserName,
+                Action = action,
+                ActionName = action.GetAttributeOfType<DisplayAttribute>().Name!,
+                EntityType = elementType,
+                EntityName = elementType.GetAttributeOfType<DisplayAttribute>().Name!,
+                EntityId = entityId
+            };
+
+            await UpdateHistoryAsync(shopId, element);
+        }
+
 
     }
 }

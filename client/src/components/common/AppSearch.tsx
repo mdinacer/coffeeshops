@@ -21,7 +21,7 @@ export default function AppSearch({ initialValue, onSearch }: Props) {
   }, [searchTerm]);
 
   return (
-    <div className=' flex w-full flex-row items-center rounded-lg  border border-gray-300 bg-gray-100 px-4 xl:max-w-sm'>
+    <div className=' flex w-full flex-row items-center rounded-lg  border border-stone-400 bg-stone-300 px-4 xl:max-w-sm'>
       <div>
         <SearchIcon className='h-6 w-6' />
       </div>

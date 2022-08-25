@@ -5,5 +5,6 @@ export interface ProductParams {
     searchTerm?: string | null;
     categoryId?: string | null;
     showcase?: boolean | null;
+    paginate?: boolean | null;
 }
 

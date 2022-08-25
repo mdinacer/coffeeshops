@@ -34,7 +34,7 @@ export default function AppPageSidebar({ user, roles, shop, onClose }: Props) {
   };
 
   const linkStyle = (isActive: boolean) => {
-    return `inline-flex items-center w-full hover:bg-sky-400 hover:opacity-100 hover:text-white py-1 px-4 rounded ${
+    return `inline-flex items-center w-full hover:bg-stone-500 hover:opacity-100 text-stone-600 text-lg hover:text-stone-300 py-1 px-4 rounded ${
       isActive ? 'font-semibold opacity-100' : 'font-normal opacity-60'
     }`;
   };
@@ -44,7 +44,7 @@ export default function AppPageSidebar({ user, roles, shop, onClose }: Props) {
   }
   return (
     <div className='  flex h-full w-full flex-col p-5'>
-      <div className=' flex flex-initial flex-row items-center justify-between border-b border-b-gray-200 pb-5'>
+      <div className=' flex flex-initial flex-row items-center justify-between border-b border-b-stone-400 pb-5'>
         <Link
           to={'/'}
           className=' flex w-full items-center gap-x-2 md:justify-center md:gap-x-5'
@@ -89,30 +89,13 @@ export default function AppPageSidebar({ user, roles, shop, onClose }: Props) {
           ))}
         </div>
 
-        {user && shop && (
-          <div className='flex flex-col  gap-y-4'>
-            {memberPages.map(({ title, path, Icon }, index) => (
-              <NavLink
-                onClick={onClose}
-                key={index}
-                to={path}
-                state={{ from: pathname }}
-                className={({ isActive }) => linkStyle(isActive)}
-              >
-                <Icon className='mr-5 h-6 w-6' />
-                <span className=' font-Secondary'>{title}</span>
-              </NavLink>
-            ))}
-          </div>
-        )}
-
         {isOwner() && (
           <div className='flex flex-col  gap-y-4 py-1 px-4'>
             {moderatorPages.map(({ title, Icon, items }, index) => (
               <div className='w-full' key={index}>
                 <div className='inline-flex w-full items-center'>
                   <Icon className='mr-5 h-6 w-6' />
-                  <span className=' font-Secondary'>{title}</span>
+                  <span className=' font-Secondary text-lg'>{title}</span>
                 </div>
                 <div className='ml-6'>
                   {items.map(({ title, path }, index) => (

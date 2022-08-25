@@ -3,6 +3,7 @@ import { useState } from 'react';
 import useManageTransactions from '../../app/hooks/manager/useManageTransactions';
 import ListPageLayout from '../../app/layout/ListPageLayout';
 import { ShopTransaction } from '../../app/models/shopTransaction';
+import { formatNumber } from '../../app/utils/utils';
 import AppButton from '../../components/common/AppButton';
 import CollapsibleMenu from '../../components/common/CollapsibleMenu';
 import ModalDialog from '../../components/common/ModalDialog';
@@ -31,8 +32,8 @@ export default function TransactionsManagerPage() {
   }
 
   const stats = () => [
-    { title: 'Depot', value: `${totalIncoming.toFixed(2)} Da` },
-    { title: 'Retrait', value: `${totalOngoing.toFixed(2)} Da` },
+    { title: 'Depot', value: `${formatNumber(totalIncoming)} Da` },
+    { title: 'Retrait', value: `${formatNumber(totalOngoing)} Da` },
     {
       title: 'Différence',
       value: (
@@ -46,7 +47,7 @@ export default function TransactionsManagerPage() {
             className={` uppercase  ${
               totalIncoming < totalOngoing ? 'text-red-600' : ' text-green-600'
             }`}
-          >{`${Math.abs(totalIncoming - totalOngoing).toFixed(2)} Da`}</p>
+          >{`${formatNumber(Math.abs(totalIncoming - totalOngoing))} Da`}</p>
         </div>
       ),
     },
@@ -76,7 +77,6 @@ export default function TransactionsManagerPage() {
             label={'Ajouter'}
             Icon={PlusIcon}
             genre='info'
-            rounded
             onClick={() => setTransactionDialogVisible(true)}
           />
         }

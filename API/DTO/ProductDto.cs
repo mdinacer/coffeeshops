@@ -8,8 +8,9 @@ namespace API.DTO
         public string PublicId { get; set; }
         public string PictureUrl { get; set; }
         public decimal Price { get; set; }
-        // public int Quantity { get; set; }
-        // public int SoldQuantity { get; set; }
+        public int Quantity { get; set; }
+        public int MinQuantity { get; set; }
+        public int SoldQuantity { get; set; }
         public int Inventory { get; set; }
         public bool Showcase { get; set; }
         public bool UseInventory { get; set; }
@@ -33,6 +34,7 @@ namespace API.DTO
         public string PictureUrl { get; set; }
         public decimal Price { get; set; }
         public int Quantity { get; set; }
+        public int MinQuantity { get; set; }
         public int SoldQuantity { get; set; }
         public int Inventory { get; set; }
         public bool Showcase { get; set; }

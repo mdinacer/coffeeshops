@@ -1,11 +1,11 @@
-import {yupResolver} from '@hookform/resolvers/yup/dist/yup';
-import {useEffect} from 'react';
-import {FieldValues, useForm} from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
+import { useEffect } from 'react';
+import { FieldValues, useForm } from 'react-hook-form';
 import agent from '../../app/api/agent';
-import {UserProfile} from '../../app/models/userProfile';
-import {setProfile} from '../../app/slices/accountSlice';
-import {useAppDispatch, useAppSelector} from '../../app/store/configureStore';
-import {ProfileValidationSchema} from '../../app/validation/profileValidationSchema';
+import { UserProfile } from '../../app/models/userProfile';
+import { setProfile } from '../../app/slices/accountSlice';
+import { useAppDispatch, useAppSelector } from '../../app/store/configureStore';
+import { ProfileValidationSchema } from '../../app/validation/profileValidationSchema';
 import AppButton from '../common/AppButton';
 import TextInput from '../input/TextInput';
 
@@ -66,15 +66,17 @@ export default function ProfileForm({ onClose }: Props) {
   return (
     <form
       onSubmit={handleSubmit(submitData)}
-      className='flex flex-col gap-y-4 w-full'
+      className='flex w-full flex-col gap-y-4'
     >
       <TextInput
+        autoComplete='given-name'
         control={control}
         placeholder={''}
         label='Prénom'
         name={'firstName'}
       />
       <TextInput
+        autoComplete='family-name'
         control={control}
         placeholder={''}
         label='Nom'
@@ -91,7 +93,7 @@ export default function ProfileForm({ onClose }: Props) {
           name={'phone'}
         />
         <TextInput
-          autoComplete='mobile'
+          autoComplete='phone'
           control={control}
           placeholder={''}
           type='tel'
@@ -100,19 +102,21 @@ export default function ProfileForm({ onClose }: Props) {
         />
       </div>
       <TextInput
+        autoComplete='address-line1'
         control={control}
         placeholder={''}
         label='Address'
         name={'address1'}
       />
       <TextInput
+        autoComplete='address-line2'
         control={control}
         placeholder={''}
         label='Address auxiliaire'
         name={'address2'}
       />
 
-      <div className='w-full grid grid-cols-2 gap-x-5 mt-5'>
+      <div className='mt-5 grid w-full grid-cols-2 gap-x-5'>
         <AppButton
           label='Annuler'
           genre='secondary'

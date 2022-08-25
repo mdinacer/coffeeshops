@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { fr } from 'date-fns/locale';
 import NotFound from '../../errors/NotFound';
 import HomePage from '../../pages/home/HomePage';
@@ -8,14 +8,16 @@ import PrivateRoute from './PrivateRoute';
 import LoadingAnimation from './LoadingAnimation';
 import AppPage from '../../pages/AppPage';
 import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.min.css';
 import useNotifications from '../hooks/useNotifications';
 import { HubConnectionState } from '@microsoft/signalr';
 import useAppInitializer from '../hooks/useAppInitializer';
+import { useAppSelector } from '../store/configureStore';
+import 'react-toastify/dist/ReactToastify.min.css';
 
 export const locale = fr;
 
 function App() {
+  const { user, shopId } = useAppSelector((state) => state.account);
   const { connection, startConnection } = useNotifications();
   const { userLoaded, shopLoaded } = useAppInitializer();
 
@@ -27,7 +29,7 @@ function App() {
 
   if (!userLoaded && !shopLoaded)
     return (
-      <div className=' fixed top-0 left-0 right-0 bottom-0 z-50 flex select-none items-center justify-center border-sky-500 bg-gray-900 text-white'>
+      <div className=' fixed top-0 left-0 right-0 bottom-0 z-50 flex select-none items-center justify-center border-yellow-500 bg-gray-900 text-stone-100'>
         <div className='flex flex-col items-center justify-center'>
           <LoadingAnimation />
           <p className=' mt-5 font-Primary text-3xl font-thin uppercase lg:text-5xl'>
@@ -49,7 +51,33 @@ function App() {
       <ToastContainer position='bottom-right' hideProgressBar theme='colored' />
       <Routes>
         <Route path='/'>
-          <Route index element={<HomePage />} />
+          <Route
+            path='wizard'
+            element={
+              shopId ? (
+                <Navigate to={'/'} />
+              ) : (
+                <PrivateRoute owner>
+                  <Suspense fallback={<div />}>
+                    <ShopWizard />
+                  </Suspense>
+                </PrivateRoute>
+              )
+            }
+          />
+
+          <Route
+            index
+            element={
+              user ? (
+                <Suspense fallback={<div />}>
+                  <OrderPage />
+                </Suspense>
+              ) : (
+                <HomePage />
+              )
+            }
+          />
           <Route
             path='order'
             element={
@@ -59,18 +87,18 @@ function App() {
             }
           />
 
-          <Route path='shop'>
-            <Route
-              index
-              element={
-                <Suspense>
-                  <PrivateRoute>
-                    <ShopFormPage />
-                  </PrivateRoute>
-                </Suspense>
-              }
-            />
-          </Route>
+          {/* <Route path='shop'>
+              <Route
+                index
+                element={
+                  <Suspense>
+                    <PrivateRoute>
+                      <ShopFormPage />
+                    </PrivateRoute>
+                  </Suspense>
+                }
+              />
+            </Route> */}
           <Route path='reports'>
             <Route
               path='inventory'
@@ -240,7 +268,9 @@ const RegisterPage = lazy(() => import('../../pages/account/RegisterPage'));
 const ConfirmEmail = lazy(() => import('../../pages/account/ConfirmEmail'));
 const ProfilePage = lazy(() => import('../../pages/account/ProfilePage'));
 const OrderPage = lazy(() => import('../../pages/order/OrderPage'));
-const ShopFormPage = lazy(() => import('../../pages/shop/ShopFormPage'));
+//const ShopFormPage = lazy(() => import('../../pages/shop/ShopFormPage'));
+
+const ShopWizard = lazy(() => import('../../pages/shop/ShopWizardPage'));
 
 const OperationsPage = lazy(
   () => import('../../pages/operation/OperationsPage')

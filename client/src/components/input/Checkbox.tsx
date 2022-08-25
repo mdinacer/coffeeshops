@@ -14,11 +14,11 @@ export default function CheckboxInput(props: Props) {
   });
   return (
     <label
-      className={`flex-auto flex flex-row w-full  items-center  bg-gray-100 border border-gray-300 rounded-lg pl-4`}
+      className={`flex w-full flex-auto flex-row  items-center  rounded-lg border border-stone-400 bg-stone-300 pl-4`}
     >
       <div className='flex-auto'>
         {props.label && (
-          <p className=' min-w-[4rem] w-full text-sm uppercase  opacity-50 border-r border-gray-400  py-2  hover:text-sky-900'>
+          <p className=' w-full min-w-[4rem] border-r border-stone-400  py-2 text-sm uppercase   '>
             {props.label}
           </p>
         )}
@@ -33,11 +33,13 @@ export default function CheckboxInput(props: Props) {
           {...field}
         />
         <div
-          className={` flex items-center justify-center transition-all duration-300 px-2 py-0`}
+          className={` flex items-center justify-center px-2 py-0 transition-all duration-300`}
         >
           <CheckCircleIcon
             className={`h-7 w-7 transition-all duration-300   ${
-              field.value === true ? ' opacity-100 text-sky-500' : ' opacity-20'
+              field.value === true
+                ? ' text-yellow-500 opacity-100'
+                : ' opacity-20'
             }`}
           />
         </div>

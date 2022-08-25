@@ -12,6 +12,7 @@ import { agentsSelectors, fetchAgentAsync } from '../../app/slices/agentsSlice';
 import agent from '../../app/api/agent';
 import TextArea from '../input/TextArea';
 import { TransactionDirection } from '../../app/models/TransactionDirection';
+import { formatNumber } from '../../app/utils/utils';
 
 interface Props {
   shopAgentId?: string;
@@ -43,7 +44,7 @@ export default function PaymentDialog({ shopAgentId, type, onClose }: Props) {
     resolver: yupResolver(
       yup.object({
         agentId: yup.string().required().min(3),
-        description: yup.string().optional().nullable(),
+        // description: yup.string().optional().nullable(),
         amount: yup
           .number()
           .required()
@@ -137,7 +138,7 @@ export default function PaymentDialog({ shopAgentId, type, onClose }: Props) {
                 Total
               </small>
               <p className=' font-Primary text-2xl font-light'>
-                {shopAgent.total.toFixed(2)}
+                {formatNumber(shopAgent.total)}
                 <span className='font-secondary text-xs uppercase'> DA</span>
               </p>
             </div>
@@ -146,7 +147,7 @@ export default function PaymentDialog({ shopAgentId, type, onClose }: Props) {
                 Payé
               </small>
               <p className=' font-Primary text-2xl font-light'>
-                {shopAgent.paid.toFixed(2)}
+                {formatNumber(shopAgent.paid)}
                 <span className='font-secondary text-xs uppercase'> DA</span>
               </p>
             </div>
@@ -161,7 +162,7 @@ export default function PaymentDialog({ shopAgentId, type, onClose }: Props) {
                     : ' font-light text-inherit'
                 }`}
               >
-                <span>{shopAgent.debt.toFixed(2)}</span>
+                <span>{formatNumber(shopAgent.debt)}</span>
                 <span className='font-secondary text-xs uppercase'> DA</span>
               </p>
             </div>
@@ -181,13 +182,13 @@ export default function PaymentDialog({ shopAgentId, type, onClose }: Props) {
           max={shopAgent?.debt}
         />
 
-        <TextArea
+        {/* <TextArea
           control={control}
           placeholder={''}
           label='Description'
           rows={3}
           name={'description'}
-        />
+        /> */}
 
         <div className='mt-5 grid w-full grid-cols-2 gap-x-5'>
           <button
@@ -203,7 +204,7 @@ export default function PaymentDialog({ shopAgentId, type, onClose }: Props) {
             value={isSubmitting ? 'Enregistrement en cours' : 'Enregistrer'}
             className={`${buttonStyle} ${
               isValid
-                ? 'cursor-pointer bg-sky-500 text-white'
+                ? 'cursor-pointer bg-yellow-500 text-stone-100'
                 : ' bg-gray-400 text-gray-300'
             }`}
           />

@@ -1,5 +1,5 @@
-import {AnimatePresence} from 'framer-motion';
-import {OrderElement} from '../../app/models/order';
+import { AnimatePresence } from 'framer-motion';
+import { OrderElement } from '../../app/models/order';
 import OrderElementsListItem from './OrderElementsListItem';
 
 interface Props {
@@ -27,7 +27,7 @@ export default function OrderElementsList({
   return (
     <div className=' flex flex-col gap-y-2'>
       <AnimatePresence>
-        {elements.map((element, index) => (
+        {elements.map((element) => (
           <OrderElementsListItem
             key={element.productId}
             element={element}

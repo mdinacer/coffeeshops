@@ -11,6 +11,7 @@ export default function HistoryManagerPage() {
     setPageNumber(page);
   }
   if (historyLoading) return <LoadingComponent />;
+
   return (
     <ListPageLayout
       title={'Historique'}

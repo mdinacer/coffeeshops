@@ -1,4 +1,4 @@
-import { SearchIcon, XIcon } from '@heroicons/react/solid';
+import { SearchIcon } from '@heroicons/react/solid';
 import { useState } from 'react';
 import { productsList } from '../../app/data/productsList';
 
@@ -17,16 +17,10 @@ export default function ProductGalleryForm({ onExit }: Props) {
             .replace(/\s+/g, '')
             .includes(query.toLowerCase().replace(/\s+/g, ''))
         );
+
   return (
     <div className='relative flex max-h-full  flex-1 flex-col gap-y-5  '>
-      <button
-        type='button'
-        className='top-0 right-4  ml-auto md:absolute md:ml-0'
-        onClick={() => onExit()}
-      >
-        <XIcon className='h-6 w-6' />
-      </button>
-      <div className=' mr-auto flex w-full max-w-md  flex-initial flex-row items-center rounded-lg bg-gray-100 px-5'>
+      <div className=' mr-auto flex w-full max-w-md  flex-initial flex-row items-center rounded-lg bg-stone-100 px-5'>
         <SearchIcon className='mr-2 h-6 w-6' />
         <input
           type='search'
@@ -36,18 +30,18 @@ export default function ProductGalleryForm({ onExit }: Props) {
         />
       </div>
       <div className=' flex-auto overflow-y-auto overscroll-none pr-3 '>
-        <div className='grid gap-4  pb-10 md:grid-cols-3'>
+        <div className='grid gap-4  pb-10 md:grid-cols-4 xl:grid-cols-5'>
           {filteredProducts.map((product, index) => (
             <button
               typeof='button'
               onClick={() => onExit(product)}
               key={index}
-              className=' rounded-md  border border-gray-300  bg-gray-200 lg:transition-all lg:duration-200 lg:hover:drop-shadow-md'
+              className=' rounded-md  border border-stone-300  bg-white lg:transition-all lg:duration-200 lg:hover:drop-shadow-md'
             >
               <div className=' flex flex-col p-2'>
-                <div className='mx-auto h-32  w-32 flex-initial'>
+                <div className='mx-auto h-32  w-full flex-initial'>
                   <img
-                    className='h-full w-full object-scale-down'
+                    className='h-full max-h-[128px] w-full object-scale-down'
                     src={product.pictureUrl}
                     alt={product.name}
                   />
@@ -56,11 +50,10 @@ export default function ProductGalleryForm({ onExit }: Props) {
                   <p className='my-auto text-center font-Secondary text-xl font-light capitalize'>
                     {product.name}
                   </p>
-                  {product.description && (
-                    <p className=' text-center font-Secondary text-base font-thin capitalize'>
-                      {product.description}
-                    </p>
-                  )}
+
+                  <p className=' text-center font-Secondary text-base font-thin capitalize'>
+                    {product.description || product.category}
+                  </p>
                 </div>
               </div>
             </button>

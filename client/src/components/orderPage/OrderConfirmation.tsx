@@ -5,6 +5,7 @@ import useAgents from '../../app/hooks/useAgents';
 import { OperationElement } from '../../app/models/OperationElement';
 import { OperationType } from '../../app/models/OperationType';
 import { ShopAgentType } from '../../app/models/shopAgentType';
+import { formatNumber } from '../../app/utils/utils';
 import AppButton from '../common/AppButton';
 import TextField from '../fields/TextField';
 import AgentForm from '../forms/AgentForm';
@@ -39,7 +40,7 @@ export default function OrderConfirmation({
 
   const agentsList = (): AgentListItem[] => {
     return [
-      { title: '', value: null },
+      { title: 'Inconnu', value: null },
       ...agents.map((agent) => ({
         title: agent.name,
         value: agent.id,
@@ -104,13 +105,13 @@ export default function OrderConfirmation({
         <div className=' inline-flex w-full items-end justify-between'>
           <p className='font-Primary text-base uppercase'>Total</p>
           <p className=' font-Primary text-2xl font-thin'>
-            {total.toFixed(2)} Da
+            {formatNumber(total)} Da
           </p>
         </div>
         <div className=' inline-flex w-full items-end justify-between'>
           <p className='font-Primary text-base uppercase'>Payé</p>
           <p className=' font-Primary text-2xl font-thin'>
-            {paidAmount.toFixed(2)} Da
+            {formatNumber(paidAmount)} Da
           </p>
         </div>
         <div className=' inline-flex w-full items-end justify-between'>
@@ -126,7 +127,7 @@ export default function OrderConfirmation({
                 : 'text-green-600'
             }`}
           >
-            {Math.ceil(remainAmount()).toFixed(2)} Da
+            {formatNumber(Math.ceil(remainAmount()))} Da
           </p>
         </div>
       </div>
@@ -154,7 +155,7 @@ export default function OrderConfirmation({
             <AppButton
               type='button'
               genre='outline'
-              className=' rounded-none border-none text-black'
+              className=' rounded-none border-none text-stone-700'
               Icon={UserAddIcon}
               onClick={() => setAgentFormVisible(true)}
               title={`Ajouter un ${

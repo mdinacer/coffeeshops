@@ -1,3 +1,4 @@
+using System.Text;
 using API.Data;
 using API.DTO;
 using API.Models;
@@ -62,6 +63,8 @@ namespace API.Controllers
                 ? TransactionDirection.incoming
                 : TransactionDirection.outgoing;
 
+
+
             var payment = new MoneyTransaction
             {
                 Id = Guid.NewGuid().ToString(),
@@ -77,15 +80,21 @@ namespace API.Controllers
 
             if (operations.Any())
             {
+                var description = new StringBuilder();
+                var agentType = agent.Type == AgentType.client ? "Client" : "Fournisseurs";
+                description.AppendLine($"Paiement de dette {agentType}");
                 var amount = createPayment.Amount;
 
                 operations.ForEach(operation =>
-                        {
-                            if (amount > 0)
-                            {
-                                amount = SetPayment(operation, amount);
-                            }
-                        });
+                {
+                    if (amount > 0)
+                    {
+                        description.AppendLine($"Commande du {operation.Date.ToString("dd/MM/yyyy")} - Montant {amount:N0}");
+                        amount = SetPayment(operation, amount);
+                    }
+                });
+
+                payment.Description = description.ToString();
             }
 
             agent.Paid += createPayment.Amount;

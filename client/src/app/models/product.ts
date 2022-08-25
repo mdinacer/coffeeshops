@@ -1,4 +1,4 @@
-import {ProductBatch} from "./ProductBatch";
+import { ProductBatch } from "./ProductBatch";
 
 export interface Product {
     id: string;
@@ -10,6 +10,7 @@ export interface Product {
     categoryId: string;
     category: string;
     quantity: number;
+    minQuantity: number;
     soldQuantity: number;
     inventory: number;
     showcase?: boolean;
@@ -30,6 +31,7 @@ export interface ProductFull {
     categoryId: string;
     category: string;
     quantity: number;
+    minQuantity: number;
     soldQuantity: number;
     inventory: number;
     showcase?: boolean;

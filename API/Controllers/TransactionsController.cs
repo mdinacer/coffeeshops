@@ -111,8 +111,9 @@ namespace API.Controllers
 
         private async void CreateTransactionHistoryElement(MoneyTransaction transaction)
         {
-            if (string.IsNullOrEmpty(ShopId)) return;
-            await CreateHistoryElement(_context, _history, ShopId, transaction);
+            var user = await UserAccessor.GetUser(HttpContext, _context);
+            if (string.IsNullOrEmpty(ShopId) || user == null) return;
+            await _history.CreateHistoryElement(HttpContext, user, ShopId, transaction);
         }
 
     }

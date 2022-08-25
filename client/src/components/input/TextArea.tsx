@@ -19,19 +19,19 @@ export default function TextArea(props: Props) {
   return (
     <div>
       <label
-        className={`flex-auto flex flex-col w-full gap-x-2 items-start bg-gray-100 border border-gray-300 rounded-lg px-4 `}
+        className={`flex w-full flex-auto flex-col items-start gap-x-2 rounded-lg border border-stone-400 bg-stone-300 px-4 `}
       >
-        <div className='flex-initial w-full'>
+        <div className='w-full flex-initial'>
           {props.label && (
-            <p className=' min-w-[4rem] w-full text-sm uppercase  opacity-50 border-b border-b-gray-300 py-2  hover:text-sky-900'>
+            <p className=' w-full min-w-[4rem] border-b border-b-stone-400  py-2 text-sm uppercase opacity-50  hover:text-yellow-900'>
               {props.label}
             </p>
           )}
         </div>
-        <div className='flex-auto w-full'>
+        <div className='w-full flex-auto'>
           <textarea
             rows={props.rows || 3}
-            className={`form-input border-none focus:outline-none bg-transparent py-1 resize-none  placeholder:first-letter:uppercase placeholder:text-gray-400 w-full`}
+            className={`form-input w-full resize-none border-none bg-transparent py-1  placeholder:text-gray-400 placeholder:first-letter:uppercase focus:outline-none`}
             aria-label={props.label}
             type={props.type}
             {...props}
@@ -40,7 +40,7 @@ export default function TextArea(props: Props) {
         </div>
       </label>
       {fieldState.error && (fieldState.isDirty || fieldState.isTouched) && (
-        <div className='py-1 w-full'>
+        <div className='w-full py-1'>
           <p className={`w-full text-sm text-red-500 first-letter:uppercase `}>
             {fieldState.error.message}
           </p>
@@ -51,7 +51,7 @@ export default function TextArea(props: Props) {
     //   {props.label && <span className=' text-sm uppercase'>{props.label}</span>}
     //   <textarea
     //     rows={props.rows || 3}
-    //     className={`form-input autofill:text-white autofill:bg-red-500 dark:autofill:text-white border border-gray-400 focus:border-gray-400 focus:outline-none  focus:border  bg-transparent py-1 px-5 placeholder:first-letter:uppercase placeholder:text-gray-400 w-full  ${
+    //     className={`form-input autofill:text-stone-100 autofill:bg-red-500 dark:autofill:text-stone-100 border border-gray-400 focus:border-gray-400 focus:outline-none  focus:border  bg-transparent py-1 px-5 placeholder:first-letter:uppercase placeholder:text-gray-400 w-full  ${
     //       fieldState.error
     //         ? 'border-red-400 focus:border-red-400'
     //         : 'border-gray-400 focus:border-gray-400'

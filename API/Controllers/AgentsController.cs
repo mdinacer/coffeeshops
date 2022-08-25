@@ -72,7 +72,7 @@ namespace API.Controllers
         {
             createAgent.Name = createAgent.Name.Trim().ToLower();
 
-            if (_context.Agents.Any(a => a.Name.Equals(createAgent.Name)))
+            if (_context.Agents.Any(a => a.Name.Equals(createAgent.Name) && a.Type == createAgent.Type))
                 return BadRequest(new ProblemDetails { Title = "Agent already registered" });
             var agent = new Agent
             {
@@ -146,8 +146,9 @@ namespace API.Controllers
 
         private async void CreateAgentHistoryElement(Agent agent)
         {
-            if (string.IsNullOrEmpty(ShopId)) return;
-            await CreateHistoryElement(_context, _history, ShopId, agent);
+            var user = await UserAccessor.GetUser(HttpContext, _context);
+            if (string.IsNullOrEmpty(ShopId) || user == null) return;
+            await _history.CreateHistoryElement(HttpContext, user, ShopId, agent);
         }
     }
 }
