@@ -1,5 +1,9 @@
-import {SortAscendingIcon, SortDescendingIcon} from '@heroicons/react/solid';
-import {useState} from 'react';
+import {
+  BarsArrowDownIcon,
+  BarsArrowUpIcon,
+} from '@heroicons/react/24/outline';
+
+import { useState } from 'react';
 import DropDown from '../input/DropDown';
 
 interface Props {
@@ -32,7 +36,7 @@ export default function AppSort({ items, initialValue, onSort }: Props) {
       }}
       button={
         <button
-          className='h-full w-full flex items-center justify-center px-2'
+          className='flex h-full w-full items-center justify-center px-2'
           type='button'
           title={`Ordre ${isAscending ? 'Ascendant' : 'Descendant'}`}
           onClick={() => {
@@ -43,9 +47,9 @@ export default function AppSort({ items, initialValue, onSort }: Props) {
           }}
         >
           {isAscending ? (
-            <SortAscendingIcon className='h-6 w-6' />
+            <BarsArrowUpIcon className='h-6 w-6' />
           ) : (
-            <SortDescendingIcon className='h-6 w-6' />
+            <BarsArrowDownIcon className='h-6 w-6' />
           )}
         </button>
       }

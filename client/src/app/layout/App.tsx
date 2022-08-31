@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { fr } from 'date-fns/locale';
 import NotFound from '../../errors/NotFound';
@@ -17,19 +17,31 @@ import 'react-toastify/dist/ReactToastify.min.css';
 export const locale = fr;
 
 function App() {
-  const { user, shopId } = useAppSelector((state) => state.account);
+  const { user, shopId, userId } = useAppSelector((state) => state.account);
   const { connection, startConnection } = useNotifications();
-  const { userLoaded, shopLoaded } = useAppInitializer();
+  const { loadUser, loadShop } = useAppInitializer();
+  const [userLoaded, setUserLoaded] = useState(false);
+  const [shopLoaded, setShopLoaded] = useState(false);
 
   useEffect(() => {
-    if (connection && connection.state === HubConnectionState.Disconnected) {
+    loadUser()
+      .then(() => {
+        setUserLoaded(true);
+        loadShop();
+        setShopLoaded(true);
+      })
+      .catch((error) => console.log(error));
+  }, []);
+
+  useEffect(() => {
+    if (connection && connection.state !== HubConnectionState.Connected) {
       startConnection(connection);
     }
   }, [connection]);
 
   if (!userLoaded && !shopLoaded)
     return (
-      <div className=' fixed top-0 left-0 right-0 bottom-0 z-50 flex select-none items-center justify-center border-yellow-500 bg-gray-900 text-stone-100'>
+      <div className=' fixed top-0 left-0 right-0 bottom-0 z-50 flex select-none items-center justify-center border-yellow-500 bg-stone-900 text-stone-100'>
         <div className='flex flex-col items-center justify-center'>
           <LoadingAnimation />
           <p className=' mt-5 font-Primary text-3xl font-thin uppercase lg:text-5xl'>
@@ -48,7 +60,12 @@ function App() {
 
   return (
     <AppPage>
-      <ToastContainer position='bottom-right' hideProgressBar theme='colored' />
+      <ToastContainer
+        newestOnTop
+        position='bottom-right'
+        hideProgressBar
+        theme='colored'
+      />
       <Routes>
         <Route path='/'>
           <Route

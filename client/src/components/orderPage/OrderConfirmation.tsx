@@ -1,4 +1,4 @@
-import { UserAddIcon } from '@heroicons/react/solid';
+import { UserPlusIcon } from '@heroicons/react/24/solid';
 import { useState } from 'react';
 import agent from '../../app/api/agent';
 import useAgents from '../../app/hooks/useAgents';
@@ -39,13 +39,18 @@ export default function OrderConfirmation({
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const agentsList = (): AgentListItem[] => {
-    return [
-      { title: 'Inconnu', value: null },
-      ...agents.map((agent) => ({
-        title: agent.name,
-        value: agent.id,
-      })),
-    ];
+    return type === OperationType.sale
+      ? [
+          { title: 'Inconnu', value: null },
+          ...agents.map((agent) => ({
+            title: agent.name,
+            value: agent.id,
+          })),
+        ]
+      : agents.map((agent) => ({
+          title: agent.name,
+          value: agent.id,
+        }));
   };
 
   const isDebt = () => {
@@ -101,7 +106,7 @@ export default function OrderConfirmation({
 
   return (
     <div className='flex w-full flex-col items-stretch gap-y-5'>
-      <div className='flex flex-col gap-y-3 border-b border-b-gray-200 pb-4'>
+      <div className='flex flex-col gap-y-3 border-b border-b-stone-200 pb-4'>
         <div className=' inline-flex w-full items-end justify-between'>
           <p className='font-Primary text-base uppercase'>Total</p>
           <p className=' font-Primary text-2xl font-thin'>
@@ -156,7 +161,7 @@ export default function OrderConfirmation({
               type='button'
               genre='outline'
               className=' rounded-none border-none text-stone-700'
-              Icon={UserAddIcon}
+              Icon={UserPlusIcon}
               onClick={() => setAgentFormVisible(true)}
               title={`Ajouter un ${
                 agentType === ShopAgentType.client ? 'client' : 'fournisseur'

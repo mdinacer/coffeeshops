@@ -1,8 +1,7 @@
-namespace API.Models
+namespace API.Models;
+
+public enum AgentType
 {
-    public enum AgentType
-    {
-        client,
-        provider
-    }
+    client,
+    provider
 }

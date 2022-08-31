@@ -1,4 +1,4 @@
-import { SearchIcon, XIcon } from '@heroicons/react/solid';
+import { MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { useEffect, useState } from 'react';
 import TextField from '../fields/TextField';
 
@@ -23,7 +23,7 @@ export default function AppSearch({ initialValue, onSearch }: Props) {
   return (
     <div className=' flex w-full flex-row items-center rounded-lg  border border-stone-400 bg-stone-300 px-4 xl:max-w-sm'>
       <div>
-        <SearchIcon className='h-6 w-6' />
+        <MagnifyingGlassIcon className='h-6 w-6' />
       </div>
       <TextField
         inputStyles=' border-none px-0'
@@ -39,7 +39,7 @@ export default function AppSearch({ initialValue, onSearch }: Props) {
         button={
           searchTerm && (
             <button type='button' onClick={() => setSearchTerm('')}>
-              <XIcon className='h-5 w-5 opacity-50' />
+              <XMarkIcon className='h-5 w-5 opacity-50' />
             </button>
           )
         }

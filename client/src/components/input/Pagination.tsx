@@ -1,4 +1,4 @@
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid';
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 import { useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import { MetaData } from '../../app/models/pagination';
@@ -29,7 +29,7 @@ export default function Pagination({ metaData, onPageChange }: Props) {
             sur {totalCount} articles
           </p>
 
-          {metaData && (
+          {metaData && metaData.totalPages > 1 && (
             <ReactPaginate
               forcePage={pageNumber}
               className='flex w-auto flex-row items-center gap-x-3 py-2 '
@@ -41,6 +41,7 @@ export default function Pagination({ metaData, onPageChange }: Props) {
               onPageChange={({ selected }) => {
                 handlePageChange(selected);
               }}
+              initialPage={0}
               pageRangeDisplayed={3}
               pageCount={totalPages}
               previousLabel={<ChevronLeftIcon className='h-6 w-6' />}

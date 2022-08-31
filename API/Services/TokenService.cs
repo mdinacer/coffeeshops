@@ -28,10 +28,7 @@ public class TokenService
             new(ClaimTypes.Email, user.Email)
         };
 
-        if (user.ShopId != null)
-        {
-            claims.Add(new Claim("shopId", user.ShopId));
-        }
+        if (user.ShopId != null) claims.Add(new Claim("shopId", user.ShopId));
 
         var roles = await _userManager.GetRolesAsync(user);
 
@@ -44,7 +41,7 @@ public class TokenService
         {
             Subject = new ClaimsIdentity(claims),
             Expires = DateTime.UtcNow.AddMinutes(30),
-            SigningCredentials = credentials,
+            SigningCredentials = credentials
         };
 
         var tokenHandler = new JwtSecurityTokenHandler();

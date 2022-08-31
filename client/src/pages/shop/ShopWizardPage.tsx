@@ -1,10 +1,9 @@
 import {
   CheckCircleIcon,
   ChevronRightIcon,
-  CogIcon,
-} from '@heroicons/react/outline';
+  Cog6ToothIcon,
+} from '@heroicons/react/24/outline';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { useAppSelector } from '../../app/store/configureStore';
 import AppButton from '../../components/common/AppButton';
 import AppLink from '../../components/common/AppLink';
@@ -85,7 +84,7 @@ export default function ShopWizardPage() {
 
               {!isValid(0) && (
                 <AppButton
-                  Icon={CogIcon}
+                  Icon={Cog6ToothIcon}
                   label='Configurer'
                   onClick={() => setShopFormVisible(true)}
                   genre='info'
@@ -108,7 +107,7 @@ export default function ShopWizardPage() {
               {!isValid(1) && (
                 <AppButton
                   disabled={!shopId}
-                  Icon={CogIcon}
+                  Icon={Cog6ToothIcon}
                   label='Configurer'
                   onClick={() => setProfileFormVisible(true)}
                   genre='info'
@@ -130,7 +129,7 @@ export default function ShopWizardPage() {
 
               <AppButton
                 disabled={!shopId}
-                Icon={CogIcon}
+                Icon={Cog6ToothIcon}
                 label='Configurer'
                 onClick={() => setUsersFormVisible(true)}
                 genre='info'

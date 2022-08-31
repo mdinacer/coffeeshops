@@ -15,13 +15,13 @@ export default function OrderProductsPagination({ metaData }: Props) {
           {Array.from(Array(metaData.totalPages).keys()).map((item) => (
             <div
               key={item}
-              className={`relative flex h-6 w-6  scale-125 items-center justify-center rounded-full bg-gray-300 `}
+              className={`relative flex h-6 w-6  scale-125 items-center justify-center rounded-full bg-stone-300 `}
               onClick={() => dispatch(setPageNumber(item + 1))}
             >
               {metaData.currentPage === item + 1 && (
                 <motion.div
                   layoutId='highlight'
-                  className={`h-6 w-6 rounded-full border-2  border-gray-400     bg-yellow-500`}
+                  className={`h-6 w-6 rounded-full border-2  border-stone-400     bg-yellow-500`}
                 ></motion.div>
               )}
             </div>

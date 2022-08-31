@@ -1,4 +1,4 @@
-import { PlusIcon } from '@heroicons/react/solid';
+import { PlusIcon } from '@heroicons/react/24/solid';
 import { useEffect, useState } from 'react';
 import useOperations from '../../app/hooks/useOperations';
 import ListPageLayout from '../../app/layout/ListPageLayout';
@@ -50,9 +50,6 @@ export default function OperationsPage() {
     return 0;
   };
 
-  useEffect(() => {
-    dispatch(setOperationParams(initParams()));
-  }, [dispatch]);
   return (
     <>
       <ListPageLayout
@@ -93,13 +90,13 @@ export default function OperationsPage() {
           />
         }
         actionButton={
-          operationType === OperationType[1] ? (
+          operationType === OperationType[1].toString() ? (
             <AppLink
               className=' w-full md:w-auto '
               label={'Ajouter une vente'}
               Icon={PlusIcon}
               toPath={'/order'}
-              genre='info'
+              genre='primary'
             />
           ) : (
             <AppButton
@@ -113,20 +110,22 @@ export default function OperationsPage() {
         }
       />
 
-      <ModalDialog
-        active={purchaseFormVisible}
-        title='Ajouter un achat'
-        contentStyle='p-5'
-      >
-        <PurchaseOperationForm
-          onClose={(value) => {
-            if (value) {
-              dispatch(addOperation(value));
-            }
-            setPurchaseFormVisible(false);
-          }}
-        />
-      </ModalDialog>
+      {purchaseFormVisible && (
+        <ModalDialog
+          active={purchaseFormVisible}
+          title='Ajouter un achat'
+          contentStyle='p-5'
+        >
+          <PurchaseOperationForm
+            onClose={(value) => {
+              if (value) {
+                dispatch(addOperation(value));
+              }
+              setPurchaseFormVisible(false);
+            }}
+          />
+        </ModalDialog>
+      )}
 
       <ModalDialog
         active={selectedOperation != null}
@@ -150,13 +149,4 @@ export default function OperationsPage() {
       </ModalDialog>
     </>
   );
-}
-
-function initParams() {
-  return {
-    pageNumber: 1,
-    pageSize: 20,
-    orderBy: 'dateDesc',
-    showcase: undefined,
-  };
 }

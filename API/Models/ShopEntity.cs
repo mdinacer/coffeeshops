@@ -1,8 +1,7 @@
-namespace API.Models
+namespace API.Models;
+
+public class ShopEntity : BaseEntity
 {
-    public class ShopEntity : BaseEntity
-    {
-        public string ShopId { get; set; }
-        public Shop Shop { get; set; }
-    }
+    public string ShopId { get; set; }
+    public Shop Shop { get; set; }
 }

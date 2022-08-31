@@ -1,4 +1,4 @@
-import { ChevronDownIcon, ChevronRightIcon } from '@heroicons/react/solid';
+import { ChevronDownIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useRef, useState } from 'react';
 import { useOutsideClick } from '../../app/utils/outsideClick';
@@ -73,7 +73,7 @@ export default function DropDown({
                   exit={{ opacity: 0, y: -30 }}
                   key={'menu'}
                   layout
-                  className='absolute left-0 z-20 mt-3 w-full  min-w-[16rem] max-w-xl rounded-xl  border  border-stone-300 bg-stone-200 py-2 px-4 drop-shadow-md'
+                  className='absolute left-0 z-20 mt-3 max-h-[40vh]  w-full min-w-[16rem] max-w-xl overflow-y-auto rounded-xl  border  border-stone-300 bg-stone-200 py-2 px-4 drop-shadow-md'
                 >
                   <ul className='list-none'>
                     {items.map((item, index) => (

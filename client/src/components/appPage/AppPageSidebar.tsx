@@ -1,12 +1,11 @@
 import {
-  AdjustmentsIcon,
+  AdjustmentsVerticalIcon,
   ArrowLeftIcon,
-  CashIcon,
-  CogIcon,
+  ArrowRightOnRectangleIcon,
+  Cog6ToothIcon,
+  DocumentChartBarIcon,
   HomeIcon,
-  LogoutIcon,
-  ViewListIcon,
-} from '@heroicons/react/outline';
+} from '@heroicons/react/24/outline';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { Shop } from '../../app/models/shop';
 import { User } from '../../app/models/user';
@@ -34,7 +33,7 @@ export default function AppPageSidebar({ user, roles, shop, onClose }: Props) {
   };
 
   const linkStyle = (isActive: boolean) => {
-    return `inline-flex items-center w-full hover:bg-stone-500 hover:opacity-100 text-stone-600 text-lg hover:text-stone-300 py-1 px-4 rounded ${
+    return `inline-flex items-center w-full hover:bg-stone-500 hover:opacity-100 text-stone-600 text-xl hover:text-stone-300 py-1 px-4 rounded ${
       isActive ? 'font-semibold opacity-100' : 'font-normal opacity-60'
     }`;
   };
@@ -57,10 +56,10 @@ export default function AppPageSidebar({ user, roles, shop, onClose }: Props) {
             />
           </div>
           <div className='w-'>
-            <small className='font-Primary text-base font-thin uppercase'>
+            <small className='font-Primary text-base uppercase'>
               Cafétéria
             </small>
-            <p className=' font-Bebas font- text-3xl first-letter:text-red-500 md:text-3xl  lg:text-4xl'>
+            <p className=' font-Primary text-3xl first-letter:text-red-500 md:text-3xl  lg:text-4xl'>
               {shop ? shop.name : 'CoffeeShops'}
             </p>
           </div>
@@ -84,7 +83,7 @@ export default function AppPageSidebar({ user, roles, shop, onClose }: Props) {
               className={({ isActive }) => linkStyle(isActive)}
             >
               <Icon className='mr-5 h-6 w-6' />
-              <span className=' font-Secondary'>{title}</span>
+              <span className=' font-Secondary text-xl'>{title}</span>
             </NavLink>
           ))}
         </div>
@@ -95,7 +94,7 @@ export default function AppPageSidebar({ user, roles, shop, onClose }: Props) {
               <div className='w-full' key={index}>
                 <div className='inline-flex w-full items-center'>
                   <Icon className='mr-5 h-6 w-6' />
-                  <span className=' font-Secondary text-lg'>{title}</span>
+                  <span className=' font-Secondary text-2xl'>{title}</span>
                 </div>
                 <div className='ml-6'>
                   {items.map(({ title, path }, index) => (
@@ -140,7 +139,7 @@ export default function AppPageSidebar({ user, roles, shop, onClose }: Props) {
             onClick={logOut}
             className=' inline-flex items-center'
           >
-            <LogoutIcon className='mr-2 h-6 w-6 text-red-600' />
+            <ArrowRightOnRectangleIcon className='mr-2 h-6 w-6 text-red-600' />
             <span className=' font-Secondary text-sm uppercase'>
               {LOGOUT_TEXT}
             </span>
@@ -166,23 +165,21 @@ const managementItems = [
 
 const pages = [{ title: 'Accueil', path: '/', Icon: HomeIcon }];
 
-const memberPages = [{ title: 'Caisse', path: '/order', Icon: CashIcon }];
-
 const moderatorPages = [
   {
     title: 'Rapports',
     path: '',
-    Icon: ViewListIcon,
+    Icon: DocumentChartBarIcon,
     items: reportItems,
   },
   {
     title: 'Gestion',
     path: '',
-    Icon: CogIcon,
+    Icon: Cog6ToothIcon,
     items: managementItems,
   },
 ];
 
 const adminPage = [
-  { title: 'Paramétrage', path: '/settings', Icon: AdjustmentsIcon },
+  { title: 'Paramétrage', path: '/settings', Icon: AdjustmentsVerticalIcon },
 ];

@@ -78,7 +78,7 @@ export const fetchOperationAsync = createAsyncThunk<Operation, string>(
 function initParams(): OperationParams {
   return {
     pageNumber: 1,
-    pageSize: 20,
+    pageSize: 13,
     orderBy: 'name',
     type: OperationType.sale,
     startDate: new Date().toUTCString(),
@@ -91,7 +91,7 @@ export const operationSlice = createSlice({
     status: "idle",
     operationsLoaded: false,
     operationParams: initParams(),
-    operationType: OperationType[1],
+    operationType: "sale",
     metaData: null,
   }),
   reducers: {
@@ -102,7 +102,7 @@ export const operationSlice = createSlice({
         ...action.payload,
         pageNumber: 1,
       };
-      state.operationType = state.operationParams.type.toString();
+      state.operationType = state.operationParams.type === OperationType.sale ? "sale" : "purchase";
     },
 
     setPageNumber: (state, action) => {

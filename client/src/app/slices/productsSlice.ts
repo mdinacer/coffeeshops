@@ -69,6 +69,16 @@ export const fetchProductsAsync = createAsyncThunk<
     }
 });
 
+export const fetchProductAsync = createAsyncThunk<Product, string>
+    ('shop/fetchProductAsync', async (productId, thunkApi) => {
+        try {
+            const response: Product = await agent.Products.get(productId);
+            return response;
+        } catch (error: any) {
+            return thunkApi.rejectWithValue({ error: error.data });
+        }
+    });
+
 export const fetchCategoriesAsync = createAsyncThunk<Category[], void>(
     'shop/fetchCategoriesAsync',
     async (_, thunkApi) => {
@@ -122,8 +132,10 @@ export const productsSlice = createSlice({
         },
 
         setPageSize: (state, action) => {
-            state.productsLoaded = false;
+            console.log(action);
+
             state.productParams = { ...state.productParams, pageSize: action.payload, pageNumber: 1, };
+            state.productsLoaded = false;
         },
 
         setMetaData: (state, action) => {
@@ -163,6 +175,10 @@ export const productsSlice = createSlice({
 
         builder.addCase(fetchProductsAsync.rejected, (state) => {
             state.status = 'idle';
+        });
+
+        builder.addCase(fetchProductAsync.fulfilled, (state, action) => {
+            productsAdapter.upsertOne(state, action.payload);
         });
 
         builder.addCase(fetchCategoriesAsync.pending, (state) => {

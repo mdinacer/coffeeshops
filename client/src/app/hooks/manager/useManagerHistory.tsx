@@ -65,7 +65,7 @@ export default function useManagerHistory() {
 function initParams() {
   return {
     pageNumber: 1,
-    pageSize: 20,
+    pageSize: 1000,
     orderBy: 'date',
     element: undefined,
     action: undefined,

@@ -1,4 +1,4 @@
-import { ChevronUpIcon } from '@heroicons/react/solid';
+import { ChevronUpIcon } from '@heroicons/react/24/solid';
 import { motion } from 'framer-motion';
 import { useRef } from 'react';
 import { Category } from '../../app/models/category';
@@ -57,14 +57,14 @@ export default function OrderCategoriesList({
           </button>
         ))}
       </div>
-      <div className='w-ful mt-5 flex items-center justify-center py-2  text-stone-300'>
+      <div className='w-ful mt-5 flex items-center justify-center rounded-md bg-stone-300  py-2 text-stone-600'>
         <button
           type='button'
           className=' inline-flex items-center'
           onClick={() => handleClose()}
         >
           <ChevronUpIcon className='mr-2 h-6 w-6' />
-          <span className='font-Secondary uppercase'>Fermer</span>
+          <span className='font-Secondary text-lg capitalize'>Fermer</span>
         </button>
       </div>
     </motion.div>

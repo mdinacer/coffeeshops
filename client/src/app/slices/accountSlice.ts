@@ -7,6 +7,7 @@ import customHistory from '../layout/history';
 
 interface AccountState {
   user: User | null;
+  userId: string | null;
   token: string | null;
   profile: UserProfile | null;
   shopId: string | null;
@@ -17,6 +18,7 @@ interface AccountState {
 
 const initialState: AccountState = {
   user: null,
+  userId: null,
   profile: null,
   shopId: null,
   roles: [],
@@ -73,6 +75,8 @@ export const refreshToken = createAsyncThunk<User>(
   'account/refreshToken',
   async (_, thunkApi) => {
     try {
+      console.log("Refreshing Token");
+
       const user = await agent.Account.refreshToken();
       return user;
     } catch (error: any) {
@@ -115,6 +119,11 @@ export const accountSlice = createSlice({
         let claims = JSON.parse(atob(data));
         let roles = claims['role'];
         let shopId = claims['shopId'];
+        let nameId = claims['nameid'];
+
+        if (nameId) {
+          state.userId = nameId;
+        }
 
         if (shopId) {
           state.shopId = shopId;
@@ -148,6 +157,11 @@ export const accountSlice = createSlice({
       if (data) {
         let claims = JSON.parse(atob(data));
         let shopId = claims['shopId'];
+        let nameId = claims['nameid'];
+
+        if (nameId) {
+          state.userId = nameId;
+        }
         if (shopId) {
           state.shopId = shopId;
         }
@@ -187,6 +201,11 @@ export const accountSlice = createSlice({
         if (data) {
           let claims = JSON.parse(atob(data));
           let shopId = claims['shopId'];
+          let nameId = claims['nameid'];
+          if (nameId) {
+            state.userId = nameId;
+          }
+
           if (shopId) {
             state.shopId = shopId;
           }

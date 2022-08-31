@@ -1,4 +1,4 @@
-import { EyeIcon, EyeOffIcon } from '@heroicons/react/outline';
+import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import { useState } from 'react';
 import { useController, UseControllerProps } from 'react-hook-form';
 import AppButton from '../common/AppButton';
@@ -36,7 +36,7 @@ export default function AppPasswordInput({ className, ...props }: Props) {
             genre='none'
             className=' border-none'
             iconStyle=' text-stone-700  opacity-50 '
-            Icon={!isVisible ? EyeIcon : EyeOffIcon}
+            Icon={!isVisible ? EyeIcon : EyeSlashIcon}
           />
         }
       />

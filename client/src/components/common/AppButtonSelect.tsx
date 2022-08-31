@@ -27,7 +27,7 @@ export default function AppButtonSelect({
     <div className='flex h-full flex-row items-center gap-x-3'>
       {label && (
         <div className='flex-initial'>
-          <p className='w-max flex-initial overflow-hidden border-r  border-stone-400  pr-2 text-sm uppercase opacity-50  hover:text-yellow-900'>
+          <p className='w-max flex-initial overflow-hidden border-r  border-stone-400  pr-2 text-sm uppercase'>
             {label}
           </p>
         </div>

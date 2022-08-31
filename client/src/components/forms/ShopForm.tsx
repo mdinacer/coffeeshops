@@ -81,6 +81,14 @@ export default function ShopForm({ onClose }: Props) {
         showButtons
       />
 
+      <NumberInput
+        control={control}
+        placeholder={''}
+        name={'tablesCount'}
+        label='Nombre de tables'
+        showButtons
+      />
+
       {!isEdit && (
         <NumberInput
           control={control}

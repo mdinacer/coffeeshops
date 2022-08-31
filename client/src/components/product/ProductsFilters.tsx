@@ -1,6 +1,5 @@
-import { setPageSize, setProductParams } from '../../app/slices/productsSlice';
+import { setProductParams } from '../../app/slices/productsSlice';
 import { useAppDispatch, useAppSelector } from '../../app/store/configureStore';
-import AppPageSize from '../common/AppPageSize';
 import AppSearch from '../common/AppSearch';
 import AppSort from '../common/AppSort';
 
@@ -17,19 +16,16 @@ export default function ProductsFilters() {
     }
   };
 
-  const handlePageSizeChange = (count: number) => {
-    dispatch(setPageSize(count));
-  };
-
   return (
     <div className=' flex w-full flex-col items-end justify-start gap-5 lg:flex-row lg:justify-between'>
-      <AppSearch
-        onSearch={handleSearch}
-        initialValue={productParams.searchTerm}
-      />
-      <div className='grid w-full  grid-cols-1 items-end gap-5 md:grid-cols-2 lg:max-w-2xl'>
+      <div className='w-full  md:max-w-lg'>
+        <AppSearch
+          onSearch={handleSearch}
+          initialValue={productParams.searchTerm}
+        />
+      </div>
+      <div className='w-full  md:max-w-sm'>
         <AppSort items={orderFilters} onSort={handleSort} initialValue='name' />
-        <AppPageSize onChange={handlePageSizeChange} />
       </div>
     </div>
   );

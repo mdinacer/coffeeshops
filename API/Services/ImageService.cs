@@ -1,93 +1,89 @@
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 
-namespace API.Services
+namespace API.Services;
+
+public class ImageService
 {
-    public class ImageService
+    private readonly Cloudinary _cloudinary;
+
+    public ImageService(IConfiguration config)
     {
-        private readonly Cloudinary _cloudinary;
+        var account = new Account(
+            config["Cloudinary:CloudName"],
+            config["Cloudinary:ApiKey"],
+            config["Cloudinary:ApiSecret"]
+        );
 
-        public ImageService(IConfiguration config)
+        _cloudinary = new Cloudinary(account);
+    }
+
+    public async Task<ImageUploadResult> AddImageAsync(IFormFile file, string? folder = null,
+        ImageTransform? transform = null)
+    {
+        var uploadResult = new ImageUploadResult();
+
+        if (file.Length > 0)
         {
-            var account = new Account(
-                config["Cloudinary:CloudName"],
-                config["Cloudinary:ApiKey"],
-                config["Cloudinary:ApiSecret"]
-            );
+            await using var stream = file.OpenReadStream();
 
-            _cloudinary = new(account);
-        }
+            if (!string.IsNullOrEmpty(folder)) _cloudinary.CreateFolder(folder);
 
-        public async Task<ImageUploadResult> AddImageAsync(IFormFile file, string? folder = null,
-            ImageTransform? transform = null)
-        {
-            var uploadResult = new ImageUploadResult();
-
-            if (file.Length > 0)
+            var uploadParams = new ImageUploadParams
             {
-                await using var stream = file.OpenReadStream();
-
-                if (!string.IsNullOrEmpty(folder))
-                {
-                    _cloudinary.CreateFolder(folder);
-                }
-
-                var uploadParams = new ImageUploadParams
-                {
-                    File = new FileDescription(file.FileName, stream),
-                    Folder = $"{folder}",
-                    Format = "webp",
-                    Transformation = transform != null
-                        ? new Transformation()
-                            .Height(transform.Height)
-                            .Width(transform.Width)
-                            .Gravity(transform.Gravity)
-                            .Crop(transform.Crop.ToString())
-                            .FetchFormat("webp")
-                        : null
-                };
-                uploadResult = await _cloudinary.UploadAsync(uploadParams);
-            }
-
-            return uploadResult;
+                File = new FileDescription(file.FileName, stream),
+                Folder = $"{folder}",
+                Format = "webp",
+                Transformation = transform != null
+                    ? new Transformation()
+                        .Height(transform.Height)
+                        .Width(transform.Width)
+                        .Gravity(transform.Gravity)
+                        .Crop(transform.Crop.ToString())
+                        .FetchFormat("webp")
+                    : null
+            };
+            uploadResult = await _cloudinary.UploadAsync(uploadParams);
         }
 
-        public async Task<DeletionResult> DeleteImageAsync(string publicId)
-        {
-            var deleteParams = new DeletionParams(publicId);
-
-            var result = await _cloudinary.DestroyAsync(deleteParams);
-
-            return result;
-        }
+        return uploadResult;
     }
 
-    public class ImageTransform
+    public async Task<DeletionResult> DeleteImageAsync(string publicId)
     {
-        public int Height { get; set; } = 800;
-        public int Width { get; set; } = 600;
-        public CropMode Crop { get; set; } = CropMode.fit;
-        public string Gravity { get; set; } = "auto";
+        var deleteParams = new DeletionParams(publicId);
 
-        public ImageTransform()
-        {
-        }
+        var result = await _cloudinary.DestroyAsync(deleteParams);
 
-        public ImageTransform(int height, int width, CropMode crop)
-        {
-            Height = height;
-            Width = width;
-            Crop = crop;
-        }
+        return result;
     }
+}
 
-    public enum CropMode
+public class ImageTransform
+{
+    public ImageTransform()
     {
-        fill,
-        fit,
-        lfill,
-        fill_pad,
-        crop,
-        thumb
     }
+
+    public ImageTransform(int height, int width, CropMode crop)
+    {
+        Height = height;
+        Width = width;
+        Crop = crop;
+    }
+
+    public int Height { get; set; } = 800;
+    public int Width { get; set; } = 600;
+    public CropMode Crop { get; set; } = CropMode.fit;
+    public string Gravity { get; set; } = "auto";
+}
+
+public enum CropMode
+{
+    fill,
+    fit,
+    lfill,
+    fill_pad,
+    crop,
+    thumb
 }

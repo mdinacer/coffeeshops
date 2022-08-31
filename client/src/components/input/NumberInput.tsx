@@ -1,4 +1,4 @@
-import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/solid';
+import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/solid';
 import { useController, UseControllerProps } from 'react-hook-form';
 import ComponentWrapper from '../common/ComponentWrapper';
 
@@ -37,20 +37,25 @@ export default function NumberInput({
   return (
     <div className='w-full text-stone-600'>
       <ComponentWrapper
+        labelStyle=' min-w-[8rem] '
         label={props.label}
         element={
           <div className='flex flex-auto flex-row items-center overflow-hidden'>
-            <input
-              className={`form-input w-full border-none bg-transparent py-1 text-center font-Primary  text-lg  placeholder:text-stone-400 placeholder:first-letter:uppercase focus:border focus:outline-none`}
-              aria-label={props.label}
-              type={'number'}
-              {...props}
-              {...field}
-            />
+            <div className=' flex-auto'>
+              <input
+                className={`form-input w-full border-none bg-transparent py-1 text-center font-Primary  text-lg  placeholder:text-stone-400 placeholder:first-letter:uppercase focus:border focus:outline-none`}
+                aria-label={props.label}
+                type={'number'}
+                {...props}
+                {...field}
+              />
+            </div>
             {prefix && (
-              <p className=' flex-initial pr-2 font-Primary text-lg text-stone-400'>
-                {prefix}
-              </p>
+              <div className=' flex-initial'>
+                <p className=' w-16 flex-initial pr-2 text-center font-Primary text-lg text-stone-400'>
+                  {prefix}
+                </p>
+              </div>
             )}
           </div>
         }
@@ -58,6 +63,7 @@ export default function NumberInput({
           showButtons && (
             <div className='flex h-full flex-row items-stretch  justify-evenly overflow-hidden rounded-2xl  '>
               <button
+                tabIndex={-1}
                 onClick={handleDecrease}
                 disabled={+field.value <= (props.min || 0)}
                 type='button'
@@ -71,6 +77,7 @@ export default function NumberInput({
               </button>
 
               <button
+                tabIndex={-1}
                 onClick={handleIncrease}
                 type='button'
                 className={buttonStyle}

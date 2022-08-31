@@ -1,6 +1,9 @@
 /* @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100;300;400;500;700&display=swap'); */
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -50,11 +53,11 @@ select:-webkit-autofill:focus {
   padding: 0;
 }
 .react-datepicker__input-container input {
-  @apply form-input block  w-full rounded border border-gray-300 bg-stone-200 shadow-sm;
+  @apply form-input block  w-full rounded border border-stone-300 bg-stone-200 shadow-sm;
 }
 
 .react-datepicker-popper {
-  @apply z-40 w-72 rounded border-2 border-gray-200 bg-stone-200 px-3 py-2 text-sm shadow;
+  @apply z-40 w-72 rounded border-2 border-stone-200 bg-stone-200 px-3 py-2 text-sm shadow;
 }
 
 .react-datepicker-left {
@@ -66,7 +69,7 @@ select:-webkit-autofill:focus {
 }
 
 .react-datepicker__portal {
-  @apply absolute top-12 right-0 z-10 w-72 transform-none rounded border-2 border-gray-200 bg-stone-200 px-3 py-2 text-sm shadow;
+  @apply absolute top-12 right-0 z-10 w-72 transform-none rounded border-2 border-stone-200 bg-stone-200 px-3 py-2 text-sm shadow;
 }
 
 .react-datepicker__month-container {
@@ -78,7 +81,7 @@ select:-webkit-autofill:focus {
 }
 
 .react-datepicker__current-month {
-  @apply ml-2.5 text-lg font-semibold text-gray-800;
+  @apply ml-2.5 text-lg font-semibold text-stone-800;
 }
 
 .react-datepicker__week {
@@ -86,7 +89,7 @@ select:-webkit-autofill:focus {
 }
 
 .react-datepicker__day-names {
-  @apply flex justify-around text-center font-Primary text-lg font-thin text-gray-400;
+  @apply flex justify-around text-center font-Primary text-lg font-thin text-stone-400;
 }
 
 .react-datepicker__day-name {
@@ -98,15 +101,15 @@ select:-webkit-autofill:focus {
 }
 
 .react-datepicker__navigation--previous {
-  @apply right-12 flex h-8 w-8 items-center justify-center rounded transition hover:bg-gray-200;
+  @apply right-12 flex h-8 w-8 items-center justify-center rounded transition hover:bg-stone-200;
 }
 
 .react-datepicker__navigation--next {
-  @apply right-4 flex h-8 w-8 items-center justify-center rounded transition hover:bg-gray-200;
+  @apply right-4 flex h-8 w-8 items-center justify-center rounded transition hover:bg-stone-200;
 }
 
 .react-datepicker__day {
-  @apply mb-1 flex h-8 w-8 cursor-pointer items-center justify-center rounded py-1 font-Primary text-lg font-thin leading-loose text-gray-700 transition;
+  @apply mb-1 flex h-8 w-8 cursor-pointer items-center justify-center rounded py-1 font-Primary text-lg font-thin leading-loose text-stone-700 transition;
 }
 
 .react-datepicker__day--disabled {
@@ -114,11 +117,11 @@ select:-webkit-autofill:focus {
 }
 
 .react-datepicker__day--outside-month {
-  @apply text-gray-300;
+  @apply text-stone-300;
 }
 
 .react-datepicker__day--in-range {
-  @apply bg-gray-200;
+  @apply bg-stone-200;
 }
 
 .react-datepicker__day--in-selecting-range {
@@ -138,9 +141,9 @@ select:-webkit-autofill:focus {
 }
 
 .react-datepicker__day--range-start {
-  @apply bg-yellow-500 text-stone-100 hover:bg-stone-200 hover:text-gray-700;
+  @apply bg-yellow-500 text-stone-100 hover:bg-stone-200 hover:text-stone-700;
 }
 
 .react-datepicker__day--range-end {
-  @apply bg-yellow-500 text-stone-100 hover:bg-stone-200 hover:text-gray-700;
+  @apply bg-yellow-500 text-stone-100 hover:bg-stone-200 hover:text-stone-700;
 }

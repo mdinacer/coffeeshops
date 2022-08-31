@@ -30,7 +30,7 @@ export default function ListPageLayout({
       className={` ${className} ax-h-full flex flex-col items-stretch  gap-y-4 md:gap-y-5 `}
     >
       {(title || actionButton) && (
-        <div className='mb-5 flex w-full flex-col items-center justify-start gap-y-5 md:flex-row md:items-center md:justify-between '>
+        <div className='flex w-full flex-col items-center justify-start gap-y-5 md:flex-row md:items-center md:justify-between '>
           {title && (
             <h1
               className={` font-Primary text-4xl font-thin capitalize lg:text-5xl`}
@@ -45,7 +45,7 @@ export default function ListPageLayout({
       {stats && (
         <div className='flex flex-initial flex-col items-center justify-center gap-4 rounded-md border-y border-stone-300  py-3 md:flex-row  '>
           {stats.length > 0 && (
-            <div className=' grid w-full py-2 px-4 md:w-auto md:p-0 lg:grid-flow-col lg:gap-5'>
+            <div className=' grid w-full py-2 px-4 md:w-auto md:grid-flow-col md:gap-5 md:p-0'>
               {stats.map((item, index) => (
                 <StatItem key={index} title={item.title} value={item.value} />
               ))}

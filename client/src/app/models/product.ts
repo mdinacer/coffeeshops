@@ -46,6 +46,8 @@ export interface ProductSmall {
     id: string;
     name: string;
     price: number,
+    minQuantity: number;
+    useInventory?: boolean;
 }
 
 

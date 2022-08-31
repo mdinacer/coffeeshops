@@ -107,7 +107,7 @@ export default function ShopUsersForm({ onClose }: Props) {
       )}
       <ul className='my-5 flex flex-col items-stretch gap-y-5'>
         {users.map((user, index) => (
-          <li key={index} className='rounded-xl bg-gray-50 px-5 py-2'>
+          <li key={index} className='rounded-xl bg-stone-50 px-5 py-2'>
             <p className=' font-Primary text-lg uppercase'>
               {user.displayName}
             </p>

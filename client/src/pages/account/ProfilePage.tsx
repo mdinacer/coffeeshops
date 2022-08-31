@@ -1,9 +1,9 @@
 import {
   KeyIcon,
-  MailIcon,
-  PencilAltIcon,
+  EnvelopeIcon,
+  PencilSquareIcon,
   TrashIcon,
-} from '@heroicons/react/solid';
+} from '@heroicons/react/24/solid';
 import { useState } from 'react';
 import { useAppSelector } from '../../app/store/configureStore';
 import getRoleName from '../../app/utils/rolesNames';
@@ -74,13 +74,13 @@ export default function ProfilePage() {
           <div className='grid w-full grid-cols-1 gap-4 lg:grid-cols-4'>
             <AppButton
               label={'Modifier'}
-              Icon={PencilAltIcon}
+              Icon={PencilSquareIcon}
               onClick={() => setIsEdit(true)}
               genre='secondary'
             />
             <AppButton
               label={"Changer l'adresse email"}
-              Icon={MailIcon}
+              Icon={EnvelopeIcon}
               onClick={() => setIsEdit(true)}
               genre='secondary'
             />

@@ -1,12 +1,11 @@
-namespace API.Helpers
+namespace API.Helpers;
+
+public class ProductsParams : PaginationParams
 {
-    public class ProductsParams : PaginationParams
-    {
-        public string OrderBy { get; set; } = "name";
-        public string? SearchTerm { get; set; }
-        public string? CategoryId { get; set; }
-        public bool? Showcase { get; set; }
-        public bool? UseInventory { get; set; }
-        public bool Paginate { get; set; } = true;
-    }
+    public string OrderBy { get; set; } = "name";
+    public string? SearchTerm { get; set; }
+    public string? CategoryId { get; set; }
+    public bool? Showcase { get; set; }
+    public bool? UseInventory { get; set; }
+    public bool Paginate { get; set; } = true;
 }

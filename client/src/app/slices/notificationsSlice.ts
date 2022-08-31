@@ -1,32 +1,50 @@
 import { HubConnection, HubConnectionState } from "@microsoft/signalr";
-import { createSlice } from "@reduxjs/toolkit";
+import { createEntityAdapter, createSlice } from "@reduxjs/toolkit";
+import { NotificationElement } from "../models/notification";
+import { RootState } from "../store/configureStore";
 
 interface NotificationState {
-    status: HubConnectionState;
+    connectionSate: string;
     connection: HubConnection | null;
+    status: string,
 }
 
-const initialState: NotificationState = {
-    connection: null,
-    status: HubConnectionState.Disconnected,
-};
+
+const notificationsAdapter = createEntityAdapter<NotificationElement>({
+    selectId: (element) => element.entityId,
+});
+
+
 
 export const notificationsSlice = createSlice({
     name: "notifications",
-    initialState,
+    initialState: notificationsAdapter.getInitialState<NotificationState>({
+        connection: null,
+        connectionSate: HubConnectionState.Disconnected,
+        status: "idle"
+    }),
     reducers: {
         setConnection: (state, action) => {
             state.connection = action.payload;
         },
         setStatus: (state, action) => {
-            state.status = action.payload;
+            state.connectionSate = action.payload;
         },
 
-
+        addNotificationElement: notificationsAdapter.addOne,
+        updateNotificationElement: notificationsAdapter.updateOne,
+        removeNotificationElement: notificationsAdapter.removeOne,
     }
 });
+
+export const notificationSelectors = notificationsAdapter.getSelectors(
+    (state: RootState) => state.notifications
+);
 
 export const {
     setConnection,
     setStatus,
+    addNotificationElement,
+    updateNotificationElement,
+    removeNotificationElement,
 } = notificationsSlice.actions;

@@ -7,7 +7,7 @@ interface Props {
 
 export default function LoadingComponent({
   message = 'Chargement en cours...',
-  className = '  fixed top-0 left-0 right-0 bottom-0 z-50 flex select-none items-center justify-center border-yellow-500 bg-gray-900 text-stone-100  ',
+  className = '  fixed top-0 left-0 right-0 bottom-0 z-50 flex select-none items-center justify-center border-yellow-500 bg-stone-900 text-stone-100  ',
 }: Props) {
   return (
     <div className={`${className} `}>

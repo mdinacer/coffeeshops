@@ -23,7 +23,6 @@ export default function AgentPaymentsList({ agentId }: Props) {
       const result = await agent.Payments.list(id);
       if (result) {
         setPayments(result);
-        console.log(result);
       }
       setPaymentsLoaded(true);
     } catch (error) {

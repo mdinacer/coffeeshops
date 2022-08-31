@@ -92,7 +92,7 @@ export default function useManageTransactions() {
 function initParams() {
   return {
     pageNumber: 1,
-    pageSize: 20,
+    pageSize: 13,
     orderBy: 'name',
     type: undefined,
     startDate: new Date().toUTCString(),

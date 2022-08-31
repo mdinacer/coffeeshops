@@ -1,4 +1,4 @@
-import { SearchIcon } from '@heroicons/react/solid';
+import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { useState } from 'react';
 import { productsList } from '../../app/data/productsList';
 
@@ -21,12 +21,12 @@ export default function ProductGalleryForm({ onExit }: Props) {
   return (
     <div className='relative flex max-h-full  flex-1 flex-col gap-y-5  '>
       <div className=' mr-auto flex w-full max-w-md  flex-initial flex-row items-center rounded-lg bg-stone-100 px-5'>
-        <SearchIcon className='mr-2 h-6 w-6' />
+        <MagnifyingGlassIcon className='mr-2 h-6 w-6' />
         <input
           type='search'
           onChange={(event) => setQuery(event.target.value)}
           placeholder='Chercher un produit'
-          className='w-full border-none bg-transparent  py-2 placeholder:text-gray-400'
+          className='w-full border-none bg-transparent  py-2 placeholder:text-stone-400'
         />
       </div>
       <div className=' flex-auto overflow-y-auto overscroll-none pr-3 '>

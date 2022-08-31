@@ -132,7 +132,7 @@ export default function PaymentDialog({ shopAgentId, type, onClose }: Props) {
           />
         )}
         {shopAgent ? (
-          <div className='mb-5 grid grid-cols-3 border-y border-y-gray-300 py-5 '>
+          <div className='mb-5 grid grid-cols-3 border-y border-y-stone-300 py-5 '>
             <div className={`text-center `}>
               <small className=' font-Primary text-sm font-thin uppercase'>
                 Total
@@ -168,7 +168,7 @@ export default function PaymentDialog({ shopAgentId, type, onClose }: Props) {
             </div>
           </div>
         ) : (
-          <div className='flex h-10 items-center justify-center border-y border-y-gray-300 py-5 '>
+          <div className='flex h-10 items-center justify-center border-y border-y-stone-300 py-5 '>
             <p className={`font-Primary text-2xl`}>Chargement</p>
           </div>
         )}
@@ -205,7 +205,7 @@ export default function PaymentDialog({ shopAgentId, type, onClose }: Props) {
             className={`${buttonStyle} ${
               isValid
                 ? 'cursor-pointer bg-yellow-500 text-stone-100'
-                : ' bg-gray-400 text-gray-300'
+                : ' bg-stone-400 text-stone-300'
             }`}
           />
         </div>
@@ -214,4 +214,4 @@ export default function PaymentDialog({ shopAgentId, type, onClose }: Props) {
   );
 }
 const buttonStyle =
-  'border border-gray-400 font-Primary uppercase font-thin py-1';
+  'border border-stone-400 font-Primary uppercase font-thin py-1';

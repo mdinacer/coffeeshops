@@ -1,4 +1,4 @@
-import { PencilAltIcon, TrashIcon } from '@heroicons/react/solid';
+import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/solid';
 import { motion } from 'framer-motion';
 import { Product } from '../../app/models/product';
 import { formatNumber } from '../../app/utils/utils';
@@ -13,14 +13,14 @@ export default function ShopProductCard({ product, onEdit, onDelete }: Props) {
   return (
     <motion.div
       layout
-      className='flex  select-none flex-row  overflow-hidden rounded-lg bg-stone-300 text-stone-600'
+      className='flex  select-none flex-col overflow-hidden  rounded-lg bg-stone-300 text-stone-600 md:flex-row'
     >
       <div className='flex flex-auto  flex-row py-2 px-5 '>
-        <div className='px-5'>
+        <div className=' w-32 px-5 '>
           <img
             src={product.pictureUrl}
             alt=''
-            className=' h-20 w-20 object-scale-down'
+            className=' h-20 w-full object-scale-down'
           />
         </div>
         <div>
@@ -48,7 +48,7 @@ export default function ShopProductCard({ product, onEdit, onDelete }: Props) {
           type='button'
           className={buttonStyle + ' bg-stone-500  hover:bg-orange-500 '}
         >
-          <PencilAltIcon className='h-6 w-6 ' />
+          <PencilSquareIcon className='h-6 w-6 ' />
         </button>
       </div>
     </motion.div>

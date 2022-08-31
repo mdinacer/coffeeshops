@@ -1,4 +1,4 @@
-import { MinusIcon, PlusIcon, XIcon } from '@heroicons/react/solid';
+import { MinusIcon, PlusIcon, XMarkIcon } from '@heroicons/react/24/solid';
 import { motion } from 'framer-motion';
 import { OrderElement } from '../../app/models/order';
 
@@ -21,10 +21,10 @@ export default function OrderElementsListItem({
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -50 }}
       layout
-      className='bg-gray-00 flex w-full   flex-row items-end rounded border-y border-y-stone-300 bg-stone-200 py-1 px-4 text-stone-900  md:items-center'
+      className='bg-stone-00 flex w-full   flex-row items-end rounded border-y border-y-stone-300 bg-stone-200  px-4 text-stone-900  md:items-center'
     >
       <div className='grid flex-auto items-center  gap-y-2 md:grid-cols-5'>
-        <p className='  font-Secondary text-xl font-light capitalize md:col-span-3'>
+        <p className='  font-Roboto text-lg font-light capitalize md:col-span-3'>
           {element.productName}
         </p>
         <div className=' mx-auto grid grid-cols-4 md:col-span-2'>
@@ -59,12 +59,13 @@ export default function OrderElementsListItem({
           className={buttonStyle + 'ml-2 bg-stone-400 text-stone-100'}
           onClick={() => onRemove(element.productId)}
         >
-          <XIcon className={iconStyle} />
+          <XMarkIcon className={iconStyle} />
         </button>
       </div>
     </motion.div>
   );
 }
 
-const buttonStyle = 'p-1 rounded-full text-gray-100  bg-stone-400 ';
+const buttonStyle =
+  'p-1 rounded-full text-stone-600 border-2 border-stone-300  bg-stone-300 ';
 const iconStyle = 'h-5 w-5';

@@ -1,25 +1,32 @@
-import useProducts from '../../app/hooks/useProducts';
+import useInventory from '../../app/hooks/useInventory';
 import ListPageLayout from '../../app/layout/ListPageLayout';
-import { setPageNumber } from '../../app/slices/productsSlice';
-import { useAppDispatch } from '../../app/store/configureStore';
 import CollapsibleMenu from '../../components/common/CollapsibleMenu';
+import InventoryFilters from '../../components/inventory/InventoryFilters';
 import InventoryList from '../../components/inventory/InventoryList';
-import ProductsFilters from '../../components/product/ProductsFilters';
 
 export default function InventoryPage() {
-  const dispatch = useAppDispatch();
-  const { products, metaData } = useProducts();
+  const {
+    inventoryItems,
+    inventoryParams,
+    metaData,
+    setPageNumber,
+    setParams,
+  } = useInventory();
 
   async function handlePageChange(page: number) {
-    dispatch(setPageNumber(page));
+    setPageNumber(page + 1);
   }
+
   return (
     <ListPageLayout
       title={'Inventaire'}
-      list={<InventoryList products={products} />}
+      list={<InventoryList products={inventoryItems} />}
       filters={
         <CollapsibleMenu title='Filtres'>
-          <ProductsFilters />
+          <InventoryFilters
+            inventoryParams={inventoryParams}
+            setParams={setParams}
+          />
         </CollapsibleMenu>
       }
       metaData={metaData}

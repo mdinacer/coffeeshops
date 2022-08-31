@@ -1,8 +1,7 @@
-namespace API.Models
+namespace API.Models;
+
+public enum TransactionType
 {
-    public enum TransactionType
-    {
-        payment,
-        transaction,
-    }
+    payment,
+    transaction
 }

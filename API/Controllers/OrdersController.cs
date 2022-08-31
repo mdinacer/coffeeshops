@@ -1,44 +1,52 @@
 using API.DTO;
 using API.Services;
-using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace API.Controllers
+namespace API.Controllers;
+
+[Authorize(Policy = "IsShopMember")]
+public class OrdersController : BaseApiController
 {
-    [Authorize(Policy = "IsShopMember")]
-    public class OrdersController : BaseApiController
+    private readonly RedisService _redis;
+    private readonly INotificationSink _notificationSink;
+
+    public OrdersController(RedisService redis, INotificationSink notificationSink)
     {
-        private readonly RedisService _redis;
-        public OrdersController(RedisService redis)
-        {
-            _redis = redis;
-        }
+        _notificationSink = notificationSink;
+        _redis = redis;
+    }
 
-        [HttpGet]
-        public async Task<ActionResult<List<CacheShopOrder>>> GetOrders()
-        {
-            if (string.IsNullOrEmpty(ShopId)) return BadRequest("Shop not found");
+    [HttpGet]
+    public async Task<ActionResult<List<CacheShopOrder>>> GetOrders()
+    {
+        if (string.IsNullOrEmpty(ShopId)) return BadRequest("Shop not found");
 
-            var orders = await _redis.GetOrdersAsync(ShopId);
+        var orders = await _redis.GetOrdersAsync(ShopId);
 
-            return Ok(orders);
-        }
+        return Ok(orders);
+    }
 
 
-        [HttpPost]
-        public async Task<ActionResult<List<CacheShopOrder>>> UpdateOrders(ShopOrdersDto shopOrders)
-        {
-            if (string.IsNullOrEmpty(ShopId)) return BadRequest("Shop not found");
+    [HttpPost]
+    public async Task<ActionResult<List<CacheShopOrder>>> UpdateOrders(ShopOrdersDto shopOrders)
+    {
+        if (string.IsNullOrEmpty(ShopId)) return BadRequest("Shop not found");
 
-            var updatedOrders = await _redis.UpdateOrderAsync(ShopId, shopOrders);
-            return Ok(updatedOrders);
-        }
+        // await _notificationSink.PushAsync(new Notification
+        // {
+        //     ShopId = ShopId,
+        //     Nature = "ordersUpdated"
 
-        [HttpDelete]
-        public async Task DeleteOrderAsync(string id)
-        {
-            await _redis.ClearOrdersAsync(id);
-        }
+        // });
+
+        var updatedOrders = await _redis.UpdateOrderAsync(ShopId, shopOrders);
+        return Ok(updatedOrders);
+    }
+
+    [HttpDelete]
+    public async Task DeleteOrderAsync(string id)
+    {
+        await _redis.ClearOrdersAsync(id);
     }
 }

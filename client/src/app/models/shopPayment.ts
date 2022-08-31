@@ -1,4 +1,4 @@
-import {TransactionDirection} from "./TransactionDirection";
+import { TransactionDirection } from "./TransactionDirection";
 
 
 export interface ShopPayment {
@@ -9,5 +9,5 @@ export interface ShopPayment {
     user?: string;
     direction: TransactionDirection;
     agentId: string;
-    agent: string;
+    agent?: string;
 }

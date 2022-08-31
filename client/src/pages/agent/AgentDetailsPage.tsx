@@ -1,4 +1,8 @@
-import { PencilAltIcon, TrashIcon, PlusIcon } from '@heroicons/react/outline';
+import {
+  PencilSquareIcon,
+  TrashIcon,
+  PlusIcon,
+} from '@heroicons/react/24/outline';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import ListPageLayout from '../../app/layout/ListPageLayout';
@@ -95,7 +99,7 @@ export default function AgentDetailsPage() {
               onClick={() => setIsEdit(true)}
               type='button'
               label='Modifier'
-              Icon={PencilAltIcon}
+              Icon={PencilSquareIcon}
               genre='warning'
             />
             <AppButton

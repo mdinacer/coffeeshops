@@ -1,6 +1,6 @@
-import { ChevronDownIcon, TrashIcon } from '@heroicons/react/solid';
+import { ChevronDownIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import useProducts from '../../app/hooks/useProducts';
 import { CURRENCY_TEXT } from '../../app/layout/App';
@@ -17,14 +17,14 @@ import { addOrder, ordersSelectors } from '../../app/slices/orderSlice';
 import AppButton from '../../components/common/AppButton';
 import OrderConfirmation from '../../components/orderPage/OrderConfirmation';
 import ModalDialog from '../../components/common/ModalDialog';
-import { CreditCardIcon } from '@heroicons/react/outline';
+import { CreditCardIcon } from '@heroicons/react/24/outline';
 import { formatNumber } from '../../app/utils/utils';
-import LoadingComponent from '../../components/common/LoadingComponent';
+import { setPaginate } from '../../app/slices/productsSlice';
 
 export default function OrderPage() {
   const dispatch = useAppDispatch();
   const [confirmOrder, setConfirmOrder] = useState(false);
-  const { products, categories, productsLoaded } = useProducts();
+  const { products, categories } = useProducts();
   const [categoriesVisible, setCategoriesVisible] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<
     Category | undefined
@@ -90,6 +90,10 @@ export default function OrderPage() {
     }
   }
 
+  useEffect(() => {
+    dispatch(setPaginate(false));
+  }, []);
+
   return (
     <>
       <ModalDialog title='Commande' active={confirmOrder}>
@@ -105,7 +109,6 @@ export default function OrderPage() {
             operationTotal={total}
             onClose={(value) => {
               if (value) {
-                console.log(value);
                 handleConfirmedOrder();
               }
               setConfirmOrder(false);
@@ -113,22 +116,22 @@ export default function OrderPage() {
           />
         )}
       </ModalDialog>
-      <Layout className='max-h-fill relative flex snap-x snap-mandatory flex-row gap-x-2  overflow-x-auto  border-none bg-stone-400 py-0 px-0 md:overflow-x-hidden 2xl:max-w-none  '>
+      <Layout className='max-h-fill relative flex snap-x snap-mandatory flex-row gap-x-2  overflow-x-auto  border-none bg-stone-400 py-0 px-0 md:overflow-x-hidden md:p-2 2xl:max-w-none  '>
         <div className='relative flex w-screen min-w-full flex-auto  snap-center flex-col border border-stone-500 bg-stone-500 md:w-2/3 md:min-w-min'>
-          <div className='w-ful flex items-center  justify-center  border-b border-b-stone-600  bg-stone-600 text-stone-300 drop-shadow-md '>
+          <div className='w-ful flex items-center  justify-center  border-b border-b-stone-600  bg-stone-600 text-stone-400 drop-shadow-md '>
             <button
               type='button'
               className=' inline-flex w-full items-center justify-center py-2'
               onClick={() => setCategoriesVisible(true)}
             >
               <ChevronDownIcon className='mr-2 h-6 w-6' />
-              <span className=' font-Primary text-lg uppercase'>
+              <span className=' font-Primary text-2xl font-normal capitalize'>
                 {selectedCategory?.name || 'Catégories'}
               </span>
             </button>
           </div>
 
-          <div className='h-full max-h-fit  flex-auto overflow-x-hidden overflow-y-scroll py-5 px-5  '>
+          <div className='h-full max-h-fit  flex-auto overflow-x-hidden overflow-y-scroll py-2 px-2  '>
             <div className=' h-full'>
               {products.length > 0 ? (
                 <OrderProductsGrid
@@ -187,7 +190,7 @@ export default function OrderPage() {
               )}
             </div>
             <div className='flex w-full flex-initial flex-row items-end justify-between px-5 py-2  md:px-0 '>
-              <p className=' font-Secondary font-semibold uppercase'>Total</p>
+              <p className=' font-Secondary text-xl uppercase'>Total</p>
               <AnimatePresence>
                 <motion.p
                   initial={{ opacity: 0, x: -50 }}

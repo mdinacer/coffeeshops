@@ -1,9 +1,8 @@
-namespace API.Interfaces
+namespace API.Interfaces;
+
+public interface IResponseCacheService
 {
-    public interface IResponseCacheService
-    {
-        Task CacheResponseAsync(string cacheKey, object response, TimeSpan timeToLive);
-        Task<string?> GetCachedResponseAsync(string cacheKey);
-        Task<bool> ClearCachedResponseAsync(string cacheKey);
-    }
+    Task CacheResponseAsync(string cacheKey, object response, TimeSpan timeToLive);
+    Task<string?> GetCachedResponseAsync(string cacheKey);
+    Task<bool> ClearCachedResponseAsync(string cacheKey);
 }

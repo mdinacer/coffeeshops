@@ -30,7 +30,7 @@ export default function TextInput({
         label={props.label}
         element={
           <input
-            className={`${inputStyle} form-input w-full border-none  bg-transparent py-2 px-5 font-Secondary first-letter:uppercase placeholder:text-gray-400 placeholder:first-letter:uppercase focus:border-none focus:outline-none`}
+            className={`${inputStyle} form-input w-full border-none  bg-transparent py-2 px-5 font-Secondary first-letter:uppercase placeholder:text-stone-400 placeholder:first-letter:uppercase focus:border-none focus:outline-none`}
             aria-label={props.label}
             type={props.type}
             {...props}

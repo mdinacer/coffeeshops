@@ -1,4 +1,4 @@
-import { PencilAltIcon, TrashIcon } from '@heroicons/react/outline';
+import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { useCallback, useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import agent from '../../app/api/agent';
@@ -122,7 +122,7 @@ export default function ProductDetailsPage() {
             />
             <AppButton
               label='Modifier'
-              Icon={PencilAltIcon}
+              Icon={PencilSquareIcon}
               onClick={() => setIsEdit(true)}
               type='button'
               genre='warning'

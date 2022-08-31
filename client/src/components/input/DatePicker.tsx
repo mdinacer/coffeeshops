@@ -1,10 +1,10 @@
 import DatePicker, { ReactDatePickerCustomHeaderProps } from 'react-datepicker';
 import { forwardRef } from 'react';
 import { format } from 'date-fns';
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid';
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 import { locale } from '../../app/layout/App';
 import ComponentWrapper from '../common/ComponentWrapper';
-import { XIcon } from '@heroicons/react/outline';
+import { XMarkIcon } from '@heroicons/react/24/outline';
 
 interface Props {
   label: string;
@@ -59,7 +59,7 @@ export default function AppDatePicker(props: Props) {
             onClick={() => handleOnChange(null)}
             className='h-full px-2 py-1'
           >
-            <XIcon className='h-6 w-6 text-stone-600' />
+            <XMarkIcon className='h-6 w-6 text-stone-600' />
           </button>
         )
       }
@@ -76,7 +76,7 @@ function CustomHeader({
 }: ReactDatePickerCustomHeaderProps) {
   return (
     <div className='flex items-center justify-between px-2 py-2'>
-      <span className='text-lg text-gray-700'>{format(date, 'PP')}</span>
+      <span className='text-lg text-stone-700'>{format(date, 'PP')}</span>
 
       <div className='space-x-2'>
         <button
@@ -87,9 +87,9 @@ function CustomHeader({
           className={`${
             prevMonthButtonDisabled && 'cursor-not-allowed opacity-50'
           } 
-                  inline-flex rounded border border-gray-300 bg-stone-200 p-1 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-0 `}
+                  inline-flex rounded border border-stone-300 bg-stone-200 p-1 text-sm font-medium text-stone-700 shadow-sm hover:bg-stone-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-0 `}
         >
-          <ChevronLeftIcon className='h-5 w-5 text-gray-600' />
+          <ChevronLeftIcon className='h-5 w-5 text-stone-600' />
         </button>
 
         <button
@@ -98,9 +98,9 @@ function CustomHeader({
           type='button'
           className={` ${
             nextMonthButtonDisabled && 'cursor-not-allowed opacity-50'
-          } inline-flex rounded border border-gray-300 bg-stone-200 p-1 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-0 `}
+          } inline-flex rounded border border-stone-300 bg-stone-200 p-1 text-sm font-medium text-stone-700 shadow-sm hover:bg-stone-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-0 `}
         >
-          <ChevronRightIcon className='h-5 w-5 text-gray-600' />
+          <ChevronRightIcon className='h-5 w-5 text-stone-600' />
         </button>
       </div>
     </div>

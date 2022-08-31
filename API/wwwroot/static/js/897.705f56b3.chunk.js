@@ -1,2 +1,650 @@
-"use strict";(self.webpackChunkclient=self.webpackChunkclient||[]).push([[897],{2999:function(e,t,n){n.d(t,{Z:function(){return f}});var a=n(885),r=n(6285),l=n(4673),s=n(2791),i=n(6048),c=n.n(i),o=n(184);function u(e){var t=e.metaData,n=e.onPageChange,i=t.currentPage,u=t.totalCount,d=t.totalPages,f=t.pageSize,x=(0,s.useState)(i),m=(0,a.Z)(x,2),h=m[0],p=m[1];function v(e){p(e),n(e)}return(0,o.jsx)("div",{className:"h-auto w-full border-b-4 border-b-stone-400 px-5 pt-1",children:t&&(0,o.jsxs)("div",{className:"flex flex-col items-center justify-between gap-y-2 lg:flex-row lg:gap-y-0",children:[(0,o.jsxs)("p",{className:"font-Primary text-lg font-thin lg:text-xl",children:["Affichage de ",(i-1)*f+1," "," \xe0 ",i*f>u?u:i*f," ","sur ",u," articles"]}),t&&(0,o.jsx)(c(),{forcePage:h,className:"flex w-auto flex-row items-center gap-x-3 py-2 ",pageClassName:"font-thin",activeClassName:"font-normal bg-stone-500 rounded-md text-stone-100",pageLinkClassName:"p-2 font-Primary  text-inherit text-xl",breakLabel:"...",nextLabel:(0,o.jsx)(r.Z,{className:"h-6 w-6"}),onPageChange:function(e){v(e.selected)},pageRangeDisplayed:3,pageCount:d,previousLabel:(0,o.jsx)(l.Z,{className:"h-6 w-6"})})]})})}var d=n(5068);function f(e){var t=e.title,n=e.list,a=e.header,r=e.stats,l=e.actionButton,s=e.filters,i=e.metaData,c=e.className,f=e.onPageChange;return(0,o.jsxs)(d.Z,{className:" ".concat(c," ax-h-full flex flex-col items-stretch  gap-y-4 md:gap-y-5 "),children:[(t||l)&&(0,o.jsxs)("div",{className:"mb-5 flex w-full flex-col items-center justify-start gap-y-5 md:flex-row md:items-center md:justify-between ",children:[t&&(0,o.jsx)("h1",{className:" font-Primary text-4xl font-thin capitalize lg:text-5xl",children:t}),l&&(0,o.jsx)("div",{children:l})]}),a&&(0,o.jsx)("div",{children:a}),r&&(0,o.jsx)("div",{className:"flex flex-initial flex-col items-center justify-center gap-4 rounded-md border-y border-stone-300  py-3 md:flex-row  ",children:r.length>0&&(0,o.jsx)("div",{className:" grid w-full py-2 px-4 md:w-auto md:p-0 lg:grid-flow-col lg:gap-5",children:r.map((function(e,t){return(0,o.jsx)(x,{title:e.title,value:e.value},t)}))})}),s&&(0,o.jsx)("div",{className:"flex-initial",children:s}),(0,o.jsx)("div",{className:"flex-auto overflow-y-auto pr-3",children:n}),i&&(0,o.jsx)("div",{className:"flex-initial",children:(0,o.jsx)(u,{metaData:i,onPageChange:f})})]})}function x(e){var t=e.title,n=e.value;return(0,o.jsxs)("div",{className:"flex w-full items-end justify-between gap-x-4 lg:flex-row  lg:justify-end lg:px-5",children:[(0,o.jsx)("p",{className:" font-Secondary text-base uppercase",children:t}),"string"===typeof n?(0,o.jsx)("p",{className:" font-Primary text-lg uppercase lg:text-4xl",children:n}):(0,o.jsx)("div",{className:"font-Primary text-lg uppercase lg:text-4xl",children:n})]})}},7281:function(e,t,n){n.d(t,{Z:function(){return l}});var a=n(7941),r=n(184);function l(e){var t=e.label,n=e.items,l=e.selectedValue,s=e.Icon,i=e.onChange;var c=function(e){return l===e};return(0,r.jsxs)("div",{className:"flex h-full flex-row items-center gap-x-3",children:[t&&(0,r.jsx)("div",{className:"flex-initial",children:(0,r.jsx)("p",{className:"w-max flex-initial overflow-hidden border-r  border-stone-400  pr-2 text-sm uppercase opacity-50  hover:text-yellow-900",children:t})}),(0,r.jsx)("div",{className:" grid flex-auto grid-flow-col gap-2",children:n.map((function(e,n){return(0,r.jsxs)("button",{type:"button",className:"relative inline-flex  items-center justify-center gap-x-2 rounded-md bg-stone-300 py-1  px-2  ".concat(c(e.value)?" text-stone-700":"  text-inherit"),onClick:function(){return function(e){i(e)}(e)},children:[c(e.value)&&(0,r.jsx)(a.E.div,{layoutId:"".concat(t,"Highlight"),className:" absolute top-0 left-0 right-0 bottom-0 z-[1] rounded-md bg-yellow-500"}),s&&(0,r.jsx)(s,{className:"  z-[2] h-5 w-5 text-inherit"}),(0,r.jsx)("span",{className:" relative z-[2] font-Primary text-lg font-thin capitalize",children:e.title})]},n)}))})]})}},4760:function(e,t,n){n.d(t,{Z:function(){return c}});var a=n(885),r=n(2791);var l=r.forwardRef((function(e,t){return r.createElement("svg",Object.assign({xmlns:"http://www.w3.org/2000/svg",viewBox:"0 0 20 20",fill:"currentColor","aria-hidden":"true",ref:t},e),r.createElement("path",{d:"M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"}))})),s=n(7281),i=n(184);function c(e){var t=e.onChange,n=(0,r.useState)(20),c=(0,a.Z)(n,2),u=c[0],d=c[1];function f(e){d(e),t(e)}return(0,i.jsx)(s.Z,{label:"Page",items:o,Icon:l,selectedValue:u,onChange:function(e){return f(e.value)}})}var o=[{title:"20",value:20},{title:"50",value:50},{title:"100",value:100}]},2604:function(e,t,n){n.d(t,{Z:function(){return o}});var a=n(885),r=n(4499),l=n(7866),s=n(2791),i=n(5694),c=n(184);function o(e){var t=e.initialValue,n=e.onSearch,o=(0,s.useState)(t||""),u=(0,a.Z)(o,2),d=u[0],f=u[1];return(0,s.useEffect)((function(){var e=setTimeout((function(){n(d)}),1e3);return function(){clearTimeout(e)}}),[d]),(0,c.jsxs)("div",{className:" flex w-full flex-row items-center rounded-lg  border border-stone-400 bg-stone-300 px-4 xl:max-w-sm",children:[(0,c.jsx)("div",{children:(0,c.jsx)(r.Z,{className:"h-6 w-6"})}),(0,c.jsx)(i.Z,{inputStyles:" border-none px-0",className:" w-full border-none bg-transparent px-0 py-0 pl-0",type:"text",label:"",placeholder:"Rechercher un article",value:d,onEnter:function(e){return n(e)},onChange:function(e){f(e)},button:d&&(0,c.jsx)("button",{type:"button",onClick:function(){return f("")},children:(0,c.jsx)(l.Z,{className:"h-5 w-5 opacity-50"})})})]})}},8268:function(e,t,n){n.d(t,{Z:function(){return o}});var a=n(885),r=n(2791);var l=r.forwardRef((function(e,t){return r.createElement("svg",Object.assign({xmlns:"http://www.w3.org/2000/svg",viewBox:"0 0 20 20",fill:"currentColor","aria-hidden":"true",ref:t},e),r.createElement("path",{d:"M3 3a1 1 0 000 2h11a1 1 0 100-2H3zM3 7a1 1 0 000 2h5a1 1 0 000-2H3zM3 11a1 1 0 100 2h4a1 1 0 100-2H3zM13 16a1 1 0 102 0v-5.586l1.293 1.293a1 1 0 001.414-1.414l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 101.414 1.414L13 10.414V16z"}))}));var s=r.forwardRef((function(e,t){return r.createElement("svg",Object.assign({xmlns:"http://www.w3.org/2000/svg",viewBox:"0 0 20 20",fill:"currentColor","aria-hidden":"true",ref:t},e),r.createElement("path",{d:"M3 3a1 1 0 000 2h11a1 1 0 100-2H3zM3 7a1 1 0 000 2h7a1 1 0 100-2H3zM3 11a1 1 0 100 2h4a1 1 0 100-2H3zM15 8a1 1 0 10-2 0v5.586l-1.293-1.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L15 13.586V8z"}))})),i=n(9179),c=n(184);function o(e){var t=e.items,n=e.initialValue,o=e.onSort,u=(0,r.useState)(!0),d=(0,a.Z)(u,2),f=d[0],x=d[1],m=(0,r.useState)("Asc"),h=(0,a.Z)(m,2),p=h[0],v=h[1],g=(0,r.useState)(n||""),j=(0,a.Z)(g,2),w=j[0],b=j[1];return(0,c.jsx)(i.Z,{label:"Trier par",className:"flex-auto py-1",buttonStyle:" border-none px-0  ",items:t,selectedValue:w,onChange:function(e){var t;b(e.value),t=e.value,o("".concat(t).concat("Desc"===p?"Desc":""))},button:(0,c.jsx)("button",{className:"h-full w-full flex items-center justify-center px-2",type:"button",title:"Ordre ".concat(f?"Ascendant":"Descendant"),onClick:function(){var e,t=!f;x(t),v(t?"Asc":"Desc"),e=t?"Asc":"Desc",o("".concat(w).concat("Desc"===e?"Desc":""))},children:f?(0,c.jsx)(l,{className:"h-6 w-6"}):(0,c.jsx)(s,{className:"h-6 w-6"})})})}},1359:function(e,t,n){n.d(t,{Z:function(){return i}});var a=n(885),r=n(2791);var l=r.forwardRef((function(e,t){return r.createElement("svg",Object.assign({xmlns:"http://www.w3.org/2000/svg",viewBox:"0 0 20 20",fill:"currentColor","aria-hidden":"true",ref:t},e),r.createElement("path",{fillRule:"evenodd",d:"M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1z",clipRule:"evenodd"}))})),s=n(184);function i(e){var t=e.title,n=e.children,i=e.className,c=e.contentStyles,o=(0,r.useState)(!1),u=(0,a.Z)(o,2),d=u[0],f=u[1];return(0,s.jsxs)(s.Fragment,{children:[(0,s.jsxs)("button",{type:"button",className:i+" flex w-full flex-row items-center rounded px-3 py-1 md:hidden ",onClick:function(){return f((function(e){return!e}))},children:[(0,s.jsx)(l,{className:"mr-2 h-6 w-6"}),(0,s.jsx)("span",{className:" font-Primary text-xl font-light uppercase",children:t})]}),(0,s.jsx)("div",{className:" py-5 md:py-0 ".concat(d?"block md:block":" hidden md:block","  ").concat(c),children:n})]})}},5694:function(e,t,n){n.d(t,{Z:function(){return c}});var a=n(1413),r=n(4925),l=n(8663),s=n(184),i=["className","initialValue","inputStyles","onChange","onEnter","button"];function c(e){var t=e.className,n=(e.initialValue,e.inputStyles),c=e.onChange,o=e.onEnter,u=e.button,d=(0,r.Z)(e,i);return(0,s.jsx)(l.Z,{className:t,label:d.label,element:(0,s.jsx)("input",(0,a.Z)((0,a.Z)({onKeyDown:function(e){o&&"Enter"===e.key&&o(e.target.value)},className:"".concat(n," form-input w-full border-none  bg-transparent py-2 px-5 font-Secondary first-letter:uppercase placeholder:text-stone-400 placeholder:first-letter:uppercase focus:border-none focus:outline-none "),"aria-label":d.label,type:d.type},d),{},{onChange:function(e){var t=e.target;return c(t.value)}})),button:u})}},3566:function(e,t,n){n.d(t,{Z:function(){return u}});var a=n(4165),r=n(5861),l=n(260),s=n(741),i=n(6474),c=n(2996),o=n(184);function u(e){var t=e.product,n=e.onClose,u=(0,i.TL)();function d(){return d=(0,r.Z)((0,a.Z)().mark((function e(t){var r;return(0,a.Z)().wrap((function(e){for(;;)switch(e.prev=e.next){case 0:return e.prev=0,e.next=3,l.Z.Products.delete(t.id);case 3:(r=e.sent)&&u((0,s.kh)(t.id)),n(r),e.next=11;break;case 8:e.prev=8,e.t0=e.catch(0),console.log(e.t0);case 11:case"end":return e.stop()}}),e,null,[[0,8]])}))),d.apply(this,arguments)}return(0,o.jsxs)("div",{className:"flex w-full max-w-lg flex-col ",children:[(0,o.jsxs)("div",{className:"mb-4 flex flex-initial flex-row",children:[(0,o.jsx)("div",{className:"px-5",children:(0,o.jsx)("img",{src:t.pictureUrl,alt:"",className:" h-20 w-20 object-scale-down"})}),(0,o.jsxs)("div",{children:[(0,o.jsx)("small",{className:" font-Primary text-sm font-thin uppercase",children:t.category}),(0,o.jsx)("p",{className:" font-Primary text-4xl font-thin capitalize",children:t.name})]})]}),(0,o.jsxs)("div",{className:"py-5  font-Secondary",children:[(0,o.jsxs)("p",{className:" ",children:[(0,o.jsx)("span",{className:"font-semibold uppercase text-red-600",children:"Attention!"})," ","cette action est irreversible."]}),(0,o.jsx)("p",{children:"\xcates vous sure de vouloir supprimer ce produit?"})]}),(0,o.jsxs)("div",{className:" grid w-full flex-initial grid-cols-2 gap-4",children:[(0,o.jsx)(c.Z,{label:"Oui",type:"button",genre:"error",onClick:function(){return function(e){return d.apply(this,arguments)}(t)}}),(0,o.jsx)(c.Z,{label:"Non",onClick:function(){return n()},type:"button",genre:"secondary"})]})]})}},7585:function(e,t,n){n.d(t,{Z:function(){return o}});var a=n(741),r=n(6474),l=n(4760),s=n(2604),i=n(8268),c=n(184);function o(){var e=(0,r.CG)((function(e){return e.products})).productParams,t=(0,r.TL)();return(0,c.jsxs)("div",{className:" flex w-full flex-col items-end justify-start gap-5 lg:flex-row lg:justify-between",children:[(0,c.jsx)(s.Z,{onSearch:function(n){n!==e.searchTerm&&t((0,a.X3)({searchTerm:n}))},initialValue:e.searchTerm}),(0,c.jsxs)("div",{className:"grid w-full  grid-cols-1 items-end gap-5 md:grid-cols-2 lg:max-w-2xl",children:[(0,c.jsx)(i.Z,{items:u,onSort:function(e){t((0,a.X3)({orderBy:e}))},initialValue:"name"}),(0,c.jsx)(l.Z,{onChange:function(e){t((0,a.U5)(e))}})]})]})}var u=[{title:"D\xe9signation",value:"name"},{title:"Cat\xe9gorie",value:"category"},{title:"Stock",value:"inventory"},{title:"Prix",value:"price"},{title:"Vente",value:"sold"}]},3897:function(e,t,n){n.r(t),n.d(t,{default:function(){return C}});var a=n(4165),r=n(5861),l=n(885),s=n(9169),i=n(2791),c=n(3156),o=n(2999),u=n(741),d=n(6474),f=n(2996),x=n(1359),m=n(6227),h=n(768),p=n(3566),v=n(7585),g=n(870),j=n(6437),w=n(7941),b=n(717),y=n(184);function N(e){var t=e.product,n=e.onEdit,a=e.onDelete;return(0,y.jsxs)(w.E.div,{layout:!0,className:"flex  select-none flex-row  overflow-hidden rounded-lg bg-stone-300 text-stone-600",children:[(0,y.jsxs)("div",{className:"flex flex-auto  flex-row py-2 px-5 ",children:[(0,y.jsx)("div",{className:"px-5",children:(0,y.jsx)("img",{src:t.pictureUrl,alt:"",className:" h-20 w-20 object-scale-down"})}),(0,y.jsxs)("div",{children:[(0,y.jsx)("small",{className:" font-Primary text-sm font-thin uppercase",children:t.category}),(0,y.jsx)("p",{className:" font-Primary text-2xl font-thin capitalize",children:t.name}),(0,y.jsxs)("p",{className:" font-Primary text-base font-thin capitalize",children:[(0,b.u)(t.price)," Da"]})]})]}),(0,y.jsxs)("div",{className:"  flex h-full  flex-initial  flex-col justify-evenly",children:[(0,y.jsx)("button",{onClick:function(){return a(t)},type:"button",className:Z+" bg-stone-400  hover:bg-red-500 ",children:(0,y.jsx)(g.Z,{className:"h-6 w-6 "})}),(0,y.jsx)("button",{onClick:function(){return n(t)},type:"button",className:Z+" bg-stone-500  hover:bg-orange-500 ",children:(0,y.jsx)(j.Z,{className:"h-6 w-6 "})})]})]})}var Z="py-1 px-5 uppercase font-Secondary h-full font-normal text-base  text-stone-200 inline-flex justify-center items-center ";function C(){var e=(0,d.TL)(),t=(0,c.Z)(),n=t.products,g=(t.productsLoaded,t.metaData),j=(0,i.useState)(!1),w=(0,l.Z)(j,2),b=w[0],Z=w[1],C=(0,i.useState)(!1),z=(0,l.Z)(C,2),E=z[0],S=z[1],k=(0,i.useState)(!1),P=(0,l.Z)(k,2),M=P[0],R=P[1],V=(0,i.useState)(void 0),D=(0,l.Z)(V,2),H=D[0],L=D[1];function B(){return(B=(0,r.Z)((0,a.Z)().mark((function t(n){return(0,a.Z)().wrap((function(t){for(;;)switch(t.prev=t.next){case 0:e((0,u.oW)(n+1));case 1:case"end":return t.stop()}}),t)})))).apply(this,arguments)}return(0,i.useEffect)((function(){e((0,u.qE)(!0))}),[]),(0,y.jsxs)(y.Fragment,{children:[(0,y.jsx)(m.Z,{active:M,title:"Ajouter un produit",children:(0,y.jsx)(h.Z,{onClose:function(){return R(!1)}})}),b&&H&&(0,y.jsx)(m.Z,{active:H&&b,title:"Suppression",children:(0,y.jsx)(p.Z,{product:H,onClose:function(){return Z(!1)}})}),E&&H&&(0,y.jsx)(m.Z,{active:E,title:"Modification",children:(0,y.jsx)(h.Z,{product:H,onClose:function(e){S(!1)}})}),(0,y.jsx)(o.Z,{title:"Gestion des articles",filters:(0,y.jsx)(x.Z,{title:"Filtres",children:(0,y.jsx)(v.Z,{})}),list:(0,y.jsx)("div",{className:"grid gap-5 gap-y-5 md:gap-y-2 lg:grid-cols-3",children:n&&n.map((function(e){return(0,y.jsx)(N,{product:e,onEdit:function(){L(e),S(!0)},onDelete:function(e){L(e),Z(!0)}},e.id)}))}),metaData:g,onPageChange:function(e){return B.apply(this,arguments)},actionButton:(0,y.jsx)(f.Z,{label:"Ajouter un produit",Icon:s.Z,type:"button",onClick:function(){return L(void 0),void R(!0)}})})]})}},6437:function(e,t,n){var a=n(2791);var r=a.forwardRef((function(e,t){return a.createElement("svg",Object.assign({xmlns:"http://www.w3.org/2000/svg",viewBox:"0 0 20 20",fill:"currentColor","aria-hidden":"true",ref:t},e),a.createElement("path",{d:"M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"}),a.createElement("path",{fillRule:"evenodd",d:"M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z",clipRule:"evenodd"}))}));t.Z=r},9169:function(e,t,n){var a=n(2791);var r=a.forwardRef((function(e,t){return a.createElement("svg",Object.assign({xmlns:"http://www.w3.org/2000/svg",viewBox:"0 0 20 20",fill:"currentColor","aria-hidden":"true",ref:t},e),a.createElement("path",{fillRule:"evenodd",d:"M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z",clipRule:"evenodd"}))}));t.Z=r},870:function(e,t,n){var a=n(2791);var r=a.forwardRef((function(e,t){return a.createElement("svg",Object.assign({xmlns:"http://www.w3.org/2000/svg",viewBox:"0 0 20 20",fill:"currentColor","aria-hidden":"true",ref:t},e),a.createElement("path",{fillRule:"evenodd",d:"M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z",clipRule:"evenodd"}))}));t.Z=r},7866:function(e,t,n){var a=n(2791);var r=a.forwardRef((function(e,t){return a.createElement("svg",Object.assign({xmlns:"http://www.w3.org/2000/svg",viewBox:"0 0 20 20",fill:"currentColor","aria-hidden":"true",ref:t},e),a.createElement("path",{fillRule:"evenodd",d:"M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z",clipRule:"evenodd"}))}));t.Z=r}}]);
+"use strict";
+(self.webpackChunkclient = self.webpackChunkclient || []).push([[897], {
+    2999: function (e, t, n) {
+        n.d(t, {
+            Z: function () {
+                return f
+            }
+        });
+        var a = n(885), r = n(6285), l = n(4673), s = n(2791), i = n(6048), c = n.n(i), o = n(184);
+
+        function u(e) {
+            var t = e.metaData, n = e.onPageChange, i = t.currentPage, u = t.totalCount, d = t.totalPages,
+                f = t.pageSize, x = (0, s.useState)(i), m = (0, a.Z)(x, 2), h = m[0], p = m[1];
+
+            function v(e) {
+                p(e), n(e)
+            }
+
+            return (0, o.jsx)("div", {
+                className: "h-auto w-full border-b-4 border-b-stone-400 px-5 pt-1",
+                children: t && (0, o.jsxs)("div", {
+                    className: "flex flex-col items-center justify-between gap-y-2 lg:flex-row lg:gap-y-0",
+                    children: [(0, o.jsxs)("p", {
+                        className: "font-Primary text-lg font-thin lg:text-xl",
+                        children: ["Affichage de ", (i - 1) * f + 1, " ", " \xe0 ", i * f > u ? u : i * f, " ", "sur ", u, " articles"]
+                    }), t && (0, o.jsx)(c(), {
+                        forcePage: h,
+                        className: "flex w-auto flex-row items-center gap-x-3 py-2 ",
+                        pageClassName: "font-thin",
+                        activeClassName: "font-normal bg-stone-500 rounded-md text-stone-100",
+                        pageLinkClassName: "p-2 font-Primary  text-inherit text-xl",
+                        breakLabel: "...",
+                        nextLabel: (0, o.jsx)(r.Z, {className: "h-6 w-6"}),
+                        onPageChange: function (e) {
+                            v(e.selected)
+                        },
+                        pageRangeDisplayed: 3,
+                        pageCount: d,
+                        previousLabel: (0, o.jsx)(l.Z, {className: "h-6 w-6"})
+                    })]
+                })
+            })
+        }
+
+        var d = n(5068);
+
+        function f(e) {
+            var t = e.title, n = e.list, a = e.header, r = e.stats, l = e.actionButton, s = e.filters, i = e.metaData,
+                c = e.className, f = e.onPageChange;
+            return (0, o.jsxs)(d.Z, {
+                className: " ".concat(c, " ax-h-full flex flex-col items-stretch  gap-y-4 md:gap-y-5 "),
+                children: [(t || l) && (0, o.jsxs)("div", {
+                    className: "mb-5 flex w-full flex-col items-center justify-start gap-y-5 md:flex-row md:items-center md:justify-between ",
+                    children: [t && (0, o.jsx)("h1", {
+                        className: " font-Primary text-4xl font-thin capitalize lg:text-5xl",
+                        children: t
+                    }), l && (0, o.jsx)("div", {children: l})]
+                }), a && (0, o.jsx)("div", {children: a}), r && (0, o.jsx)("div", {
+                    className: "flex flex-initial flex-col items-center justify-center gap-4 rounded-md border-y border-stone-300  py-3 md:flex-row  ",
+                    children: r.length > 0 && (0, o.jsx)("div", {
+                        className: " grid w-full py-2 px-4 md:w-auto md:p-0 lg:grid-flow-col lg:gap-5",
+                        children: r.map((function (e, t) {
+                            return (0, o.jsx)(x, {title: e.title, value: e.value}, t)
+                        }))
+                    })
+                }), s && (0, o.jsx)("div", {
+                    className: "flex-initial",
+                    children: s
+                }), (0, o.jsx)("div", {
+                    className: "flex-auto overflow-y-auto pr-3",
+                    children: n
+                }), i && (0, o.jsx)("div", {
+                    className: "flex-initial",
+                    children: (0, o.jsx)(u, {metaData: i, onPageChange: f})
+                })]
+            })
+        }
+
+        function x(e) {
+            var t = e.title, n = e.value;
+            return (0, o.jsxs)("div", {
+                className: "flex w-full items-end justify-between gap-x-4 lg:flex-row  lg:justify-end lg:px-5",
+                children: [(0, o.jsx)("p", {
+                    className: " font-Secondary text-base uppercase",
+                    children: t
+                }), "string" === typeof n ? (0, o.jsx)("p", {
+                    className: " font-Primary text-lg uppercase lg:text-4xl",
+                    children: n
+                }) : (0, o.jsx)("div", {className: "font-Primary text-lg uppercase lg:text-4xl", children: n})]
+            })
+        }
+    }, 7281: function (e, t, n) {
+        n.d(t, {
+            Z: function () {
+                return l
+            }
+        });
+        var a = n(7941), r = n(184);
+
+        function l(e) {
+            var t = e.label, n = e.items, l = e.selectedValue, s = e.Icon, i = e.onChange;
+            var c = function (e) {
+                return l === e
+            };
+            return (0, r.jsxs)("div", {
+                className: "flex h-full flex-row items-center gap-x-3",
+                children: [t && (0, r.jsx)("div", {
+                    className: "flex-initial",
+                    children: (0, r.jsx)("p", {
+                        className: "w-max flex-initial overflow-hidden border-r  border-stone-400  pr-2 text-sm uppercase opacity-50  hover:text-yellow-900",
+                        children: t
+                    })
+                }), (0, r.jsx)("div", {
+                    className: " grid flex-auto grid-flow-col gap-2",
+                    children: n.map((function (e, n) {
+                        return (0, r.jsxs)("button", {
+                            type: "button",
+                            className: "relative inline-flex  items-center justify-center gap-x-2 rounded-md bg-stone-300 py-1  px-2  ".concat(c(e.value) ? " text-stone-700" : "  text-inherit"),
+                            onClick: function () {
+                                return function (e) {
+                                    i(e)
+                                }(e)
+                            },
+                            children: [c(e.value) && (0, r.jsx)(a.E.div, {
+                                layoutId: "".concat(t, "Highlight"),
+                                className: " absolute top-0 left-0 right-0 bottom-0 z-[1] rounded-md bg-yellow-500"
+                            }), s && (0, r.jsx)(s, {className: "  z-[2] h-5 w-5 text-inherit"}), (0, r.jsx)("span", {
+                                className: " relative z-[2] font-Primary text-lg font-thin capitalize",
+                                children: e.title
+                            })]
+                        }, n)
+                    }))
+                })]
+            })
+        }
+    }, 4760: function (e, t, n) {
+        n.d(t, {
+            Z: function () {
+                return c
+            }
+        });
+        var a = n(885), r = n(2791);
+        var l = r.forwardRef((function (e, t) {
+            return r.createElement("svg", Object.assign({
+                xmlns: "http://www.w3.org/2000/svg",
+                viewBox: "0 0 20 20",
+                fill: "currentColor",
+                "aria-hidden": "true",
+                ref: t
+            }, e), r.createElement("path", {d: "M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"}))
+        })), s = n(7281), i = n(184);
+
+        function c(e) {
+            var t = e.onChange, n = (0, r.useState)(20), c = (0, a.Z)(n, 2), u = c[0], d = c[1];
+
+            function f(e) {
+                d(e), t(e)
+            }
+
+            return (0, i.jsx)(s.Z, {
+                label: "Page", items: o, Icon: l, selectedValue: u, onChange: function (e) {
+                    return f(e.value)
+                }
+            })
+        }
+
+        var o = [{title: "20", value: 20}, {title: "50", value: 50}, {title: "100", value: 100}]
+    }, 2604: function (e, t, n) {
+        n.d(t, {
+            Z: function () {
+                return o
+            }
+        });
+        var a = n(885), r = n(4499), l = n(7866), s = n(2791), i = n(5694), c = n(184);
+
+        function o(e) {
+            var t = e.initialValue, n = e.onSearch, o = (0, s.useState)(t || ""), u = (0, a.Z)(o, 2), d = u[0],
+                f = u[1];
+            return (0, s.useEffect)((function () {
+                var e = setTimeout((function () {
+                    n(d)
+                }), 1e3);
+                return function () {
+                    clearTimeout(e)
+                }
+            }), [d]), (0, c.jsxs)("div", {
+                className: " flex w-full flex-row items-center rounded-lg  border border-stone-400 bg-stone-300 px-4 xl:max-w-sm",
+                children: [(0, c.jsx)("div", {children: (0, c.jsx)(r.Z, {className: "h-6 w-6"})}), (0, c.jsx)(i.Z, {
+                    inputStyles: " border-none px-0",
+                    className: " w-full border-none bg-transparent px-0 py-0 pl-0",
+                    type: "text",
+                    label: "",
+                    placeholder: "Rechercher un article",
+                    value: d,
+                    onEnter: function (e) {
+                        return n(e)
+                    },
+                    onChange: function (e) {
+                        f(e)
+                    },
+                    button: d && (0, c.jsx)("button", {
+                        type: "button", onClick: function () {
+                            return f("")
+                        }, children: (0, c.jsx)(l.Z, {className: "h-5 w-5 opacity-50"})
+                    })
+                })]
+            })
+        }
+    }, 8268: function (e, t, n) {
+        n.d(t, {
+            Z: function () {
+                return o
+            }
+        });
+        var a = n(885), r = n(2791);
+        var l = r.forwardRef((function (e, t) {
+            return r.createElement("svg", Object.assign({
+                xmlns: "http://www.w3.org/2000/svg",
+                viewBox: "0 0 20 20",
+                fill: "currentColor",
+                "aria-hidden": "true",
+                ref: t
+            }, e), r.createElement("path", {d: "M3 3a1 1 0 000 2h11a1 1 0 100-2H3zM3 7a1 1 0 000 2h5a1 1 0 000-2H3zM3 11a1 1 0 100 2h4a1 1 0 100-2H3zM13 16a1 1 0 102 0v-5.586l1.293 1.293a1 1 0 001.414-1.414l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 101.414 1.414L13 10.414V16z"}))
+        }));
+        var s = r.forwardRef((function (e, t) {
+            return r.createElement("svg", Object.assign({
+                xmlns: "http://www.w3.org/2000/svg",
+                viewBox: "0 0 20 20",
+                fill: "currentColor",
+                "aria-hidden": "true",
+                ref: t
+            }, e), r.createElement("path", {d: "M3 3a1 1 0 000 2h11a1 1 0 100-2H3zM3 7a1 1 0 000 2h7a1 1 0 100-2H3zM3 11a1 1 0 100 2h4a1 1 0 100-2H3zM15 8a1 1 0 10-2 0v5.586l-1.293-1.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L15 13.586V8z"}))
+        })), i = n(9179), c = n(184);
+
+        function o(e) {
+            var t = e.items, n = e.initialValue, o = e.onSort, u = (0, r.useState)(!0), d = (0, a.Z)(u, 2), f = d[0],
+                x = d[1], m = (0, r.useState)("Asc"), h = (0, a.Z)(m, 2), p = h[0], v = h[1],
+                g = (0, r.useState)(n || ""), j = (0, a.Z)(g, 2), w = j[0], b = j[1];
+            return (0, c.jsx)(i.Z, {
+                label: "Trier par",
+                className: "flex-auto py-1",
+                buttonStyle: " border-none px-0  ",
+                items: t,
+                selectedValue: w,
+                onChange: function (e) {
+                    var t;
+                    b(e.value), t = e.value, o("".concat(t).concat("Desc" === p ? "Desc" : ""))
+                },
+                button: (0, c.jsx)("button", {
+                    className: "h-full w-full flex items-center justify-center px-2",
+                    type: "button",
+                    title: "Ordre ".concat(f ? "Ascendant" : "Descendant"),
+                    onClick: function () {
+                        var e, t = !f;
+                        x(t), v(t ? "Asc" : "Desc"), e = t ? "Asc" : "Desc", o("".concat(w).concat("Desc" === e ? "Desc" : ""))
+                    },
+                    children: f ? (0, c.jsx)(l, {className: "h-6 w-6"}) : (0, c.jsx)(s, {className: "h-6 w-6"})
+                })
+            })
+        }
+    }, 1359: function (e, t, n) {
+        n.d(t, {
+            Z: function () {
+                return i
+            }
+        });
+        var a = n(885), r = n(2791);
+        var l = r.forwardRef((function (e, t) {
+            return r.createElement("svg", Object.assign({
+                xmlns: "http://www.w3.org/2000/svg",
+                viewBox: "0 0 20 20",
+                fill: "currentColor",
+                "aria-hidden": "true",
+                ref: t
+            }, e), r.createElement("path", {
+                fillRule: "evenodd",
+                d: "M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1z",
+                clipRule: "evenodd"
+            }))
+        })), s = n(184);
+
+        function i(e) {
+            var t = e.title, n = e.children, i = e.className, c = e.contentStyles, o = (0, r.useState)(!1),
+                u = (0, a.Z)(o, 2), d = u[0], f = u[1];
+            return (0, s.jsxs)(s.Fragment, {
+                children: [(0, s.jsxs)("button", {
+                    type: "button",
+                    className: i + " flex w-full flex-row items-center rounded px-3 py-1 md:hidden ",
+                    onClick: function () {
+                        return f((function (e) {
+                            return !e
+                        }))
+                    },
+                    children: [(0, s.jsx)(l, {className: "mr-2 h-6 w-6"}), (0, s.jsx)("span", {
+                        className: " font-Primary text-xl font-light uppercase",
+                        children: t
+                    })]
+                }), (0, s.jsx)("div", {
+                    className: " py-5 md:py-0 ".concat(d ? "block md:block" : " hidden md:block", "  ").concat(c),
+                    children: n
+                })]
+            })
+        }
+    }, 5694: function (e, t, n) {
+        n.d(t, {
+            Z: function () {
+                return c
+            }
+        });
+        var a = n(1413), r = n(4925), l = n(8663), s = n(184),
+            i = ["className", "initialValue", "inputStyles", "onChange", "onEnter", "button"];
+
+        function c(e) {
+            var t = e.className, n = (e.initialValue, e.inputStyles), c = e.onChange, o = e.onEnter, u = e.button,
+                d = (0, r.Z)(e, i);
+            return (0, s.jsx)(l.Z, {
+                className: t,
+                label: d.label,
+                element: (0, s.jsx)("input", (0, a.Z)((0, a.Z)({
+                    onKeyDown: function (e) {
+                        o && "Enter" === e.key && o(e.target.value)
+                    },
+                    className: "".concat(n, " form-input w-full border-none  bg-transparent py-2 px-5 font-Secondary first-letter:uppercase placeholder:text-stone-400 placeholder:first-letter:uppercase focus:border-none focus:outline-none "),
+                    "aria-label": d.label,
+                    type: d.type
+                }, d), {}, {
+                    onChange: function (e) {
+                        var t = e.target;
+                        return c(t.value)
+                    }
+                })),
+                button: u
+            })
+        }
+    }, 3566: function (e, t, n) {
+        n.d(t, {
+            Z: function () {
+                return u
+            }
+        });
+        var a = n(4165), r = n(5861), l = n(260), s = n(741), i = n(6474), c = n(2996), o = n(184);
+
+        function u(e) {
+            var t = e.product, n = e.onClose, u = (0, i.TL)();
+
+            function d() {
+                return d = (0, r.Z)((0, a.Z)().mark((function e(t) {
+                    var r;
+                    return (0, a.Z)().wrap((function (e) {
+                        for (; ;) switch (e.prev = e.next) {
+                            case 0:
+                                return e.prev = 0, e.next = 3, l.Z.Products.delete(t.id);
+                            case 3:
+                                (r = e.sent) && u((0, s.kh)(t.id)), n(r), e.next = 11;
+                                break;
+                            case 8:
+                                e.prev = 8, e.t0 = e.catch(0), console.log(e.t0);
+                            case 11:
+                            case"end":
+                                return e.stop()
+                        }
+                    }), e, null, [[0, 8]])
+                }))), d.apply(this, arguments)
+            }
+
+            return (0, o.jsxs)("div", {
+                className: "flex w-full max-w-lg flex-col ",
+                children: [(0, o.jsxs)("div", {
+                    className: "mb-4 flex flex-initial flex-row",
+                    children: [(0, o.jsx)("div", {
+                        className: "px-5",
+                        children: (0, o.jsx)("img", {
+                            src: t.pictureUrl,
+                            alt: "",
+                            className: " h-20 w-20 object-scale-down"
+                        })
+                    }), (0, o.jsxs)("div", {
+                        children: [(0, o.jsx)("small", {
+                            className: " font-Primary text-sm font-thin uppercase",
+                            children: t.category
+                        }), (0, o.jsx)("p", {
+                            className: " font-Primary text-4xl font-thin capitalize",
+                            children: t.name
+                        })]
+                    })]
+                }), (0, o.jsxs)("div", {
+                    className: "py-5  font-Secondary",
+                    children: [(0, o.jsxs)("p", {
+                        className: " ",
+                        children: [(0, o.jsx)("span", {
+                            className: "font-semibold uppercase text-red-600",
+                            children: "Attention!"
+                        }), " ", "cette action est irreversible."]
+                    }), (0, o.jsx)("p", {children: "\xcates vous sure de vouloir supprimer ce produit?"})]
+                }), (0, o.jsxs)("div", {
+                    className: " grid w-full flex-initial grid-cols-2 gap-4",
+                    children: [(0, o.jsx)(c.Z, {
+                        label: "Oui", type: "button", genre: "error", onClick: function () {
+                            return function (e) {
+                                return d.apply(this, arguments)
+                            }(t)
+                        }
+                    }), (0, o.jsx)(c.Z, {
+                        label: "Non", onClick: function () {
+                            return n()
+                        }, type: "button", genre: "secondary"
+                    })]
+                })]
+            })
+        }
+    }, 7585: function (e, t, n) {
+        n.d(t, {
+            Z: function () {
+                return o
+            }
+        });
+        var a = n(741), r = n(6474), l = n(4760), s = n(2604), i = n(8268), c = n(184);
+
+        function o() {
+            var e = (0, r.CG)((function (e) {
+                return e.products
+            })).productParams, t = (0, r.TL)();
+            return (0, c.jsxs)("div", {
+                className: " flex w-full flex-col items-end justify-start gap-5 lg:flex-row lg:justify-between",
+                children: [(0, c.jsx)(s.Z, {
+                    onSearch: function (n) {
+                        n !== e.searchTerm && t((0, a.X3)({searchTerm: n}))
+                    }, initialValue: e.searchTerm
+                }), (0, c.jsxs)("div", {
+                    className: "grid w-full  grid-cols-1 items-end gap-5 md:grid-cols-2 lg:max-w-2xl",
+                    children: [(0, c.jsx)(i.Z, {
+                        items: u, onSort: function (e) {
+                            t((0, a.X3)({orderBy: e}))
+                        }, initialValue: "name"
+                    }), (0, c.jsx)(l.Z, {
+                        onChange: function (e) {
+                            t((0, a.U5)(e))
+                        }
+                    })]
+                })]
+            })
+        }
+
+        var u = [{title: "D\xe9signation", value: "name"}, {title: "Cat\xe9gorie", value: "category"}, {
+            title: "Stock",
+            value: "inventory"
+        }, {title: "Prix", value: "price"}, {title: "Vente", value: "sold"}]
+    }, 3897: function (e, t, n) {
+        n.r(t), n.d(t, {
+            default: function () {
+                return C
+            }
+        });
+        var a = n(4165), r = n(5861), l = n(885), s = n(9169), i = n(2791), c = n(3156), o = n(2999), u = n(741),
+            d = n(6474), f = n(2996), x = n(1359), m = n(6227), h = n(768), p = n(3566), v = n(7585), g = n(870),
+            j = n(6437), w = n(7941), b = n(717), y = n(184);
+
+        function N(e) {
+            var t = e.product, n = e.onEdit, a = e.onDelete;
+            return (0, y.jsxs)(w.E.div, {
+                layout: !0,
+                className: "flex  select-none flex-row  overflow-hidden rounded-lg bg-stone-300 text-stone-600",
+                children: [(0, y.jsxs)("div", {
+                    className: "flex flex-auto  flex-row py-2 px-5 ",
+                    children: [(0, y.jsx)("div", {
+                        className: "px-5",
+                        children: (0, y.jsx)("img", {
+                            src: t.pictureUrl,
+                            alt: "",
+                            className: " h-20 w-20 object-scale-down"
+                        })
+                    }), (0, y.jsxs)("div", {
+                        children: [(0, y.jsx)("small", {
+                            className: " font-Primary text-sm font-thin uppercase",
+                            children: t.category
+                        }), (0, y.jsx)("p", {
+                            className: " font-Primary text-2xl font-thin capitalize",
+                            children: t.name
+                        }), (0, y.jsxs)("p", {
+                            className: " font-Primary text-base font-thin capitalize",
+                            children: [(0, b.u)(t.price), " Da"]
+                        })]
+                    })]
+                }), (0, y.jsxs)("div", {
+                    className: "  flex h-full  flex-initial  flex-col justify-evenly",
+                    children: [(0, y.jsx)("button", {
+                        onClick: function () {
+                            return a(t)
+                        },
+                        type: "button",
+                        className: Z + " bg-stone-400  hover:bg-red-500 ",
+                        children: (0, y.jsx)(g.Z, {className: "h-6 w-6 "})
+                    }), (0, y.jsx)("button", {
+                        onClick: function () {
+                            return n(t)
+                        },
+                        type: "button",
+                        className: Z + " bg-stone-500  hover:bg-orange-500 ",
+                        children: (0, y.jsx)(j.Z, {className: "h-6 w-6 "})
+                    })]
+                })]
+            })
+        }
+
+        var Z = "py-1 px-5 uppercase font-Secondary h-full font-normal text-base  text-stone-200 inline-flex justify-center items-center ";
+
+        function C() {
+            var e = (0, d.TL)(), t = (0, c.Z)(), n = t.products, g = (t.productsLoaded, t.metaData),
+                j = (0, i.useState)(!1), w = (0, l.Z)(j, 2), b = w[0], Z = w[1], C = (0, i.useState)(!1),
+                z = (0, l.Z)(C, 2), E = z[0], S = z[1], k = (0, i.useState)(!1), P = (0, l.Z)(k, 2), M = P[0], R = P[1],
+                V = (0, i.useState)(void 0), D = (0, l.Z)(V, 2), H = D[0], L = D[1];
+
+            function B() {
+                return (B = (0, r.Z)((0, a.Z)().mark((function t(n) {
+                    return (0, a.Z)().wrap((function (t) {
+                        for (; ;) switch (t.prev = t.next) {
+                            case 0:
+                                e((0, u.oW)(n + 1));
+                            case 1:
+                            case"end":
+                                return t.stop()
+                        }
+                    }), t)
+                })))).apply(this, arguments)
+            }
+
+            return (0, i.useEffect)((function () {
+                e((0, u.qE)(!0))
+            }), []), (0, y.jsxs)(y.Fragment, {
+                children: [(0, y.jsx)(m.Z, {
+                    active: M,
+                    title: "Ajouter un produit",
+                    children: (0, y.jsx)(h.Z, {
+                        onClose: function () {
+                            return R(!1)
+                        }
+                    })
+                }), b && H && (0, y.jsx)(m.Z, {
+                    active: H && b,
+                    title: "Suppression",
+                    children: (0, y.jsx)(p.Z, {
+                        product: H, onClose: function () {
+                            return Z(!1)
+                        }
+                    })
+                }), E && H && (0, y.jsx)(m.Z, {
+                    active: E,
+                    title: "Modification",
+                    children: (0, y.jsx)(h.Z, {
+                        product: H, onClose: function (e) {
+                            S(!1)
+                        }
+                    })
+                }), (0, y.jsx)(o.Z, {
+                    title: "Gestion des articles",
+                    filters: (0, y.jsx)(x.Z, {title: "Filtres", children: (0, y.jsx)(v.Z, {})}),
+                    list: (0, y.jsx)("div", {
+                        className: "grid gap-5 gap-y-5 md:gap-y-2 lg:grid-cols-3",
+                        children: n && n.map((function (e) {
+                            return (0, y.jsx)(N, {
+                                product: e, onEdit: function () {
+                                    L(e), S(!0)
+                                }, onDelete: function (e) {
+                                    L(e), Z(!0)
+                                }
+                            }, e.id)
+                        }))
+                    }),
+                    metaData: g,
+                    onPageChange: function (e) {
+                        return B.apply(this, arguments)
+                    },
+                    actionButton: (0, y.jsx)(f.Z, {
+                        label: "Ajouter un produit",
+                        Icon: s.Z,
+                        type: "button",
+                        onClick: function () {
+                            return L(void 0), void R(!0)
+                        }
+                    })
+                })]
+            })
+        }
+    }, 6437: function (e, t, n) {
+        var a = n(2791);
+        var r = a.forwardRef((function (e, t) {
+            return a.createElement("svg", Object.assign({
+                xmlns: "http://www.w3.org/2000/svg",
+                viewBox: "0 0 20 20",
+                fill: "currentColor",
+                "aria-hidden": "true",
+                ref: t
+            }, e), a.createElement("path", {d: "M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"}), a.createElement("path", {
+                fillRule: "evenodd",
+                d: "M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z",
+                clipRule: "evenodd"
+            }))
+        }));
+        t.Z = r
+    }, 9169: function (e, t, n) {
+        var a = n(2791);
+        var r = a.forwardRef((function (e, t) {
+            return a.createElement("svg", Object.assign({
+                xmlns: "http://www.w3.org/2000/svg",
+                viewBox: "0 0 20 20",
+                fill: "currentColor",
+                "aria-hidden": "true",
+                ref: t
+            }, e), a.createElement("path", {
+                fillRule: "evenodd",
+                d: "M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z",
+                clipRule: "evenodd"
+            }))
+        }));
+        t.Z = r
+    }, 870: function (e, t, n) {
+        var a = n(2791);
+        var r = a.forwardRef((function (e, t) {
+            return a.createElement("svg", Object.assign({
+                xmlns: "http://www.w3.org/2000/svg",
+                viewBox: "0 0 20 20",
+                fill: "currentColor",
+                "aria-hidden": "true",
+                ref: t
+            }, e), a.createElement("path", {
+                fillRule: "evenodd",
+                d: "M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z",
+                clipRule: "evenodd"
+            }))
+        }));
+        t.Z = r
+    }, 7866: function (e, t, n) {
+        var a = n(2791);
+        var r = a.forwardRef((function (e, t) {
+            return a.createElement("svg", Object.assign({
+                xmlns: "http://www.w3.org/2000/svg",
+                viewBox: "0 0 20 20",
+                fill: "currentColor",
+                "aria-hidden": "true",
+                ref: t
+            }, e), a.createElement("path", {
+                fillRule: "evenodd",
+                d: "M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z",
+                clipRule: "evenodd"
+            }))
+        }));
+        t.Z = r
+    }
+}]);
 //# sourceMappingURL=897.705f56b3.chunk.js.map

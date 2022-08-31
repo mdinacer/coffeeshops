@@ -206,6 +206,10 @@ const Transactions = {
     delete: (transactionId: string) => requests.delete(`Transactions/${transactionId}`),
 }
 
+const Notifications = {
+    fetchNotifications: (user: string, message: string) => requests.post(`Notifications`, { ForUserId: user, message }),
+}
+
 const agent = {
     Account,
     Agents,
@@ -216,7 +220,8 @@ const agent = {
     Payments,
     Products,
     Shops,
-    Transactions
+    Transactions,
+    Notifications
 }
 
 export default agent;

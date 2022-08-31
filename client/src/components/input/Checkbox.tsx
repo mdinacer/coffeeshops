@@ -1,4 +1,4 @@
-import { CheckCircleIcon } from '@heroicons/react/solid';
+import { CheckCircleIcon } from '@heroicons/react/24/solid';
 import { useController, UseControllerProps } from 'react-hook-form';
 
 interface Props extends UseControllerProps {

@@ -18,14 +18,14 @@ export default function OrderCategoryCard({ category }: Props) {
           </div>
 
           <div className='flex-auto'>
-            <p className=' font-Primary text-2xl font-thin capitalize'>
+            <p className=' font-Secondary text-xl  capitalize'>
               {category.name}
             </p>
           </div>
         </div>
       ) : (
         <div className='flex h-20 items-center justify-center '>
-          <p className=' font-Primary text-2xl font-thin uppercase'>
+          <p className=' font-Secondary text-2xl font-normal capitalize'>
             {category.name}
           </p>
         </div>

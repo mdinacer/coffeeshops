@@ -20,8 +20,6 @@ builder.Services.AddAuthorizationConfig();
 builder.Services.AddResponseCompression(options => { options.EnableForHttps = true; });
 
 
-
-
 // Create and migrate database
 await DatabaseMigrator.Migrate(builder);
 
@@ -39,8 +37,6 @@ else
 {
     app.UseHttpsRedirection();
 }
-
-
 
 
 app.UseResponseCompression();
@@ -72,9 +68,9 @@ app.MapControllers();
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
-    endpoints.MapHub<Hubs>("/hubs/notifications");
+    //endpoints.MapHub<Hubs>("/hubs/notifications");
+    endpoints.MapHub<NotificationHub>("/notificationHub");
     endpoints.MapFallbackToController("Index", "Fallback");
 });
 
 app.Run();
-

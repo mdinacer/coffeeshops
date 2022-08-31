@@ -2,13 +2,13 @@ using API.Data;
 using API.Models;
 using Microsoft.AspNetCore.Identity;
 
-namespace API.Extensions
+namespace API.Extensions;
+
+public static class IdentityExtensions
 {
-    public static class IdentityExtensions
+    public static IServiceCollection AddIdentityConfig(this IServiceCollection services)
     {
-        public static IServiceCollection AddIdentityConfig(this IServiceCollection services)
-        {
-            services.AddIdentityCore<User>(opt =>
+        services.AddIdentityCore<User>(opt =>
             {
                 opt.User.RequireUniqueEmail = true;
                 opt.Password.RequireNonAlphanumeric = false;
@@ -20,7 +20,6 @@ namespace API.Extensions
             .AddDefaultTokenProviders();
 
 
-            return services;
-        }
+        return services;
     }
 }

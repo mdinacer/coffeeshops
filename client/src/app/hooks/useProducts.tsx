@@ -8,16 +8,16 @@ import {
 
 export default function useProducts() {
   const products = useAppSelector(productSelectors.selectAll);
-  const { shop } = useAppSelector((state) => state.shop);
+  const { shopId } = useAppSelector((state) => state.account);
   const { productsLoaded, categoriesLoaded, categories, metaData } =
     useAppSelector((state) => state.products);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (shop && !productsLoaded) {
+    if (shopId && !productsLoaded) {
       dispatch(fetchProductsAsync());
     }
-  }, [dispatch, productsLoaded, shop]);
+  }, [dispatch, productsLoaded, shopId]);
 
   useEffect(() => {
     if (!categoriesLoaded) {

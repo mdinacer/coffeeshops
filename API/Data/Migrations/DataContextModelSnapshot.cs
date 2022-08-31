@@ -397,6 +397,9 @@ namespace API.Data.Migrations
                     b.Property<int>("TablesCount")
                         .HasColumnType("integer");
 
+                    b.Property<decimal?>("WithdrawalMax")
+                        .HasColumnType("numeric");
+
                     b.HasKey("Id");
 
                     b.ToTable("Shops");

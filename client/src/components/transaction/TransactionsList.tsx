@@ -1,4 +1,4 @@
-import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/react/solid';
+import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/react/24/solid';
 import { format } from 'date-fns';
 import { locale } from '../../app/layout/App';
 import { ShopTransaction } from '../../app/models/shopTransaction';
@@ -19,23 +19,16 @@ export default function TransactionsList({
 }: Props) {
   return (
     <ResponsiveTable
-      headers={[
-        'Flux',
-        'Type',
-        'Date',
-        'Description',
-        'Montant',
-        'Utilisateur',
-      ]}
+      headers={['Flux', 'Type', 'Date', 'Montant', 'Utilisateur']}
     >
-      {transactions.map((item, index) => (
+      {transactions.map((item) => (
         <ResponsiveTableRow
           key={item.id}
           cells={[
             {
               title: 'Name',
               value: (
-                <div className=' flex flex-row items-center text-base lg:w-full'>
+                <div className=' flex flex-row items-center justify-center text-base lg:w-full'>
                   {item.direction === TransactionDirection.outgoing ? (
                     <ArrowDownIcon className='mr-2 h-6 w-6 text-red-600 dark:text-red-400' />
                   ) : (
@@ -57,7 +50,7 @@ export default function TransactionsList({
                   : item.direction === TransactionDirection.incoming
                   ? 'Depot'
                   : 'Retrait',
-              align: 'right',
+              align: 'center',
             },
 
             {
@@ -65,9 +58,9 @@ export default function TransactionsList({
               value: item.date
                 ? format(new Date(item.date), 'PP', { locale })
                 : '',
-              align: 'right',
+              align: 'center',
             },
-            { title: 'Description', value: item.description, align: 'left' },
+
             {
               title: 'Montant',
               value: formatNumber(item.amount),

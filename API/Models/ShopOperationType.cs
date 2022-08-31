@@ -1,8 +1,7 @@
-namespace API.Models
+namespace API.Models;
+
+public enum ShopOperationType
 {
-    public enum ShopOperationType
-    {
-        purchase,
-        sale
-    }
+    purchase,
+    sale
 }

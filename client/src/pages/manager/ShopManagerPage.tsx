@@ -43,7 +43,7 @@ export default function ShopManagerPage() {
         productsCount={shop.productsCount}
         operationsCount={shop.operationsCount}
       />
-      {/* <div className='my-5 rounded bg-gray-100 p-5 dark:bg-gray-600 '>
+      {/* <div className='my-5 rounded bg-stone-100 p-5 dark:bg-stone-600 '>
         <p className=' font-Primary text-2xl font-thin uppercase'>
           Propriétaire
         </p>
@@ -133,7 +133,7 @@ export default function ShopManagerPage() {
         </div>
       </div>
 
-      {/* {shopStats && (
+      {shopStats && (
         <>
           <div className='mt-10 grid grid-cols-1 gap-3'>
             <ChartContainer title='Journalier' element={shopStats.weekly}>
@@ -150,7 +150,7 @@ export default function ShopManagerPage() {
             </ChartContainer>
           </div>
         </>
-      )} */}
+      )}
     </Layout>
   );
 }

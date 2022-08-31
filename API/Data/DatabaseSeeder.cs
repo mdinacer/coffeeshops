@@ -1,202 +1,195 @@
 using API.Models;
 using Microsoft.AspNetCore.Identity;
 
-namespace API.Data
+namespace API.Data;
+
+public class DatabaseSeeder
 {
-    public class DatabaseSeeder
-    {
-        public static async Task Initialize(DataContext context, UserManager<User> userManager,
+    public static async Task Initialize(DataContext context, UserManager<User> userManager,
         RoleManager<Role> roleManager)
+    {
+        string[] roleNames = {"Admin", "Owner", "Moderator", "Agent"};
+
+        foreach (var roleName in roleNames)
         {
-            string[] roleNames = { "Admin", "Owner", "Moderator", "Agent", };
+            var roleExist = await roleManager.RoleExistsAsync(roleName);
+            if (!roleExist) await roleManager.CreateAsync(new Role {Name = roleName});
+        }
 
-            foreach (var roleName in roleNames)
+
+        if (!userManager.Users.Any())
+        {
+            var admin = new User
             {
-                var roleExist = await roleManager.RoleExistsAsync(roleName);
-                if (!roleExist)
+                UserName = "admin",
+                Email = "admin@test.com",
+                DisplayName = "Abdenasser Mohammedi",
+                Profile = new UserProfile
                 {
-                    await roleManager.CreateAsync(new Role { Name = roleName });
-                }
-            }
-
-
-            if (!userManager.Users.Any())
-            {
-                var admin = new User
-                {
-                    UserName = "admin",
+                    FirstName = "Abdenasser",
+                    LastName = "Mohammedi",
                     Email = "admin@test.com",
-                    DisplayName = "Abdenasser Mohammedi",
-                    Profile = new UserProfile
-                    {
-                        FirstName = "Abdenasser",
-                        LastName = "Mohammedi",
-                        Email = "admin@test.com",
-                        Mobile = "+213662991735",
-                        Address1 = "36 cité les pins Arzew - Oran"
-                    }
-                };
+                    Mobile = "+213662991735",
+                    Address1 = "36 cité les pins Arzew - Oran"
+                }
+            };
 
-                await userManager.CreateAsync(admin, "Pa$$w0rd");
-                await userManager.AddToRoleAsync(admin, "Admin");
+            await userManager.CreateAsync(admin, "Pa$$w0rd");
+            await userManager.AddToRoleAsync(admin, "Admin");
 
-                var moderator = new User
-                {
-                    UserName = "moderator",
-                    Email = "moderator@test.com",
-                    DisplayName = "Bob Bobbity",
-                    Profile = new UserProfile
-                    {
-                        FirstName = "Bob",
-                        LastName = "Bobbity",
-                        Email = "moderator@test.com",
-                        Mobile = "+213662991735",
-                        Address1 = "36 cité les pins Arzew - Oran"
-                    }
-                };
-
-                await userManager.CreateAsync(moderator, "Pa$$w0rd");
-                await userManager.AddToRoleAsync(moderator, "Moderator");
-
-                var agent = new User
-                {
-                    UserName = "Agent",
-                    Email = "agent@test.com",
-                    DisplayName = "Tom Tommity",
-                    Profile = new UserProfile
-                    {
-                        FirstName = "Tom",
-                        LastName = "Tommity",
-                        Email = "agent@test.com",
-                        Mobile = "+213662991735",
-                        Address1 = "36 cité les pins Arzew - Oran"
-                    }
-                };
-
-                await userManager.CreateAsync(agent, "Pa$$w0rd");
-                await userManager.AddToRoleAsync(agent, "Agent");
-
-                var shop = new Shop
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    Name = "RedPill Shop",
-                    TablesCount = 12,
-
-                };
-                context.Shops.Add(shop);
-
-                admin.ShopId = shop.Id;
-                moderator.ShopId = shop.Id;
-                agent.ShopId = shop.Id;
-                shop.OwnerId = admin.Id;
-
-                await context.SaveChangesAsync();
-
-
-            }
-
-            if (!context.Categories.Any())
+            var moderator = new User
             {
+                UserName = "moderator",
+                Email = "moderator@test.com",
+                DisplayName = "Bob Bobbity",
+                Profile = new UserProfile
+                {
+                    FirstName = "Bob",
+                    LastName = "Bobbity",
+                    Email = "moderator@test.com",
+                    Mobile = "+213662991735",
+                    Address1 = "36 cité les pins Arzew - Oran"
+                }
+            };
 
-                var categories = new List<Category>{
-                new   Category{
-                    Name =  "boissons chaudes",
-                    PictureUrl="/assets/images/categories/hot_drink.png",
-                    Validated= true,
-            },
-                new   Category
+            await userManager.CreateAsync(moderator, "Pa$$w0rd");
+            await userManager.AddToRoleAsync(moderator, "Moderator");
+
+            var agent = new User
+            {
+                UserName = "Agent",
+                Email = "agent@test.com",
+                DisplayName = "Tom Tommity",
+                Profile = new UserProfile
+                {
+                    FirstName = "Tom",
+                    LastName = "Tommity",
+                    Email = "agent@test.com",
+                    Mobile = "+213662991735",
+                    Address1 = "36 cité les pins Arzew - Oran"
+                }
+            };
+
+            await userManager.CreateAsync(agent, "Pa$$w0rd");
+            await userManager.AddToRoleAsync(agent, "Agent");
+
+            var shop = new Shop
+            {
+                Id = Guid.NewGuid().ToString(),
+                Name = "RedPill Shop",
+                TablesCount = 12
+            };
+            context.Shops.Add(shop);
+
+            admin.ShopId = shop.Id;
+            moderator.ShopId = shop.Id;
+            agent.ShopId = shop.Id;
+            shop.OwnerId = admin.Id;
+
+            await context.SaveChangesAsync();
+        }
+
+        if (!context.Categories.Any())
+        {
+            var categories = new List<Category>
+            {
+                new()
+                {
+                    Name = "boissons chaudes",
+                    PictureUrl = "/assets/images/categories/hot_drink.png",
+                    Validated = true
+                },
+                new()
                 {
                     Name = "boissons fraîches",
                     PictureUrl = "/assets/images/categories/fresh_drink.png",
-                    Validated= true,
+                    Validated = true
                 },
-                 new   Category
-                 {
-                     Name = "boissons gazeuses",
-                     PictureUrl = "/assets/images/categories/soda.png",
-                     Validated= true,
-                 },
-                 new   Category
-                 {
-                     Name = "jus",
-                     PictureUrl = "/assets/images/categories/juice.png",
-                     Validated= true,
-                 },
-                 new   Category
-                 {
-                     Name = "eau minérale",
-                     PictureUrl = "/assets/images/categories/water.png",
-                     Validated= true,
-                 },
-                 new   Category
-                 {
-                     Name = "pains et gateaux",
+                new()
+                {
+                    Name = "boissons gazeuses",
+                    PictureUrl = "/assets/images/categories/soda.png",
+                    Validated = true
+                },
+                new()
+                {
+                    Name = "jus",
+                    PictureUrl = "/assets/images/categories/juice.png",
+                    Validated = true
+                },
+                new()
+                {
+                    Name = "eau minérale",
+                    PictureUrl = "/assets/images/categories/water.png",
+                    Validated = true
+                },
+                new()
+                {
+                    Name = "pains et gateaux",
 
-                     PictureUrl = "/assets/images/categories/cake.png",
-                     Validated= true,
-                 },
-                new   Category
+                    PictureUrl = "/assets/images/categories/cake.png",
+                    Validated = true
+                },
+                new()
                 {
                     Name = "autres",
 
                     PictureUrl = "/assets/images/categories/other.png",
-                     Validated= true,
-                },
+                    Validated = true
+                }
             };
 
-                context.Categories.AddRange(categories);
-                await context.SaveChangesAsync();
-
-            }
-
-            // if (context.Transactions.Any())
-            // {
-            //     await context.Transactions.Include(t => t.Agent).ForEachAsync(t =>
-            //     {
-            //         if (t.Amount <= 0)
-            //         {
-            //             t.Amount = 5000;
-            //         }
-            //         if (t.Agent != null)
-            //         {
-            //             t.Type = TransactionType.payment;
-            //             var type = t.Agent.Type == AgentType.client ? "Client" : "Fournisseur";
-            //             t.Description = $"Paiement de dette {type} - {t.Agent.Name}";
-            //         }
-            //         else
-            //         {
-            //             t.Type = TransactionType.transaction;
-            //             if (t.Description == "string")
-            //             {
-            //                 t.Description = null;
-            //             }
-            //         }
-            //     });
-
-            //     await context.SaveChangesAsync();
-            // }
-
-            // if (context.Products.Any())
-            // {
-            //     await context.Products.ForEachAsync(product =>
-            //     {
-            //         if (product.PictureUrl.StartsWith("assets"))
-            //         {
-            //             product.PictureUrl = $"/{product.PictureUrl}";
-            //         }
-            //     });
-
-            //     await context.SaveChangesAsync();
-            // }
-
-            // if (context.OperationsElements.Any())
-            // {
-            //     await context.OperationsElements.ForEachAsync(element =>
-            //     {
-            //         element.ProductName = element.Product;
-            //     });
-            //     await context.SaveChangesAsync();
-            // }
+            context.Categories.AddRange(categories);
+            await context.SaveChangesAsync();
         }
+
+        // if (context.Transactions.Any())
+        // {
+        //     await context.Transactions.Include(t => t.Agent).ForEachAsync(t =>
+        //     {
+        //         if (t.Amount <= 0)
+        //         {
+        //             t.Amount = 5000;
+        //         }
+        //         if (t.Agent != null)
+        //         {
+        //             t.Type = TransactionType.payment;
+        //             var type = t.Agent.Type == AgentType.client ? "Client" : "Fournisseur";
+        //             t.Description = $"Paiement de dette {type} - {t.Agent.Name}";
+        //         }
+        //         else
+        //         {
+        //             t.Type = TransactionType.transaction;
+        //             if (t.Description == "string")
+        //             {
+        //                 t.Description = null;
+        //             }
+        //         }
+        //     });
+
+        //     await context.SaveChangesAsync();
+        // }
+
+        // if (context.Products.Any())
+        // {
+        //     await context.Products.ForEachAsync(product =>
+        //     {
+        //         if (product.PictureUrl.StartsWith("assets"))
+        //         {
+        //             product.PictureUrl = $"/{product.PictureUrl}";
+        //         }
+        //     });
+
+        //     await context.SaveChangesAsync();
+        // }
+
+        // if (context.OperationsElements.Any())
+        // {
+        //     await context.OperationsElements.ForEachAsync(element =>
+        //     {
+        //         element.ProductName = element.Product;
+        //     });
+        //     await context.SaveChangesAsync();
+        // }
     }
 }

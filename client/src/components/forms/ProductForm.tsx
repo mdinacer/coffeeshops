@@ -14,7 +14,6 @@ import NumberInput from '../input/NumberInput';
 import ImageDropZone from '../input/ImageDropZone';
 import agent from '../../app/api/agent';
 import { setProduct, updateProduct } from '../../app/slices/productsSlice';
-import { ViewGridAddIcon } from '@heroicons/react/solid';
 
 import TextArea from '../input/TextArea';
 import ProductGalleryForm from './ProductGalleryForm';
@@ -23,6 +22,7 @@ import CheckboxInput from '../input/Checkbox';
 import AppDatePicker from '../input/DatePicker';
 import AppButton from '../common/AppButton';
 import ModalDialog from '../common/ModalDialog';
+import { Squares2X2Icon } from '@heroicons/react/24/outline';
 
 interface Props {
   product?: Product | undefined;
@@ -94,12 +94,15 @@ export default function ProductForm({
     if (item.description) {
       setValue('description', item.description);
     }
-    const category = categories.find(
-      (c) => c.name.trim().toLowerCase() === item.category.trim().toLowerCase()
-    );
+    if (item.category) {
+      const category = categories.find(
+        (c) =>
+          c.name.trim().toLowerCase() === item.category.trim().toLowerCase()
+      );
 
-    if (category) {
-      setValue('categoryId', category.id);
+      if (category) {
+        setValue('categoryId', category.id);
+      }
     }
   }
 
@@ -140,6 +143,7 @@ export default function ProductForm({
       <ModalDialog
         onClose={() => setProductGalleryVisible(false)}
         active={productGalleryVisible}
+        containerStyle={' overflow-y-auto'}
         title='Galerie de produits'
       >
         <ProductGalleryForm
@@ -165,7 +169,7 @@ export default function ProductForm({
             <>
               {!isEdit && (
                 <AppButton
-                  Icon={ViewGridAddIcon}
+                  Icon={Squares2X2Icon}
                   label='Galerie'
                   onClick={() => setProductGalleryVisible(true)}
                   labelStyle={' hidden md:block '}
@@ -189,12 +193,12 @@ export default function ProductForm({
           onChange={(item) => setValue('categoryId', item.value)}
         />
 
-        <TextArea
+        {/* <TextArea
           placeholder={''}
           name={'description'}
           label='Détails'
           control={control}
-        />
+        /> */}
 
         <NumberInput
           control={control}

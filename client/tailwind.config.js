@@ -14,8 +14,10 @@ module.exports = {
     extend: {},
     fontFamily: {
       Primary: ["'Oswald'", 'sans-serif'],
-      Secondary: ["'Inter'", 'sans-serif'],
+      Secondary: ["'Roboto Condensed'", 'sans-serif'],
       Inter: ["'Inter'", 'sans-serif'],
+      Roboto: ["'Roboto Condensed'", 'sans-serif'],
+      Josefin: ["'Josefin Sans'", 'sans-serif'],
     },
   },
   plugins: [

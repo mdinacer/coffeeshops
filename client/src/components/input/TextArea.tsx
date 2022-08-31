@@ -31,7 +31,7 @@ export default function TextArea(props: Props) {
         <div className='w-full flex-auto'>
           <textarea
             rows={props.rows || 3}
-            className={`form-input w-full resize-none border-none bg-transparent py-1  placeholder:text-gray-400 placeholder:first-letter:uppercase focus:outline-none`}
+            className={`form-input w-full resize-none border-none bg-transparent py-1  placeholder:text-stone-400 placeholder:first-letter:uppercase focus:outline-none`}
             aria-label={props.label}
             type={props.type}
             {...props}
@@ -51,10 +51,10 @@ export default function TextArea(props: Props) {
     //   {props.label && <span className=' text-sm uppercase'>{props.label}</span>}
     //   <textarea
     //     rows={props.rows || 3}
-    //     className={`form-input autofill:text-stone-100 autofill:bg-red-500 dark:autofill:text-stone-100 border border-gray-400 focus:border-gray-400 focus:outline-none  focus:border  bg-transparent py-1 px-5 placeholder:first-letter:uppercase placeholder:text-gray-400 w-full  ${
+    //     className={`form-input autofill:text-stone-100 autofill:bg-red-500 dark:autofill:text-stone-100 border border-stone-400 focus:border-stone-400 focus:outline-none  focus:border  bg-transparent py-1 px-5 placeholder:first-letter:uppercase placeholder:text-stone-400 w-full  ${
     //       fieldState.error
     //         ? 'border-red-400 focus:border-red-400'
-    //         : 'border-gray-400 focus:border-gray-400'
+    //         : 'border-stone-400 focus:border-stone-400'
     //     }`}
     //     aria-label={props.label}
     //     type={props.type}

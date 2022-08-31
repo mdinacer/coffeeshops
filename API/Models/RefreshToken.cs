@@ -1,5 +1,3 @@
-
-
 using API.Models;
 
 public class RefreshToken

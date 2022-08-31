@@ -26,10 +26,10 @@ export default function AppDialog({
       initial={{ x: -500, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
       exit={{ x: 500, opacity: 0 }}
-      className={` ${className}   w-auto flex-col items-stretch overflow-y-auto  border  border-gray-300 bg-gray-200 p-3 drop-shadow-md md:flex md:rounded-2xl md:p-6 `}
+      className={` ${className}   w-auto flex-col items-stretch overflow-y-auto  border  border-stone-300 bg-stone-200 p-3 drop-shadow-md md:flex md:rounded-2xl md:p-6 `}
     >
       {title && (
-        <div className=' mb-2 flex-initial  border-b border-b-gray-200 px-5 pb-2'>
+        <div className=' mb-2 flex-initial  border-b border-b-stone-200 px-5 pb-2'>
           <h1 className=' text-center font-Secondary text-2xl font-semibold uppercase md:text-3xl'>
             {title}
           </h1>

@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { TransactionDirection } from '../../app/models/TransactionDirection';
 import { TransactionParams } from '../../app/models/TransactionParams';
 import { TransactionType } from '../../app/models/TransactionType';
-import AppPageSize from '../common/AppPageSize';
 import AppSort from '../common/AppSort';
 import AppDatePicker from '../input/DatePicker';
 import DropDown from '../input/DropDown';
@@ -25,12 +24,8 @@ export default function TransactionFilters({ setParams }: Props) {
     setParams({ [property]: value });
   }
 
-  const handlePageSizeChange = (count: number) => {
-    filter('pageSize', count);
-  };
-
   return (
-    <div className='grid gap-4 md:grid-cols-3 '>
+    <div className='grid gap-4 md:grid-cols-3 xl:grid-cols-5 '>
       <div>
         <DropDown
           items={typeFilters}
@@ -89,9 +84,6 @@ export default function TransactionFilters({ setParams }: Props) {
             filter('endDate', value ? new Date(value) : undefined);
           }}
         />
-      </div>
-      <div>
-        <AppPageSize onChange={handlePageSizeChange} />
       </div>
     </div>
   );

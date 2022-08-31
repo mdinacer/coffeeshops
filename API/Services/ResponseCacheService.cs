@@ -2,47 +2,42 @@ using System.Text.Json;
 using API.Interfaces;
 using StackExchange.Redis;
 
-namespace API.Services
+namespace API.Services;
+
+public class ResponseCacheService : IResponseCacheService
 {
-    public class ResponseCacheService : IResponseCacheService
+    private readonly IDatabase _database;
+
+    public ResponseCacheService(IConnectionMultiplexer redis)
     {
-        private readonly IDatabase _database;
-        public ResponseCacheService(IConnectionMultiplexer redis)
+        _database = redis.GetDatabase();
+    }
+
+    public async Task CacheResponseAsync(string cacheKey, object? response, TimeSpan timeToLive)
+    {
+        if (response == null) return;
+
+        var options = new JsonSerializerOptions
         {
-            _database = redis.GetDatabase();
-        }
-        public async Task CacheResponseAsync(string cacheKey, object? response, TimeSpan timeToLive)
-        {
-            if (response == null)
-            {
-                return;
-            }
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+        };
 
-            var options = new JsonSerializerOptions
-            {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-            };
+        var serializedResponse = JsonSerializer.Serialize(response, options);
 
-            var serializedResponse = JsonSerializer.Serialize(response, options);
+        await _database.StringSetAsync(cacheKey, serializedResponse, timeToLive);
+    }
 
-            await _database.StringSetAsync(cacheKey, serializedResponse, timeToLive);
-        }
+    public async Task<string?> GetCachedResponseAsync(string cacheKey)
+    {
+        var cachedResponse = await _database.StringGetAsync(cacheKey);
 
-        public async Task<string?> GetCachedResponseAsync(string cacheKey)
-        {
-            var cachedResponse = await _database.StringGetAsync(cacheKey);
+        if (cachedResponse.IsNullOrEmpty) return null;
 
-            if (cachedResponse.IsNullOrEmpty)
-            {
-                return null;
-            }
+        return cachedResponse;
+    }
 
-            return cachedResponse;
-        }
-
-        public async Task<bool> ClearCachedResponseAsync(string cacheKey)
-        {
-            return await _database.KeyDeleteAsync(cacheKey);
-        }
+    public async Task<bool> ClearCachedResponseAsync(string cacheKey)
+    {
+        return await _database.KeyDeleteAsync(cacheKey);
     }
 }

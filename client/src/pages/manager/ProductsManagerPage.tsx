@@ -1,11 +1,10 @@
-import { PlusIcon } from '@heroicons/react/solid';
+import { PlusIcon } from '@heroicons/react/24/solid';
 import { useEffect, useState } from 'react';
 import useProducts from '../../app/hooks/useProducts';
 import ListPageLayout from '../../app/layout/ListPageLayout';
 import { Product } from '../../app/models/product';
 import {
   setPageNumber,
-  setPaginate,
   setProductParams,
 } from '../../app/slices/productsSlice';
 import { useAppDispatch } from '../../app/store/configureStore';
@@ -38,12 +37,11 @@ export default function ProductsManagerPage() {
     setAddProductForm(true);
   };
 
-  // useEffect(() => {
-  //   dispatch(setProductParams({ pageSize: 1000 }));
-  // }, []);
   useEffect(() => {
-    dispatch(setPaginate(true));
+    dispatch(setProductParams({ paginate: true, pageSize: 15 }));
   }, []);
+
+  if (!productsLoaded) return <LoadingComponent />;
   return (
     <>
       <ModalDialog active={addProductForm} title='Ajouter un produit'>
@@ -82,7 +80,7 @@ export default function ProductsManagerPage() {
           </CollapsibleMenu>
         }
         list={
-          <div className='grid gap-5 gap-y-5 md:gap-y-2 lg:grid-cols-3'>
+          <div className='grid gap-5 gap-y-5 md:grid-cols-2 md:gap-y-2 xl:grid-cols-3'>
             {products &&
               products.map((product) => (
                 <ShopProductCard

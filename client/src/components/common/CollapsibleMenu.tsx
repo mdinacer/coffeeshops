@@ -1,4 +1,4 @@
-import { MenuAlt2Icon } from '@heroicons/react/solid';
+import { Bars3BottomLeftIcon } from '@heroicons/react/24/outline';
 import { useState } from 'react';
 
 interface Props {
@@ -25,7 +25,7 @@ export default function CollapsibleMenu({
         }
         onClick={() => setExpanded((prev) => !prev)}
       >
-        <MenuAlt2Icon className='mr-2 h-6 w-6' />
+        <Bars3BottomLeftIcon className='mr-2 h-6 w-6' />
         <span className=' font-Primary text-xl font-light uppercase'>
           {title}
         </span>

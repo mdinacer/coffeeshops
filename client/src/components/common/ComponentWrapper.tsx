@@ -3,6 +3,7 @@ interface Props {
   element: React.ReactNode;
   button?: React.ReactNode;
   className?: string;
+  labelStyle?: string;
 }
 
 export default function ComponentWrapper({
@@ -10,6 +11,7 @@ export default function ComponentWrapper({
   element,
   button,
   className,
+  labelStyle,
 }: Props) {
   return (
     <div
@@ -18,7 +20,9 @@ export default function ComponentWrapper({
       <label className={`flex w-full flex-auto flex-row items-center gap-x-2 `}>
         <div className='flex-initial'>
           {label && (
-            <p className=' w-full min-w-[4rem] border-r border-stone-400  pr-2 text-sm uppercase  hover:text-yellow-900'>
+            <p
+              className={` ${labelStyle}  w-full min-w-[4rem] border-r border-stone-400  pr-2 text-sm uppercase  hover:text-yellow-900`}
+            >
               {label}
             </p>
           )}

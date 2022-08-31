@@ -1,10 +1,13 @@
-import { ArrowLeftIcon, LoginIcon, LogoutIcon } from '@heroicons/react/outline';
 import {
+  ArrowLeftIcon,
+  ArrowLeftOnRectangleIcon,
+  ArrowRightOnRectangleIcon,
+  Bars3CenterLeftIcon,
   BellIcon,
-  MenuAlt1Icon,
-  SearchIcon,
+  MagnifyingGlassIcon,
   UserCircleIcon,
-} from '@heroicons/react/solid';
+} from '@heroicons/react/24/outline';
+
 import { Link, useLocation } from 'react-router-dom';
 import { User } from '../../app/models/user';
 import { signOut } from '../../app/slices/accountSlice';
@@ -31,7 +34,7 @@ export default function AppPageHeader({
   return (
     <>
       <div
-        className={`flex w-full flex-row  items-center justify-between border-b border-b-stone-400 bg-stone-700 text-stone-300 md:py-0 md:pl-5 ${className}`}
+        className={`flex w-full flex-row  items-center justify-between border-b border-b-stone-400 bg-stone-800 text-stone-300 md:py-0 md:pl-5 ${className}`}
       >
         <div className='relative z-10 inline-flex items-center gap-x-5'>
           {!sidebarExpanded && (
@@ -40,13 +43,13 @@ export default function AppPageHeader({
               className='p-2'
               onClick={() => onMenuButtonClick(true)}
             >
-              <MenuAlt1Icon className={` h-6 w-6 `} />
+              <Bars3CenterLeftIcon className={` h-6 w-6 `} />
             </button>
           )}
           {from && (
             <Link
               to={from}
-              className='inline-flex items-center gap-x-2 rounded-full border border-stone-800 bg-stone-400 py-1 px-5  hover:bg-yellow-500 hover:text-stone-100'
+              className='inline-flex items-center gap-x-2 rounded-full border border-stone-800 bg-stone-500 py-1 px-5  hover:bg-yellow-500 hover:text-stone-100'
             >
               <ArrowLeftIcon className={` h-5 w-5 `} />
               <span className='hidden font-Primary font-thin uppercase md:block'>
@@ -59,7 +62,7 @@ export default function AppPageHeader({
         <div className=' flex flex-row gap-x-5'>
           <div className='grid grid-cols-2'>
             <button type='button' className='p-2'>
-              <SearchIcon className='h-6 w-6' />
+              <MagnifyingGlassIcon className='h-6 w-6' />
             </button>
             <button type='button' className='p-2'>
               <BellIcon className='h-6 w-6' />
@@ -77,7 +80,7 @@ export default function AppPageHeader({
                 className=' items-center  gap-x-2 border-none hover:text-inherit hover:underline hover:underline-offset-2 '
               />
               <AppButton
-                Icon={LogoutIcon}
+                Icon={ArrowRightOnRectangleIcon}
                 label='sortir'
                 labelStyle=' hidden md:block'
                 genre='none'
@@ -89,7 +92,7 @@ export default function AppPageHeader({
             <div>
               <AppLink
                 toPath='/account/login'
-                Icon={LoginIcon}
+                Icon={ArrowLeftOnRectangleIcon}
                 className={
                   ' underline  hover:text-inherit hover:underline-offset-1 '
                 }

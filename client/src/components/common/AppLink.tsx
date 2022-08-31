@@ -71,4 +71,4 @@ export default function AppLink({
   );
 }
 const buttonStyle =
-  ' flex justify-center gap-x-2 items-center  border transition-all duration-300 px-3 py-2 text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ';
+  ' flex justify-center gap-x-2 items-center  border transition-all duration-300 px-3 py-1 text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ';

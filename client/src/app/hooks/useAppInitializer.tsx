@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import agent from '../api/agent';
 import {
   fetchCurrentUser,
   refreshToken,
@@ -7,23 +8,25 @@ import {
 } from '../slices/accountSlice';
 import { fetchShopAsync } from '../slices/shopSlice';
 import { useAppDispatch, useAppSelector } from '../store/configureStore';
+import useNotifications from './useNotifications';
 
 export default function useAppInitializer() {
   const dispatch = useAppDispatch();
-  const { token, shopId } = useAppSelector((state) => state.account);
+  const { token, shopId, user } = useAppSelector((state) => state.account);
   const [shopLoading, setShopLoading] = useState(false);
   const [shopLoaded, setShopLoaded] = useState(false);
-  const [loadingUser, setLoadingUser] = useState(true);
+  const [userLoading, setUserLoading] = useState(true);
   const [userLoaded, setUserLoaded] = useState(false);
+  const { stopConnection, connection } = useNotifications();
 
   const loadUser = useCallback(async () => {
     try {
-      setLoadingUser(true);
+      setUserLoading(true);
       await dispatch(fetchCurrentUser());
     } catch (error) {
       console.log(error);
     } finally {
-      setLoadingUser(false);
+      setUserLoading(false);
     }
   }, [dispatch]);
 
@@ -43,11 +46,14 @@ export default function useAppInitializer() {
       if (!token) return;
       const jwtToken = JSON.parse(atob(token.split('.')[1]));
       const expires = new Date(jwtToken.exp * 1000);
-      const timeout = expires.getTime() - Date.now() - 60 * 1000;
-      const timer = setTimeout(() => dispatch(refreshToken()), timeout);
+      const timeout = expires.getTime() - Date.now() - 5000;
+      const timer = setTimeout(() => {
+        dispatch(refreshToken());
+        stopConnection(connection);
+      }, timeout);
       dispatch(setRefreshTokenTimeout(timer));
     },
-    [dispatch]
+    [connection, dispatch, stopConnection]
   );
 
   useEffect(() => {
@@ -57,20 +63,22 @@ export default function useAppInitializer() {
     };
   }, [token]);
 
-  useEffect(() => {
-    loadUser().then(() => setUserLoaded(true));
-  }, []);
+  // useEffect(() => {
+  //   loadUser().then(() => setUserLoaded(true));
+  // }, []);
 
-  useEffect(() => {
-    if (shopId && !shopLoading) {
-      loadShop().then(() => setShopLoaded(true));
-    }
-  }, [shopId]);
+  // useEffect(() => {
+  //   if (shopId && !shopLoading) {
+  //     loadShop().then(() => setShopLoaded(true));
+  //   }
+  // }, [shopId]);
 
   return {
-    loadingUser,
+    loadingUser: userLoading,
+    shopLoading,
     userLoaded,
     shopLoaded,
-    initApp: loadUser,
+    loadUser,
+    loadShop,
   };
 }

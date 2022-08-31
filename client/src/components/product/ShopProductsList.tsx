@@ -77,7 +77,7 @@ export default function ShopProductsList({ onSelect }: Props) {
         <Layout className='fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-black bg-opacity-70 '>
           <div>
             {deleteDialogVisible && (
-              <div className=' flex w-full max-w-lg flex-col rounded-md bg-stone-200 py-5 px-10 dark:bg-gray-800 '>
+              <div className=' flex w-full max-w-lg flex-col rounded-md bg-stone-200 py-5 px-10 dark:bg-stone-800 '>
                 <div className='mb-4 flex flex-initial flex-row'>
                   <div className='px-5'>
                     <img
@@ -118,7 +118,7 @@ export default function ShopProductsList({ onSelect }: Props) {
                   <button
                     onClick={() => setDeleteDialogVisible(false)}
                     type='button'
-                    className={buttonStyle + ' rounded-md bg-gray-700'}
+                    className={buttonStyle + ' rounded-md bg-stone-700'}
                   >
                     Non
                   </button>
@@ -127,7 +127,7 @@ export default function ShopProductsList({ onSelect }: Props) {
             )}
 
             {editDialogVisible && (
-              <div className=' rounded-md bg-stone-200  py-5 px-10 dark:bg-gray-800'>
+              <div className=' rounded-md bg-stone-200  py-5 px-10 dark:bg-stone-800'>
                 <ProductForm
                   product={selectedProduct}
                   onClose={() => setEditDialogVisible(false)}

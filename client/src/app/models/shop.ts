@@ -8,4 +8,5 @@ export interface Shop {
     owner: UserProfile;
     productsCount: number,
     operationsCount: number,
+    withdrawalMax?: number
 }
