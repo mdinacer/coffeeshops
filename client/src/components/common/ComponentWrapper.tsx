@@ -21,7 +21,7 @@ export default function ComponentWrapper({
         <div className='flex-initial'>
           {label && (
             <p
-              className={` ${labelStyle}  w-full min-w-[4rem] border-r border-stone-400  pr-2 text-sm uppercase  hover:text-yellow-900`}
+              className={` ${labelStyle} w-full  min-w-[3rem] border-r border-stone-400 pr-2  font-Secondary text-sm uppercase  hover:text-yellow-900`}
             >
               {label}
             </p>
@@ -29,7 +29,7 @@ export default function ComponentWrapper({
         </div>
         <div className='flex-auto'>{element}</div>
       </label>
-      <div className='flex flex-initial items-stretch'>
+      <div className='flex flex-initial items-stretch overflow-hidden rounded-r-lg'>
         {!!button && button}
       </div>
     </div>

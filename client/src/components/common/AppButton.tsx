@@ -72,7 +72,7 @@ export default function AppButton({
       </div>
       {label && (
         <span
-          className={`  font-Secondary text-lg font-thin uppercase  ${labelStyle}`}
+          className={` font-Secondary text-base font-normal uppercase  ${labelStyle}`}
         >
           {loading ? loadingLabel : label}
         </span>
@@ -82,4 +82,4 @@ export default function AppButton({
 }
 
 const buttonStyle =
-  ' flex justify-center gap-x-2 items-center  transition-all duration-300 px-3 py-1 text-lg font-Primary font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ';
+  ' flex justify-center gap-x-2 items-center  transition-all duration-300 px-3 py-1  focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ';

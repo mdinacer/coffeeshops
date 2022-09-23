@@ -10,7 +10,6 @@ import NumberInput from '../input/NumberInput';
 import { useAppDispatch, useAppSelector } from '../../app/store/configureStore';
 import { agentsSelectors, fetchAgentAsync } from '../../app/slices/agentsSlice';
 import agent from '../../app/api/agent';
-import TextArea from '../input/TextArea';
 import { TransactionDirection } from '../../app/models/TransactionDirection';
 import { formatNumber } from '../../app/utils/utils';
 
@@ -35,6 +34,7 @@ export default function PaymentDialog({ shopAgentId, type, onClose }: Props) {
 
   const {
     control,
+    watch,
     handleSubmit,
     reset,
     setValue,
@@ -51,11 +51,19 @@ export default function PaymentDialog({ shopAgentId, type, onClose }: Props) {
           .min(0)
           .max(
             shopAgent ? shopAgent.debt : 0,
-            `Le montant ne doit pas dépasser la somme de ${shopAgent?.debt} Da`
+            `Le montant maximum payable est de ${shopAgent?.debt} Da`
           ),
       })
     ),
   });
+
+  const amount = watch('amount', 0);
+
+  useEffect(() => {
+    if (shopAgent && shopAgent.debt > 0 && amount > shopAgent.debt) {
+      setValue('amount', shopAgent.debt);
+    }
+  }, [amount, shopAgent]);
 
   const agentsList = (): AgentListItem[] => {
     return [

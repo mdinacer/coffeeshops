@@ -77,7 +77,11 @@ export default function OperationDetails({ operationId, onClose }: Props) {
           />
           <StatsItem
             title='Dette'
-            value={`${formatNumber(operation.remain)} Da`}
+            value={
+              operation.remain > 0
+                ? `${formatNumber(operation.remain)} Da`
+                : 'Aucune'
+            }
             valueStyle={operation.remain > 0 ? 'text-red-600' : 'text-inherit'}
           />
         </div>

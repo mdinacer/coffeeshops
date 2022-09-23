@@ -93,78 +93,80 @@ export default function ProductDetailsPage() {
         />
       </ModalDialog>
       <Layout className='flex h-auto flex-col px-5 py-5 '>
-        <div className=' mb-5 flex w-full flex-col items-start justify-between rounded bg-stone-100  p-5 md:flex-row md:items-end'>
-          <div className=' flex flex-row items-center '>
-            <div className='mx-auto px-0 py-5 pr-3 md:mx-0 md:my-auto md:py-0 lg:px-5'>
-              <img
-                src={product.pictureUrl}
-                alt={product.name}
-                className=' h-20 w-20 object-scale-down md:h-28 md:w-28'
+        <div className='rounded bg-stone-100  p-5'>
+          <div className=' mb- flex w-full flex-col items-start justify-between  md:flex-row md:items-end'>
+            <div className=' flex flex-row items-center '>
+              <div className='mx-auto px-0 py-5 pr-3 md:mx-0 md:my-auto md:py-0 lg:px-5'>
+                <img
+                  src={product.pictureUrl}
+                  alt={product.name}
+                  className=' h-20 w-20 object-scale-down md:h-28 md:w-28'
+                />
+              </div>
+              <div>
+                <small className=' font-Primary text-base font-thin uppercase md:text-lg'>
+                  {product.category}
+                </small>
+                <p className=' font-Primary text-3xl font-thin capitalize  md:text-5xl lg:text-7xl'>
+                  {product.name}
+                </p>
+              </div>
+            </div>
+
+            <div className=' flex w-full  flex-row items-center justify-around gap-x-4 md:w-auto'>
+              <AppButton
+                label='Supprimer'
+                Icon={TrashIcon}
+                onClick={() => setIsDelete(true)}
+                type='button'
+                genre='error'
+              />
+              <AppButton
+                label='Modifier'
+                Icon={PencilSquareIcon}
+                onClick={() => setIsEdit(true)}
+                type='button'
+                genre='warning'
               />
             </div>
-            <div>
-              <small className=' font-Primary text-base font-thin uppercase md:text-lg'>
-                {product.category}
-              </small>
-              <p className=' font-Primary text-3xl font-thin capitalize  md:text-5xl lg:text-7xl'>
-                {product.name}
-              </p>
+          </div>
+
+          <div className='flex-initial  border-y border-stone-200 bg-stone-100 p-5 py-5'>
+            <div className='grid gap-y-3  md:grid-cols-6 '>
+              <StatItem
+                title={'Prix'}
+                value={formatNumber(product.price)}
+                prefix='Da'
+              />
+              <StatItem title={'Quantité'} value={product.quantity} />
+              <StatItem title={'Vendu'} value={product.soldQuantity} />
+              <StatItem
+                title={'Vente Moyenne'}
+                value={product.averageSale}
+                prefix='/ jour'
+                fallBack='indisponible'
+              />
+              <StatItem
+                title={'Stock'}
+                value={product.useInventory ? product.inventory : null}
+              />
+
+              <StatItem
+                title={'Profit'}
+                value={formatNumber(product.currentProfit)}
+                prefix='Da'
+              />
             </div>
+            {!product.useInventory && (
+              <p className='w-full pt-4 text-center font-Secondary text-sm italic opacity-50'>
+                Inventaire non applicable
+              </p>
+            )}
           </div>
-
-          <div className=' flex w-full  flex-row items-center justify-around gap-x-4 md:w-auto'>
-            <AppButton
-              label='Supprimer'
-              Icon={TrashIcon}
-              onClick={() => setIsDelete(true)}
-              type='button'
-              genre='error'
-            />
-            <AppButton
-              label='Modifier'
-              Icon={PencilSquareIcon}
-              onClick={() => setIsEdit(true)}
-              type='button'
-              genre='warning'
-            />
-          </div>
-        </div>
-
-        <div className='flex-initial rounded border-y border-stone-200 bg-stone-100 p-5 py-5'>
-          <div className='grid gap-y-3  md:grid-cols-6 '>
-            <StatItem
-              title={'Prix'}
-              value={formatNumber(product.price)}
-              prefix='Da'
-            />
-            <StatItem title={'Quantité'} value={product.quantity} />
-            <StatItem title={'Vendu'} value={product.soldQuantity} />
-            <StatItem
-              title={'Vente Moyenne'}
-              value={product.averageSale}
-              prefix='/ jour'
-              fallBack='indisponible'
-            />
-            <StatItem
-              title={'Stock'}
-              value={product.useInventory ? product.inventory : null}
-            />
-
-            <StatItem
-              title={'Profit'}
-              value={formatNumber(product.currentProfit)}
-              prefix='Da'
-            />
-          </div>
-          {!product.useInventory && (
-            <p className='w-full pt-4 text-center font-Secondary text-sm italic opacity-50'>
-              Inventaire non applicable
-            </p>
-          )}
         </div>
 
         {product.useInventory && batchesLoaded && (
-          <div className='mt-10 flex flex-auto flex-col overflow-hidden rounded-2xl bg-stone-100 px-2 py-5 md:px-6 md:py-6'>
+          <div className='mt-5 flex flex-auto flex-col overflow-hidden bg-stone-100 px-2 py-5 md:px-6 md:py-6'>
             <p className=' mb-5 flex-initial px-3 font-Primary text-2xl font-thin uppercase '>
               Lots
             </p>

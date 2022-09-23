@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useState } from 'react';
-import agent from '../api/agent';
 import {
   fetchCurrentUser,
   refreshToken,
@@ -12,21 +11,17 @@ import useNotifications from './useNotifications';
 
 export default function useAppInitializer() {
   const dispatch = useAppDispatch();
-  const { token, shopId, user } = useAppSelector((state) => state.account);
+  const { token, shopId } = useAppSelector((state) => state.account);
   const [shopLoading, setShopLoading] = useState(false);
   const [shopLoaded, setShopLoaded] = useState(false);
-  const [userLoading, setUserLoading] = useState(true);
   const [userLoaded, setUserLoaded] = useState(false);
   const { stopConnection, connection } = useNotifications();
 
   const loadUser = useCallback(async () => {
     try {
-      setUserLoading(true);
       await dispatch(fetchCurrentUser());
     } catch (error) {
       console.log(error);
-    } finally {
-      setUserLoading(false);
     }
   }, [dispatch]);
 
@@ -63,22 +58,18 @@ export default function useAppInitializer() {
     };
   }, [token]);
 
-  // useEffect(() => {
-  //   loadUser().then(() => setUserLoaded(true));
-  // }, []);
+  useEffect(() => {
+    loadUser().then(() => setUserLoaded(true));
+  }, []);
 
-  // useEffect(() => {
-  //   if (shopId && !shopLoading) {
-  //     loadShop().then(() => setShopLoaded(true));
-  //   }
-  // }, [shopId]);
+  useEffect(() => {
+    if (shopId && !shopLoading) {
+      loadShop().then(() => setShopLoaded(true));
+    }
+  }, [shopId]);
 
   return {
-    loadingUser: userLoading,
-    shopLoading,
     userLoaded,
     shopLoaded,
-    loadUser,
-    loadShop,
   };
 }

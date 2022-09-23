@@ -1,21 +1,22 @@
-import {
-  KeyIcon,
-  EnvelopeIcon,
-  PencilSquareIcon,
-  TrashIcon,
-} from '@heroicons/react/24/solid';
+import { EnvelopeIcon } from '@heroicons/react/24/outline';
+import { KeyIcon, PencilSquareIcon } from '@heroicons/react/24/solid';
 import { useState } from 'react';
 import { useAppSelector } from '../../app/store/configureStore';
 import getRoleName from '../../app/utils/rolesNames';
 import AppButton from '../../components/common/AppButton';
+import ModalDialog from '../../components/common/ModalDialog';
+import PasswordChangeForm from '../../components/forms/PasswordChangeForm';
 import ProfileForm from '../../components/forms/ProfileForm';
 import Layout from '../../components/Layout';
+import MailChangeRequest from './MailChangeRequest';
 
 export default function ProfilePage() {
   const [isEdit, setIsEdit] = useState(false);
   const { user, roles } = useAppSelector((state) => state.account);
   const { shop } = useAppSelector((state) => state.shop);
   const profile = user?.profile;
+  const [isPasswordChange, setIsPasswordChange] = useState(false);
+  const [isChangeEmail, setIsChangeEmail] = useState(false);
 
   if (isEdit || !profile)
     return (
@@ -32,8 +33,24 @@ export default function ProfilePage() {
     );
 
   return (
-    <Layout className='container flex'>
-      <div className='container mx-auto my-10 flex flex-1 flex-col gap-y-10 px-5'>
+    <>
+      <ModalDialog
+        title="Changement de l'email"
+        active={isChangeEmail}
+        onClose={() => setIsChangeEmail(false)}
+      >
+        <MailChangeRequest onClose={() => setIsChangeEmail(false)} />
+      </ModalDialog>
+
+      <ModalDialog
+        containerStyle=' max-w-sm'
+        title='Changement de mot de passe'
+        active={isPasswordChange}
+        onClose={() => setIsPasswordChange(false)}
+      >
+        <PasswordChangeForm onClose={() => setIsPasswordChange(false)} />
+      </ModalDialog>
+      <Layout className='m-auto h-auto text-stone-600 2xl:max-w-6xl'>
         <div className=' flex w-full flex-col gap-y-4 '>
           <div className='mb-5'>
             <p className=' mb-2 font-Primary text-3xl font-thin lg:text-5xl '>
@@ -65,13 +82,16 @@ export default function ProfilePage() {
                 />
               </div>
               <div className='flex flex-col gap-y-2'>
-                <DetailItem title='Téléphone:' value={profile.phone} />
+                <DetailItem
+                  title='Téléphone:'
+                  value={profile.phone || 'Aucun'}
+                />
                 <DetailItem title='Mobile:' value={profile.mobile} />
               </div>
             </div>
           </div>
 
-          <div className='grid w-full grid-cols-1 gap-4 lg:grid-cols-4'>
+          <div className='mt-5 grid w-full grid-cols-1 gap-4 lg:grid-cols-3'>
             <AppButton
               label={'Modifier'}
               Icon={PencilSquareIcon}
@@ -81,26 +101,32 @@ export default function ProfilePage() {
             <AppButton
               label={"Changer l'adresse email"}
               Icon={EnvelopeIcon}
-              onClick={() => setIsEdit(true)}
+              onClick={() => setIsChangeEmail(true)}
               genre='secondary'
             />
 
             <AppButton
+              disabled={isPasswordChange}
+              onClick={() => setIsPasswordChange(true)}
               type='button'
-              label='Changer le mot de passe'
+              label={
+                isPasswordChange
+                  ? 'Demande en cours'
+                  : 'Changer le mot de passe'
+              }
               Icon={KeyIcon}
               genre='warning'
             />
-            <AppButton
-              type='button'
-              label=' Supprimer le compte'
-              Icon={TrashIcon}
-              genre={'error'}
-            />
+            {/* <AppButton
+            type='button'
+            label=' Supprimer le compte'
+            Icon={TrashIcon}
+            genre={'error'}
+          /> */}
           </div>
         </div>
-      </div>
-    </Layout>
+      </Layout>
+    </>
   );
 }
 

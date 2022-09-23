@@ -132,7 +132,17 @@ const Account = {
     verifyEmail: (token: string, email: string) =>
         requests.post<void>(`/Account/verifyEmail?token=${token}&email=${email}`, {}),
     resendEmailConfirm: (email: string) =>
-        requests.get(`/Account/resendEmailConfirmationLink?email=${email}`)
+        requests.get(`/Account/resendEmailConfirmationLink?email=${email}`),
+    resetPasswordRequest: (email: string) =>
+        requests.get(`/Account/sendPasswordResetLink`, getAxiosParams([{ property: "email", value: email }])),
+    resetPassword: (email: string, token: string, newPassword: string) =>
+        requests.post<void>(`/Account/resetPassword`, { email, token, newPassword }),
+    changePassword: (currentPassword: string, newPassword: string) =>
+        requests.post(`/Account/changePassword`, { currentPassword, newPassword }),
+    changeEmailRequest: (password: string, newEmail: string) =>
+        requests.post(`/Account/sendEmailChangeRequest`, { password, newEmail }),
+    changeEmail: (token: string, newEmail: string) =>
+        requests.post<void>(`/Account/changeEmail`, { token, newEmail }),
 }
 
 const Agents = {
@@ -179,8 +189,9 @@ const Payments = {
 
 const Products = {
     get: (productId: string) => requests.get<Product>(`Products/${productId}`),
-    list: (params: URLSearchParams) => requests.get(`Products`, params),
-    listAll: () => requests.get<Operation[]>(`Products/list`),
+    list: () => requests.get(`Products`),
+    listPaginated: (params: URLSearchParams) => requests.get(`Products/paginated`, params),
+    listShowcase: () => requests.get(`Products/showcase`),
     listPurchases: (productId: string) => requests.get<OperationElement[]>(`Products/${productId}/purchases`),
     listBatches: (productId: string) => requests.get<ProductBatch[]>(`Products/${productId}/batches`),
     create: (values: any) => requests.postForm(`Products`, createFormData(values)),
@@ -225,3 +236,21 @@ const agent = {
 }
 
 export default agent;
+
+
+interface QueryParamItem {
+    property: string;
+    value: any
+}
+
+
+function getAxiosParams(values: Array<QueryParamItem>) {
+
+    const params = new URLSearchParams();
+
+    if (!Array.isArray(values) || !values.length) return params;
+
+    values.forEach(param => params.append(param.property, param.value.toString()))
+
+    return params;
+}

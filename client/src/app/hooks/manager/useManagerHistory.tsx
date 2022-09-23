@@ -20,7 +20,7 @@ export default function useManagerHistory() {
       const result: any = await agent.ShopHistory.list(params);
       if (result) {
         const { items, metaData } = result;
-        setHistory(result);
+        setHistory(items);
         setMetaData(metaData);
       }
       setHistoryLoaded(true);
@@ -34,6 +34,7 @@ export default function useManagerHistory() {
   function setParams(value: any) {
     setHistoryParams((prev) => ({ ...prev, ...value, pageNumber: 1 }));
     setHistoryLoaded(false);
+    //fetchHistory();
   }
 
   function setPageNumber(page: number) {
@@ -46,14 +47,19 @@ export default function useManagerHistory() {
     setHistoryLoaded(false);
   }
 
+  // useEffect(() => {
+  //   if (!historyLoaded && !historyLoading) {
+  //     fetchHistory();
+  //   }
+  // }, []);
+
   useEffect(() => {
-    if (!historyLoaded && !historyLoading) {
-      fetchHistory();
-    }
-  }, [fetchHistory, historyLoaded, historyLoading]);
+    fetchHistory();
+  }, [historyParams]);
 
   return {
     history,
+    historyParams,
     historyLoaded,
     historyLoading,
     metaData,
@@ -65,11 +71,11 @@ export default function useManagerHistory() {
 function initParams() {
   return {
     pageNumber: 1,
-    pageSize: 1000,
+    pageSize: 15,
     orderBy: 'date',
     element: undefined,
     action: undefined,
-    // startDate: new Date().toUTCString(),
+    startDate: new Date().toUTCString(),
     // endDate: new Date().toUTCString(),
   };
 }
@@ -80,10 +86,16 @@ export function getAxiosHistoryParams(historyParams: HistoryParams) {
   params.append('pageSize', historyParams.pageSize.toString());
   params.append('orderBy', historyParams.orderBy);
 
-  if (historyParams.action) {
-    params.append('action', historyParams.action);
+  if (historyParams.action !== undefined) {
+    params.append('action', historyParams.action.toString());
   } else {
     params.delete('action');
+  }
+
+  if (historyParams.userId) {
+    params.append('userId', historyParams.userId.toString());
+  } else {
+    params.delete('userId');
   }
 
   if (historyParams.element) {

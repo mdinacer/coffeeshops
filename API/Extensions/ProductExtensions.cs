@@ -45,13 +45,12 @@ public static class ProductExtensions
     }
 
 
-    public static IQueryable<Product> Filter(this IQueryable<Product> query, string? categoryId, bool? showcase)
+    public static IQueryable<Product> Filter(this IQueryable<Product> query, string? categoryId)
     {
         if (!string.IsNullOrEmpty(categoryId))
             query = query.Where(p => p.CategoryId == categoryId);
 
-        if (showcase != null && showcase == true)
-            query = query.Where(p => p.Showcase);
+
 
         return query;
     }

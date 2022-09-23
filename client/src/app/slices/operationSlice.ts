@@ -9,7 +9,6 @@ import { RootState } from '../store/configureStore';
 interface OperationState {
   operationsLoaded: boolean;
   operationParams: OperationParams;
-  operationType: string;
   metaData: MetaData | null;
   status: "idle" | "pending" | "error";
 }
@@ -28,6 +27,12 @@ export function getAxiosOperationParams(operationParams: OperationParams) {
     params.append('type', OperationType[operationParams.type]);
   } else {
     params.delete('type');
+  }
+
+  if (operationParams.agentId) {
+    params.append('agentId', operationParams.agentId);
+  } else {
+    params.delete('agentId');
   }
 
   if (operationParams.startDate) {
@@ -91,7 +96,6 @@ export const operationSlice = createSlice({
     status: "idle",
     operationsLoaded: false,
     operationParams: initParams(),
-    operationType: "sale",
     metaData: null,
   }),
   reducers: {
@@ -102,7 +106,6 @@ export const operationSlice = createSlice({
         ...action.payload,
         pageNumber: 1,
       };
-      state.operationType = state.operationParams.type === OperationType.sale ? "sale" : "purchase";
     },
 
     setPageNumber: (state, action) => {
@@ -121,7 +124,6 @@ export const operationSlice = createSlice({
 
     resetOperationParams: (state) => {
       state.operationParams = initParams();
-      state.operationType = OperationType[1];
     },
 
     addOperation: operationsAdapter.addOne,

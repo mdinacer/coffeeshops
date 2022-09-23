@@ -1,5 +1,7 @@
 import { format } from 'date-fns';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import useAgents from '../../app/hooks/useAgents';
 import useOperations from '../../app/hooks/useOperations';
 import { OperationType } from '../../app/models/OperationType';
 import { setOperationParams } from '../../app/slices/operationSlice';
@@ -7,19 +9,20 @@ import { useAppDispatch } from '../../app/store/configureStore';
 import AppButtonSelect from '../common/AppButtonSelect';
 import AppSort from '../common/AppSort';
 import AppDatePicker from '../input/DatePicker';
+import DropDown from '../input/DropDown';
 
-export default function OperationsFilters() {
+interface Props {
+  setOperationType: (type: OperationType) => void;
+}
+
+export default function OperationsFilters({ setOperationType }: Props) {
+  const [searchParams] = useSearchParams();
+  const agentId = searchParams.get('agentId');
+
   const dispatch = useAppDispatch();
-  const { operationType } = useOperations();
-  const [startDate, setStartDate] = useState<Date | null | undefined>(
-    new Date()
-  );
-  const type =
-    operationType === OperationType[0]
-      ? OperationType.purchase
-      : OperationType.sale;
-  const [endDate, setEndDate] = useState<Date | null | undefined>();
-  const [selectedType, setSelectedType] = useState(type);
+  const { operationParams } = useOperations();
+  const { agents, fetchAgents } = useAgents(0);
+  const [selectedOperationType, setSelectedOperationType] = useState(1);
 
   const typeFilters = [
     { title: 'Achat', value: 0 },
@@ -27,7 +30,6 @@ export default function OperationsFilters() {
   ];
 
   const orderByList = [
-    { title: 'Référence', value: 'id' },
     { title: 'Date', value: 'date' },
     { title: 'Montant', value: 'total' },
     { title: 'Dettes', value: 'remain' },
@@ -41,26 +43,63 @@ export default function OperationsFilters() {
     filter('orderBy', value);
   };
 
+  const agentsList = () => {
+    return [
+      { title: 'Tout', value: '' },
+      ...agents.map((a) => ({ title: a.name, value: a.id })),
+    ];
+  };
+
+  useEffect(() => {
+    if (agentId) {
+      dispatch(
+        setOperationParams({
+          type: null,
+          agentId,
+          startDate: null,
+        })
+      );
+    }
+  }, []);
+
   return (
     <div>
-      <div className='grid  gap-4 md:grid-cols-2 lg:grid-cols-4'>
+      <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5'>
         <div>
           <AppButtonSelect
+            disabled={!!agentId}
             items={typeFilters}
             label={`opération`}
-            selectedValue={selectedType}
+            selectedValue={selectedOperationType}
             onChange={(item) => {
-              setSelectedType(item.value);
-              filter('type', OperationType[item.value]);
+              fetchAgents(item.value);
+              setSelectedOperationType(+item.value);
+
+              setOperationType(
+                item.value === 0 ? OperationType.purchase : OperationType.sale
+              );
+              filter('type', OperationType[item.value].toString());
             }}
           />
         </div>
         <div>
           <AppSort
             items={orderByList}
-            initialValue='date'
+            initialValue={'date'}
             onSort={(value: string) => {
               handleOrderChange(value);
+            }}
+          />
+        </div>
+
+        <div>
+          <DropDown
+            items={agentsList()}
+            disabled={!!agentId}
+            label={`Agent`}
+            selectedValue={operationParams.agentId || ''}
+            onChange={(item) => {
+              filter('agentId', item.value);
             }}
           />
         </div>
@@ -68,11 +107,20 @@ export default function OperationsFilters() {
           <AppDatePicker
             label={'Début'}
             selectsStart
-            startDate={startDate}
-            selectedDate={startDate}
-            endDate={endDate}
+            startDate={
+              operationParams.startDate
+                ? new Date(operationParams.startDate)
+                : null
+            }
+            selectedDate={
+              operationParams.startDate
+                ? new Date(operationParams.startDate)
+                : null
+            }
+            endDate={
+              operationParams.endDate ? new Date(operationParams.endDate) : null
+            }
             onChange={(value) => {
-              setStartDate(value);
               filter(
                 'startDate',
                 value ? format(new Date(value), 'yyyy-MM-dd') : undefined
@@ -84,13 +132,24 @@ export default function OperationsFilters() {
           <AppDatePicker
             isClearable
             selectsEnd
-            startDate={startDate}
-            selectedDate={endDate}
-            endDate={endDate}
-            minDate={startDate}
+            startDate={
+              operationParams.startDate
+                ? new Date(operationParams.startDate)
+                : null
+            }
+            selectedDate={
+              operationParams.endDate ? new Date(operationParams.endDate) : null
+            }
+            endDate={
+              operationParams.endDate ? new Date(operationParams.endDate) : null
+            }
+            minDate={
+              operationParams.startDate
+                ? new Date(operationParams.startDate)
+                : null
+            }
             label={'Fin'}
             onChange={(value) => {
-              setEndDate(value);
               filter(
                 'endDate',
                 value ? format(new Date(value), 'yyyy-MM-dd') : undefined

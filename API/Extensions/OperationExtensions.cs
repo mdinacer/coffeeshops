@@ -37,13 +37,17 @@ public static class OperationExtensions
 
 
     public static IQueryable<Operation> Filter(this IQueryable<Operation> query, ShopOperationType? type,
-        DateTime? startDate, DateTime? endDate)
+        DateTime? startDate, DateTime? endDate, string? agentId)
     {
         if (type != null)
             query = query.Where(p => p.Type == type);
 
         if (startDate != null)
             query = query.Where(p => p.Date.Date >= startDate.Value.Date);
+
+        if (!string.IsNullOrEmpty(agentId))
+            query = query.Where(p => p.AgentId != null && p.AgentId.Equals(agentId));
+
 
         if (endDate != null)
             query = query.Where(p => p.Date <= endDate.Value.Date);

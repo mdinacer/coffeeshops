@@ -13,7 +13,7 @@ module.exports = {
     // },
     extend: {},
     fontFamily: {
-      Primary: ["'Oswald'", 'sans-serif'],
+      Primary: ["'Roboto Condensed'", 'sans-serif'],
       Secondary: ["'Roboto Condensed'", 'sans-serif'],
       Inter: ["'Inter'", 'sans-serif'],
       Roboto: ["'Roboto Condensed'", 'sans-serif'],

@@ -17,6 +17,10 @@ export default function AppPage({ children }: Props) {
   const node = useRef(null);
   const { pathname } = useLocation();
 
+  // const isOwner = roles && roles.some((r) => r === 'Owner');
+  // const isModerator = roles && roles.some((r) => r === 'Moderator');
+  const isAgent = roles && roles.some((r) => r === 'Agent');
+
   useOutsideClick(node, () => setSidebarExpanded(false));
   return (
     <>
@@ -24,33 +28,35 @@ export default function AppPage({ children }: Props) {
         layout
         className='flex max-h-screen min-h-screen w-screen select-none flex-row items-stretch justify-start overflow-hidden bg-stone-400 text-stone-500'
       >
-        <AnimatePresence exitBeforeEnter>
-          {sidebarExpanded && (
-            <motion.div
-              layout
-              ref={node}
-              initial={{ x: '-100%' }}
-              exit={{ x: '-100%' }}
-              animate={{
-                x: 0,
-              }}
-              transition={{ stiffness: 100 }}
-              style={{
-                transformOrigin: 'left',
-              }}
-              className='absolute top-0 left-0 bottom-0 z-30 flex h-screen w-full overflow-hidden bg-stone-300 drop-shadow-md md:w-full md:max-w-[400px]'
-            >
-              <AppPageSidebar
-                shop={shop}
-                roles={roles}
-                user={user}
-                onClose={() => setSidebarExpanded(false)}
-              />
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {!isAgent && (
+          <AnimatePresence exitBeforeEnter>
+            {sidebarExpanded && (
+              <motion.div
+                layout
+                ref={node}
+                initial={{ x: '-100%' }}
+                exit={{ x: '-100%' }}
+                animate={{
+                  x: 0,
+                }}
+                transition={{ stiffness: 100 }}
+                style={{
+                  transformOrigin: 'left',
+                }}
+                className='absolute top-0 left-0 bottom-0 z-30 flex h-screen w-full overflow-hidden bg-stone-300 drop-shadow-md md:w-full md:max-w-[400px]'
+              >
+                <AppPageSidebar
+                  shop={shop}
+                  roles={roles}
+                  user={user}
+                  onClose={() => setSidebarExpanded(false)}
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        )}
         <div className='relative flex w-screen flex-col '>
-          {sidebarExpanded && (
+          {!isAgent && sidebarExpanded && (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1, transition: { delay: 0.4 } }}
@@ -62,6 +68,7 @@ export default function AppPage({ children }: Props) {
             <AppPageHeader
               sidebarExpanded={sidebarExpanded}
               user={user}
+              roles={roles}
               onMenuButtonClick={(value) => setSidebarExpanded(value)}
               className='relative flex-initial drop-shadow-md '
             />

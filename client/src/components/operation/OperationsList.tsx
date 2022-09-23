@@ -9,7 +9,7 @@ import ResponsiveTableRow from '../common/ResponsiveTableRow';
 
 interface Props {
   operations: Operation[];
-  type: string;
+  type: OperationType;
   onSelect: (operation: Operation) => void;
 }
 
@@ -19,7 +19,7 @@ export default function OperationsList({ operations, type, onSelect }: Props) {
       <ResponsiveTable
         headers={[
           'date',
-          type === OperationType[1] ? 'client' : 'fournisseur',
+          type === OperationType.sale ? 'client' : 'fournisseur',
           'total',
           'payé',
           'reste',
@@ -34,9 +34,10 @@ export default function OperationsList({ operations, type, onSelect }: Props) {
                 value: format(new Date(operation.date), 'PPP', {
                   locale: locale,
                 }),
+                align: 'center',
               },
               {
-                title: type === OperationType[1] ? 'client' : 'fournisseur',
+                title: type === OperationType.sale ? 'client' : 'fournisseur',
                 value: operation?.agentName || 'non fournis',
               },
 

@@ -63,6 +63,9 @@ export default function LoginPage() {
               placeholder='Tapez votre mot de passe'
             />
             <p className=' w-full text-center text-sm text-red-500'>{error}</p>
+            <Link to={'/account/resetPasswordRequest/'}>
+              Mot de passe oublié ?
+            </Link>
             <AppButton
               disabled={!isValid}
               genre='primary'

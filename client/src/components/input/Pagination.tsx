@@ -26,12 +26,11 @@ export default function Pagination({ metaData, onPageChange }: Props) {
             {currentPage * pageSize > totalCount
               ? totalCount
               : currentPage * pageSize}{' '}
-            sur {totalCount} articles
+            sur {totalCount} éléments
           </p>
 
           {metaData && metaData.totalPages > 1 && (
             <ReactPaginate
-              forcePage={pageNumber}
               className='flex w-auto flex-row items-center gap-x-3 py-2 '
               pageClassName='font-thin'
               activeClassName='font-normal bg-stone-500 rounded-md text-stone-100'
@@ -41,7 +40,6 @@ export default function Pagination({ metaData, onPageChange }: Props) {
               onPageChange={({ selected }) => {
                 handlePageChange(selected);
               }}
-              initialPage={0}
               pageRangeDisplayed={3}
               pageCount={totalPages}
               previousLabel={<ChevronLeftIcon className='h-6 w-6' />}

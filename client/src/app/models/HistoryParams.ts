@@ -7,5 +7,5 @@ export interface HistoryParams {
     startDate?: string;
     endDate?: string;
     element?: string;
-    action?: string;
+    action?: number;
 }

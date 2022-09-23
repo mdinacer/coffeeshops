@@ -6,8 +6,9 @@ interface Props {
   label?: string;
   items: Array<ListItem>;
   selectedValue: any;
-  onChange: (item: ListItem) => void;
   initialValue?: any;
+  disabled?: boolean;
+  onChange: (item: ListItem) => void;
   Icon?: (props: any) => JSX.Element;
 }
 
@@ -15,6 +16,7 @@ export default function AppButtonSelect({
   label,
   items,
   selectedValue,
+  disabled = false,
   Icon,
   onChange,
 }: Props) {
@@ -24,7 +26,11 @@ export default function AppButtonSelect({
 
   const isSelected = (value: any) => selectedValue === value;
   return (
-    <div className='flex h-full flex-row items-center gap-x-3'>
+    <div
+      className={`flex h-full flex-row items-center gap-x-3 ${
+        disabled ? 'opacity-50' : ' opacity-100'
+      }`}
+    >
       {label && (
         <div className='flex-initial'>
           <p className='w-max flex-initial overflow-hidden border-r  border-stone-400  pr-2 text-sm uppercase'>
@@ -36,6 +42,7 @@ export default function AppButtonSelect({
       <div className=' grid flex-auto grid-flow-col gap-2'>
         {items.map((item, index) => (
           <button
+            disabled={disabled}
             key={index}
             type='button'
             className={`relative inline-flex  items-center justify-center gap-x-2 rounded-md bg-stone-300 py-1  px-2  ${

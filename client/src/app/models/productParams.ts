@@ -4,7 +4,6 @@ export interface ProductParams {
     orderBy: string;
     searchTerm?: string | null;
     categoryId?: string | null;
-    showcase?: boolean | null;
-    paginate?: boolean | null;
+
 }
 

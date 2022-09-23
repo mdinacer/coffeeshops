@@ -1,7 +1,10 @@
 using System.Security.Claims;
 using System.Text;
+using System.Text.Encodings.Web;
+using System.Web;
 using API.Data;
 using API.DTO;
+using API.Extensions;
 using API.Models;
 using API.Services;
 using AutoMapper;
@@ -134,6 +137,7 @@ public class AccountController : BaseApiController
         if (user == null) return Unauthorized();
 
         var origin = Request.Headers["origin"];
+
         var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
         token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
 
@@ -144,6 +148,122 @@ public class AccountController : BaseApiController
         await _emailSender.SendEmailAsync(user.Email, "Please verify email", message);
 
         return Ok("Email verification link resent");
+    }
+
+
+    [AllowAnonymous]
+    [HttpGet("sendPasswordResetLink")]
+    public async Task<IActionResult> SendPasswordResetLink([FromQuery] string email)
+    {
+        var user = await _userManager.FindByEmailAsync(email);
+
+        if (user == null) return Unauthorized();
+        var origin = Request.Headers["origin"];
+
+        var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+        token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
+
+        var uri = new Uri($"{origin}/account/resetPassword")
+            .AddParameter("token", token)
+            .AddParameter("email", user.Email);
+
+
+        var message =
+            $"<p>Please click the below link to reset your password:</p><p><a href='{uri.ToString()}'>Click to reset password</a></p>";
+
+        await _emailSender.SendEmailAsync(user.Email, "Password Reset", message);
+
+        return Ok("Password reset link sent");
+    }
+
+
+    [HttpPost("resetPassword")]
+    public async Task<IActionResult> ResetPassword(ResetPasswordDto resetPassword)
+    {
+        var user = await _userManager.FindByEmailAsync(resetPassword.Email);
+
+        if (user == null) return Unauthorized();
+
+        var decodedTokenBytes = WebEncoders.Base64UrlDecode(resetPassword.Token);
+        var decodedToken = Encoding.UTF8.GetString(decodedTokenBytes);
+        var result = await _userManager.ResetPasswordAsync(user, decodedToken, resetPassword.NewPassword);
+
+        if (!result.Succeeded) return BadRequest("Could not reset your password");
+
+        return Ok("Password reset");
+    }
+
+    [HttpPost("changePassword")]
+    public async Task<IActionResult> ChangePassword(ChangePasswordDto changePassword)
+    {
+        var user = await _context.Users
+           .SingleOrDefaultAsync(u =>
+               u.UserName == User.Identity!.Name);
+
+        if (user == null) return Unauthorized();
+
+
+        var result = await _userManager.ChangePasswordAsync(user, changePassword.CurrentPassword, changePassword.NewPassword);
+
+        if (!result.Succeeded) return BadRequest("Could not change your password");
+
+        return Ok("Password changed");
+    }
+
+
+    [HttpPost("sendEmailChangeRequest")]
+    public async Task<IActionResult> ChangeEmailConfirmationLink(ChangeEmailRequestDto changeEmailRequest)
+    {
+        var user = await _context.Users
+           .SingleOrDefaultAsync(u =>
+               u.UserName == User.Identity!.Name);
+
+        if (user == null) return Unauthorized();
+
+        var result = await _signInManager.CheckPasswordSignInAsync(user, changeEmailRequest.Password, false);
+
+        if (!result.Succeeded) return Unauthorized();
+
+        var origin = Request.Headers["origin"];
+
+        var token = await _userManager.GenerateChangeEmailTokenAsync(user, changeEmailRequest.NewEmail);
+        token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
+
+        var uri = new Uri($"{origin}/account/changeEmail")
+            .AddParameter("token", token)
+            .AddParameter("email", changeEmailRequest.NewEmail);
+
+        var message =
+            $"<p>Please click the below link to change your email:</p><p><a href='{uri.ToString()}'>Click to reset password</a></p>";
+
+        await _emailSender.SendEmailAsync(changeEmailRequest.NewEmail, "Email Change", message);
+
+        return Ok("Email change link sent");
+    }
+
+    [HttpPost("changeEmail")]
+    public async Task<IActionResult> ChangeEmail(ChangeEmailDto changeEmail)
+    {
+        var user = await _context.Users
+        .Include(u => u.Profile)
+            .SingleOrDefaultAsync(u =>
+                u.UserName == User.Identity!.Name);
+
+        if (user == null) return Unauthorized();
+
+        var decodedTokenBytes = WebEncoders.Base64UrlDecode(changeEmail.Token);
+        var decodedToken = Encoding.UTF8.GetString(decodedTokenBytes);
+
+        var result = await _userManager.ChangeEmailAsync(user, changeEmail.NewEmail, decodedToken);
+
+        if (!result.Succeeded) return BadRequest("Could not change your email");
+        if (user.Profile != null)
+        {
+            user.Profile.Email = changeEmail.NewEmail;
+            await _context.SaveChangesAsync();
+        }
+
+        return Ok("Email changed");
     }
 
 
@@ -266,4 +386,6 @@ public class AccountController : BaseApiController
 
         Response.Cookies.Append("refreshToken", refreshToken.Token, cookieOptions);
     }
+
+
 }

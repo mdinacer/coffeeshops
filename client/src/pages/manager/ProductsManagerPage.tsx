@@ -1,16 +1,12 @@
 import { PlusIcon } from '@heroicons/react/24/solid';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import useProducts from '../../app/hooks/useProducts';
 import ListPageLayout from '../../app/layout/ListPageLayout';
 import { Product } from '../../app/models/product';
-import {
-  setPageNumber,
-  setProductParams,
-} from '../../app/slices/productsSlice';
+import { setPageNumber } from '../../app/slices/productsSlice';
 import { useAppDispatch } from '../../app/store/configureStore';
 import AppButton from '../../components/common/AppButton';
 import CollapsibleMenu from '../../components/common/CollapsibleMenu';
-import LoadingComponent from '../../components/common/LoadingComponent';
 import ModalDialog from '../../components/common/ModalDialog';
 import ProductForm from '../../components/forms/ProductForm';
 import ProductDeleteDialog from '../../components/product/ProductDeleteDialog';
@@ -19,7 +15,7 @@ import ShopProductCard from '../../components/product/ShopProductCard';
 
 export default function ProductsManagerPage() {
   const dispatch = useAppDispatch();
-  const { products, productsLoaded, metaData } = useProducts();
+  const { products, metaData } = useProducts();
   const [deleteProduct, setDeleteProduct] = useState(false);
   const [editProduct, setEditProduct] = useState(false);
   const [addProductForm, setAddProductForm] = useState(false);
@@ -37,11 +33,6 @@ export default function ProductsManagerPage() {
     setAddProductForm(true);
   };
 
-  useEffect(() => {
-    dispatch(setProductParams({ paginate: true, pageSize: 15 }));
-  }, []);
-
-  if (!productsLoaded) return <LoadingComponent />;
   return (
     <>
       <ModalDialog active={addProductForm} title='Ajouter un produit'>
@@ -80,7 +71,7 @@ export default function ProductsManagerPage() {
           </CollapsibleMenu>
         }
         list={
-          <div className='grid gap-5 gap-y-5 md:grid-cols-2 md:gap-y-2 xl:grid-cols-3'>
+          <div className='grid gap-5 gap-y-5  md:grid-cols-2 md:gap-y-2 xl:grid-cols-3'>
             {products &&
               products.map((product) => (
                 <ShopProductCard

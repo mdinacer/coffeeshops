@@ -21,7 +21,7 @@ export default function OrderElementsListItem({
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -50 }}
       layout
-      className='bg-stone-00 flex w-full   flex-row items-end rounded border-y border-y-stone-300 bg-stone-200  px-4 text-stone-900  md:items-center'
+      className='bg-stone-00 flex w-full   flex-row items-end rounded border-y border-y-stone-300 bg-stone-200  pl-4 text-stone-900  md:items-center'
     >
       <div className='grid flex-auto items-center  gap-y-2 md:grid-cols-5'>
         <p className='  font-Roboto text-lg font-light capitalize md:col-span-3'>
@@ -56,7 +56,7 @@ export default function OrderElementsListItem({
       <div>
         <button
           type='button'
-          className={buttonStyle + 'ml-2 bg-stone-400 text-stone-100'}
+          className={buttonStyle + 'ml-2 rounded-none bg-stone-500 text-white'}
           onClick={() => onRemove(element.productId)}
         >
           <XMarkIcon className={iconStyle} />
@@ -67,5 +67,5 @@ export default function OrderElementsListItem({
 }
 
 const buttonStyle =
-  'p-1 rounded-full text-stone-600 border-2 border-stone-300  bg-stone-300 ';
+  'p-1 rounded-full text-stone-600 border border-stone-500  bg-stone-200 ';
 const iconStyle = 'h-5 w-5';

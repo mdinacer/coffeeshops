@@ -49,7 +49,7 @@ export default function HomePage() {
         </div>
       </div>
 
-      <div className='relative flex h-screen w-screen  snap-center flex-col items-center justify-center bg-stone-200  '>
+      <div className='relative flex hidden h-screen w-screen  snap-center flex-col items-center justify-center bg-stone-200  '>
         <div className=' w-full py-10 opacity-70'>
           <p className=' text-center font-Primary text-6xl font-thin uppercase'>
             Caractéristiques

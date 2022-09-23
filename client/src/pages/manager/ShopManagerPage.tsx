@@ -1,10 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import agent from '../../app/api/agent';
-import {
-  ShopStats,
-  StatsElement,
-  StatsElementData,
-} from '../../app/models/shopStats';
+import { ShopStats, StatsElement } from '../../app/models/shopStats';
 import { useAppSelector } from '../../app/store/configureStore';
 import { formatNumber } from '../../app/utils/utils';
 import Layout from '../../components/Layout';

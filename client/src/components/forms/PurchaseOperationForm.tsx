@@ -74,7 +74,7 @@ export default function PurchaseOperationForm({ operation, onClose }: Props) {
   const fetchProducts = useCallback(async () => {
     try {
       setProductsLoading(true);
-      const result = await agent.Products.listAll();
+      const result = await agent.Products.list();
       console.log(result);
       setProducts(result);
 

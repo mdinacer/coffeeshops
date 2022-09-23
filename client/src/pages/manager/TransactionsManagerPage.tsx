@@ -34,7 +34,7 @@ export default function TransactionsManagerPage() {
     useState<ShopTransaction | null>(null);
 
   async function handlePageChange(page: number) {
-    setPageNumber(page);
+    setPageNumber(page + 1);
   }
 
   const stats = () => [

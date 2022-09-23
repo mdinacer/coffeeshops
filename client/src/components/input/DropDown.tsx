@@ -38,6 +38,7 @@ export default function DropDown({
   return (
     <div ref={node}>
       <ComponentWrapper
+        className={disabled ? 'opacity-50' : ' opacity-100'}
         button={button}
         label={label}
         element={

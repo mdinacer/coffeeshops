@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import useManageAgents from '../../app/hooks/manager/useManageAgents';
+import useManagerAgents from '../../app/hooks/manager/useManagerAgents';
 import ListPageLayout from '../../app/layout/ListPageLayout';
 import { ShopAgent } from '../../app/models/shopAgent';
 import { ShopAgentType } from '../../app/models/shopAgentType';
@@ -15,7 +15,7 @@ import AgentForm from '../../components/forms/AgentForm';
 
 export default function AgentsManagerPage() {
   const dispatch = useAppDispatch();
-  const { agentsParams, metaData, agents } = useManageAgents();
+  const { agentsParams, metaData, agents } = useManagerAgents();
   const [addAgent, setAddAgent] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();

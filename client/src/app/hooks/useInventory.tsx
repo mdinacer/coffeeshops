@@ -19,7 +19,7 @@ export default function useInventory() {
     setItemsLoading(true);
     const params = getAxiosProductParams(inventoryParams);
     try {
-      const response: any = await agent.Products.list(params);
+      const response: any = await agent.Products.listPaginated(params);
       const { items, metaData } = response;
       setMetaData(metaData);
       setInventoryItems(items);
@@ -32,9 +32,6 @@ export default function useInventory() {
 
   function setParams(value: any) {
     setInventoryParams((prev) => ({ ...prev, ...value, pageNumber: 1 }));
-    console.log('====================================');
-    console.log(inventoryItems);
-    console.log('====================================');
     setItemsLoaded(false);
   }
 

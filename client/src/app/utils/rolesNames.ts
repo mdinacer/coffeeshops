@@ -8,6 +8,8 @@ export default function getRoleName(value: string) {
             return 'Manager';
         case "Moderator":
             return 'Modérateur';
+        case "Agent":
+            return 'Serveur';
         default:
             return null;
     }

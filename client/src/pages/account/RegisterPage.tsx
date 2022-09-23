@@ -8,7 +8,6 @@ import PasswordInput from '../../components/input/PasswordInput';
 import TextInput from '../../components/input/TextInput';
 import { useState } from 'react';
 import Layout from '../../components/Layout';
-import AppDialog from '../../components/common/AppDialog';
 import AppButton from '../../components/common/AppButton';
 import { toast } from 'react-toastify';
 import AppLink from '../../components/common/AppLink';

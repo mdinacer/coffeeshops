@@ -13,9 +13,8 @@ import DropDown from '../input/DropDown';
 import NumberInput from '../input/NumberInput';
 import ImageDropZone from '../input/ImageDropZone';
 import agent from '../../app/api/agent';
-import { setProduct, updateProduct } from '../../app/slices/productsSlice';
+import { setProduct, updateProduct } from '../../app/slices/catalogSlice';
 
-import TextArea from '../input/TextArea';
 import ProductGalleryForm from './ProductGalleryForm';
 import useProducts from '../../app/hooks/useProducts';
 import CheckboxInput from '../input/Checkbox';
@@ -64,7 +63,6 @@ export default function ProductForm({
   });
 
   const useInventory = watch('useInventory');
-  const quantity = watch('quantity');
   const watchFile = watch('file', null);
   const selectedCategory = watch('categoryId', null);
 
@@ -170,7 +168,7 @@ export default function ProductForm({
               {!isEdit && (
                 <AppButton
                   Icon={Squares2X2Icon}
-                  label='Galerie'
+                  label=''
                   onClick={() => setProductGalleryVisible(true)}
                   labelStyle={' hidden md:block '}
                   type='button'

@@ -34,10 +34,9 @@ public class ProductsController : BaseApiController
     }
 
     // [Cached(60 * 30)]
-    [HttpGet("list")]
+    [HttpGet()]
     public async Task<ActionResult<List<ProductSmallDto>>> GetProducts()
     {
-
         return await _context.Products
             .Where(p => p.ShopId == ShopId)
             .OrderBy(p => p.Name)
@@ -45,27 +44,39 @@ public class ProductsController : BaseApiController
             .ToListAsync();
     }
 
+    [HttpGet("showcase")]
+    public async Task<ActionResult<List<ProductFullDto>>> GetShowCaseProducts()
+    {
+        var products = await _context.Products
+            .Where(p => p.ShopId == ShopId && p.Showcase)
+            .ProjectTo<ProductFullDto>(_mapper.ConfigurationProvider)
+            .ToListAsync();
+
+        return Ok(products);
+    }
+
 
     // [Cached(60 * 60)]
-    [HttpGet]
+    [HttpGet("paginated")]
     public async Task<ActionResult<PagedList<ProductFullDto>>> GetProducts([FromQuery] ProductsParams productsParams)
     {
         var query = _context.Products
             .Where(p => p.ShopId == ShopId)
-            .Filter(productsParams.CategoryId, productsParams.Showcase)
+            .Filter(productsParams.CategoryId)
             .Search(productsParams.SearchTerm)
             .Sort(productsParams.OrderBy)
             .ProjectTo<ProductFullDto>(_mapper.ConfigurationProvider)
             .AsQueryable();
 
         var products =
-            await PagedList<ProductFullDto>.CreateAsync(query, productsParams.PageNumber, productsParams.PageSize,
-                productsParams.Paginate);
+            await PagedList<ProductFullDto>.CreateAsync(query, productsParams.PageNumber, productsParams.PageSize);
 
         Response.AddPaginationHeader(products.MetaData);
 
         return Ok(products);
     }
+
+
 
     //[Cached(600)]
     [HttpGet("{id}")]

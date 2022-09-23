@@ -64,7 +64,7 @@ public class ShopsController : BaseApiController
             // .ThenInclude(o => o.Profile)
             .SingleOrDefaultAsync(s => s.Id == user.ShopId);
 
-        if (shop == null) return BadRequest("User is not assigned to any shop");
+        if (shop == null) return NotFound("User is not assigned to any shop");
 
         var shopDetails = _mapper.Map<ShopDetailsDto>(shop);
         shopDetails.isOwner = user.Id == shop.OwnerId;
@@ -145,7 +145,7 @@ public class ShopsController : BaseApiController
         if (currentUser == null) return NotFound("User Not found");
 
         var users = await _context.Users
-            .Where(u => u.ShopId == ShopId && u.Id != currentUser.Id)
+            .Where(u => u.ShopId == ShopId)
             .ToListAsync();
 
         var shopUsers = users.Select(u =>
@@ -153,6 +153,7 @@ public class ShopsController : BaseApiController
             var roles = _userManager.GetRolesAsync(u).Result;
             var userDto = new ShopUserDto
             {
+                Id = u.Id,
                 DisplayName = u.DisplayName,
                 Username = u.UserName,
                 Email = u.Email,

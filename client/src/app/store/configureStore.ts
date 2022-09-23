@@ -7,6 +7,7 @@ import { operationSlice } from "../slices/operationSlice";
 import { orderSlice } from "../slices/orderSlice";
 import { agentSlice } from "../slices/agentsSlice";
 import { notificationsSlice } from "../slices/notificationsSlice";
+import { catalogSlice } from "../slices/catalogSlice";
 
 
 export const store = configureStore({
@@ -14,6 +15,7 @@ export const store = configureStore({
         account: accountSlice.reducer,
         agent: agentSlice.reducer,
         shop: shopSlice.reducer,
+        catalog: catalogSlice.reducer,
         products: productsSlice.reducer,
         operation: operationSlice.reducer,
         order: orderSlice.reducer,

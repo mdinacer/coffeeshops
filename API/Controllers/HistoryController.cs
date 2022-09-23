@@ -31,6 +31,8 @@ public class HistoryController : BaseApiController
         var history =
             PagedList<HistoryElementDto>.Create(query, historyParams.PageNumber, historyParams.PageSize);
 
+        Response.AddPaginationHeader(history.MetaData);
+
         return Ok(history);
     }
 

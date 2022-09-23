@@ -13,25 +13,32 @@ import { HubConnectionState } from '@microsoft/signalr';
 import useAppInitializer from '../hooks/useAppInitializer';
 import { useAppSelector } from '../store/configureStore';
 import 'react-toastify/dist/ReactToastify.min.css';
+import PasswordResetRequestPage from '../../pages/account/PasswordResetRequestPage';
 
 export const locale = fr;
 
 function App() {
-  const { user, shopId, userId } = useAppSelector((state) => state.account);
+  const { user, shopId, roles } = useAppSelector((state) => state.account);
   const { connection, startConnection } = useNotifications();
-  const { loadUser, loadShop } = useAppInitializer();
-  const [userLoaded, setUserLoaded] = useState(false);
-  const [shopLoaded, setShopLoaded] = useState(false);
+  const { userLoaded, shopLoaded } = useAppInitializer();
 
-  useEffect(() => {
-    loadUser()
-      .then(() => {
-        setUserLoaded(true);
-        loadShop();
-        setShopLoaded(true);
-      })
-      .catch((error) => console.log(error));
-  }, []);
+  const isAdmin = roles && roles.some((r) => r === 'Admin');
+  const isOwner = roles && roles.some((r) => r === 'Owner');
+  const isManager =
+    roles &&
+    (roles.some((r) => r === 'Manager') ||
+      roles.some((r) => r === 'Moderator'));
+  const isAgent = roles && roles.some((r) => r === 'Agent');
+
+  // useEffect(() => {
+  //   loadUser()
+  //     .then(() => {
+  //       setUserLoaded(true);
+  //       loadShop();
+  //       setShopLoaded(true);
+  //     })
+  //     .catch((error) => console.log(error));
+  // }, []);
 
   useEffect(() => {
     if (connection && connection.state !== HubConnectionState.Connected) {
@@ -51,13 +58,6 @@ function App() {
       </div>
     );
 
-  // if (false)
-  //   return (
-  //     <div>
-  //       <ShopWizard onClose={() => setIsFirstLaunch(false)} />
-  //     </div>
-  //   );
-
   return (
     <AppPage>
       <ToastContainer
@@ -66,9 +66,10 @@ function App() {
         hideProgressBar
         theme='colored'
       />
+
       <Routes>
         <Route path='/'>
-          <Route
+          {/* <Route
             path='wizard'
             element={
               shopId ? (
@@ -81,7 +82,7 @@ function App() {
                 </PrivateRoute>
               )
             }
-          />
+          /> */}
 
           <Route
             index
@@ -261,6 +262,31 @@ function App() {
                 </Suspense>
               }
             />
+            <Route
+              path='changeEmail'
+              element={
+                <Suspense fallback={<div />}>
+                  <ChangeEmail />
+                </Suspense>
+              }
+            />
+            <Route
+              path='resetPasswordRequest'
+              element={
+                <Suspense fallback={<div />}>
+                  <PasswordResetRequest />
+                </Suspense>
+              }
+            />
+
+            <Route
+              path='resetPassword'
+              element={
+                <Suspense fallback={<div />}>
+                  <PasswordReset />
+                </Suspense>
+              }
+            />
           </Route>
           <Route
             path='/server-error'
@@ -283,6 +309,13 @@ export default App;
 const LoginPage = lazy(() => import('../../pages/account/LoginPage'));
 const RegisterPage = lazy(() => import('../../pages/account/RegisterPage'));
 const ConfirmEmail = lazy(() => import('../../pages/account/ConfirmEmail'));
+const ChangeEmail = lazy(() => import('../../pages/account/ChangeEmail'));
+const PasswordResetRequest = lazy(
+  () => import('../../pages/account/PasswordResetRequestPage')
+);
+const PasswordReset = lazy(
+  () => import('../../pages/account/PasswordResetPage')
+);
 const ProfilePage = lazy(() => import('../../pages/account/ProfilePage'));
 const OrderPage = lazy(() => import('../../pages/order/OrderPage'));
 //const ShopFormPage = lazy(() => import('../../pages/shop/ShopFormPage'));

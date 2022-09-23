@@ -5,8 +5,6 @@ using API.Interfaces;
 using API.Services;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Serialization;
 
 namespace API.Extensions;
 
@@ -34,9 +32,6 @@ public static class ServicesExtensions
         services.AddSingleton<IUserIdProvider, UserIdProvider>();
         services.AddSingleton<INotificationSink, NotificationService>();
         services.AddHostedService(sp => (NotificationService)sp.GetService<INotificationSink>()!);
-
-
-
 
         return services;
     }

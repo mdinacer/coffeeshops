@@ -2,6 +2,7 @@ import {
   PencilSquareIcon,
   TrashIcon,
   PlusIcon,
+  DocumentIcon,
 } from '@heroicons/react/24/outline';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -20,6 +21,7 @@ import { fetchAgentAsync } from '../../app/slices/agentsSlice';
 import NotFound from '../../errors/NotFound';
 import ModalDialog from '../../components/common/ModalDialog';
 import { formatNumber } from '../../app/utils/utils';
+import AppLink from '../../components/common/AppLink';
 
 export default function AgentDetailsPage() {
   const { id } = useParams<{ id: string }>();
@@ -94,7 +96,13 @@ export default function AgentDetailsPage() {
         metaData={null}
         onPageChange={(page) => {}}
         actionButton={
-          <div className=' my-4 flex flex-row items-center justify-end gap-x-4'>
+          <div className=' my-4 flex flex-row items-center justify-end gap-x-1'>
+            <AppLink
+              toPath={`/reports/operations?agentId=${agent.id}`}
+              label='Opérations'
+              Icon={DocumentIcon}
+              genre={'info'}
+            />
             <AppButton
               onClick={() => setIsEdit(true)}
               type='button'
@@ -109,6 +117,7 @@ export default function AgentDetailsPage() {
               Icon={TrashIcon}
               genre={'error'}
             />
+
             {agent.debt > 0 && (
               <AppButton
                 onClick={() => setAddPayment(true)}

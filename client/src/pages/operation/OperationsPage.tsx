@@ -1,14 +1,11 @@
+import { ArrowLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 import { PlusIcon } from '@heroicons/react/24/solid';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import useOperations from '../../app/hooks/useOperations';
 import ListPageLayout from '../../app/layout/ListPageLayout';
 import { Operation } from '../../app/models/operation';
 import { OperationType } from '../../app/models/OperationType';
-import {
-  addOperation,
-  setOperationParams,
-  setPageNumber,
-} from '../../app/slices/operationSlice';
+import { addOperation, setPageNumber } from '../../app/slices/operationSlice';
 import { useAppDispatch } from '../../app/store/configureStore';
 import { formatNumber } from '../../app/utils/utils';
 import AppButton from '../../components/common/AppButton';
@@ -22,19 +19,18 @@ import OperationsList from '../../components/operation/OperationsList';
 
 export default function OperationsPage() {
   const dispatch = useAppDispatch();
-  const { operations, metaData, operationType } = useOperations();
+  const { operations, metaData } = useOperations();
+  const [operationType, setOperationType] = useState(OperationType.sale);
   const [purchaseFormVisible, setPurchaseFormVisible] = useState(false);
   const [selectedOperation, setSelectedOperation] = useState<Operation | null>(
     null
   );
 
   async function handlePageChange(page: number) {
-    console.log(page + 1);
-
     dispatch(setPageNumber(page + 1));
   }
   const getTypeTitle = () => {
-    return operationType === OperationType[0] ? 'Achats' : 'Ventes';
+    return operationType === OperationType.purchase ? 'Achats' : 'Ventes';
   };
 
   const operationsTotal = () => getTotal('total');
@@ -77,7 +73,9 @@ export default function OperationsPage() {
         onPageChange={handlePageChange}
         filters={
           <CollapsibleMenu title='Filtres'>
-            <OperationsFilters />
+            <OperationsFilters
+              setOperationType={(value) => setOperationType(value)}
+            />
           </CollapsibleMenu>
         }
         list={
@@ -90,11 +88,11 @@ export default function OperationsPage() {
           />
         }
         actionButton={
-          operationType === OperationType[1].toString() ? (
+          operationType === OperationType.sale ? (
             <AppLink
               className=' w-full md:w-auto '
-              label={'Ajouter une vente'}
-              Icon={PlusIcon}
+              label={'Aller a la caisse'}
+              Icon={ArrowLeftIcon}
               toPath={'/order'}
               genre='primary'
             />

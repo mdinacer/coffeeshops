@@ -1,6 +1,6 @@
-import {useCallback, useEffect, useState} from 'react';
-import {ShopAgent} from '../models/shopAgent';
-import {ShopAgentType} from '../models/shopAgentType';
+import { useCallback, useEffect, useState } from 'react';
+import { ShopAgent } from '../models/shopAgent';
+import { ShopAgentType } from '../models/shopAgentType';
 import agent from '../api/agent';
 
 export default function useAgents(

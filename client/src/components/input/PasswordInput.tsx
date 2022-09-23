@@ -13,7 +13,10 @@ interface Props extends UseControllerProps {
 
 export default function AppPasswordInput({ className, ...props }: Props) {
   const [isVisible, setIsVisible] = useState(false);
-  const { fieldState, field } = useController({ ...props, defaultValue: '' });
+  const {
+    fieldState: { error, isDirty, isTouched },
+    field,
+  } = useController({ ...props, defaultValue: '' });
 
   return (
     <div className='w-full'>
@@ -41,13 +44,13 @@ export default function AppPasswordInput({ className, ...props }: Props) {
         }
       />
 
-      {fieldState.error && (fieldState.isDirty || fieldState.isTouched) && (
-        <div className='w-full py-0'>
-          <p
-            className={`w-full text-left font-Secondary text-sm text-red-500 first-letter:uppercase `}
+      {error && (isDirty || isTouched) && (
+        <div className='w-full py-2'>
+          <span
+            className={`w-full whitespace-pre-line text-left font-Secondary text-sm  text-red-500 first-letter:uppercase `}
           >
-            {fieldState.error.message}
-          </p>
+            {error.message}
+          </span>
         </div>
       )}
     </div>

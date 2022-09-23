@@ -159,8 +159,7 @@ export default function OrderConfirmation({
           button={
             <AppButton
               type='button'
-              genre='outline'
-              className=' rounded-none border-none text-stone-700'
+              genre='none'
               Icon={UserPlusIcon}
               onClick={() => setAgentFormVisible(true)}
               title={`Ajouter un ${

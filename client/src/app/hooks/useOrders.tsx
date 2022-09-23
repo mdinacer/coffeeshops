@@ -1,11 +1,11 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { EmptyOrder, Order, OrderElement } from '../models/order';
 import { useAppDispatch, useAppSelector } from '../store/configureStore';
 import agent from '../api/agent';
 import {
   addOrder,
-  fetchCachedOrdersAsync,
   initTables,
+  loadCachedOrders,
   ordersSelectors,
   removeOrder,
   updateOrder,
@@ -17,10 +17,11 @@ import useNotifications from './useNotifications';
 export default function useOrders() {
   const dispatch = useAppDispatch();
   const { shop } = useAppSelector((state) => state.shop);
-  const { ordersCacheLoaded, tables } = useAppSelector((state) => state.order);
+  const { tables } = useAppSelector((state) => state.order);
   const orders = useAppSelector(ordersSelectors.selectAll);
   const tablesCount = shop?.tablesCount || 0;
   const { sendMessage } = useNotifications();
+  const [cacheLoaded, setCacheLoaded] = useState(false);
 
   function updateTableState(tableId: number, values: any) {
     dispatch(updateTable({ tableId, values }));
@@ -132,6 +133,19 @@ export default function useOrders() {
     }
   }
 
+  const loadCachedData = useCallback(() => {
+    try {
+      const cachedData = localStorage.getItem('orders');
+      if (!cachedData) return;
+      const orders = JSON.parse(cachedData);
+      dispatch(loadCachedOrders(orders));
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setCacheLoaded(true);
+    }
+  }, [dispatch]);
+
   const cacheOrders = useCallback(
     async (values?: Order[]) => {
       try {
@@ -147,7 +161,7 @@ export default function useOrders() {
             })),
           }));
 
-        return await agent.Orders.update({ orders: list });
+        return localStorage.setItem('orders', JSON.stringify(list));
       } catch (error) {
         console.log(error);
       }
@@ -174,19 +188,18 @@ export default function useOrders() {
   }
 
   useEffect(() => {
-    if (tablesCount > 0 && !ordersCacheLoaded) {
-      dispatch(fetchCachedOrdersAsync()).then(({ payload }) => {
-        const values = payload as Order[] | null;
-        dispatch(initTables({ tablesCount, values }));
-      });
+    if (tablesCount > 0 && cacheLoaded) {
+      dispatch(initTables({ tablesCount }));
     }
-  }, [dispatch, ordersCacheLoaded, tablesCount]);
+  }, [cacheLoaded, tablesCount]);
 
   useEffect(() => {
-    if (ordersCacheLoaded) {
-      cacheOrders(orders);
-    }
-  }, [orders, ordersCacheLoaded]);
+    cacheOrders(orders);
+  }, [orders]);
+
+  useEffect(() => {
+    loadCachedData();
+  }, []);
 
   return {
     tables,

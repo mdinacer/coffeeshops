@@ -38,7 +38,7 @@ public class OperationsController : BaseApiController
         var query = _context.Operations
             .Where(p => p.ShopId == ShopId)
             .Sort(operationParams.OrderBy)
-            .Filter(operationParams.Type, operationParams.StartDate, operationParams.EndDate)
+            .Filter(operationParams.Type, operationParams.StartDate, operationParams.EndDate, operationParams.AgentId)
             .ProjectTo<OperationDto>(_mapper.ConfigurationProvider)
             .AsQueryable();
 
@@ -118,25 +118,16 @@ public class OperationsController : BaseApiController
                             ShopId = ShopId,
                             EntityId = product.Id,
                             Nature = "productLowStock",
-                            Message = $"Le produit ${product.Name} a atteint le seuil de stock minimum."
-
+                            Payload = new
+                            {
+                                Name = product.Name,
+                                Stock = product.GetInventory()
+                            }
                         });
                     }
 
                 }
-                var remain = product.GetInventory();
-                await _notificationSink.PushAsync(new Notification
-                {
-                    ShopId = ShopId,
-                    EntityId = product.Id,
-                    Nature = "productLowStock",
-                    Payload = new
-                    {
-                        Name = product.Name,
-                        Stock = product.GetInventory()
-                    }
 
-                });
 
                 if (createOperation.Type == ShopOperationType.purchase)
                 {

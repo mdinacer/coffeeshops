@@ -27,7 +27,7 @@ export default function ListPageLayout({
 }: Props) {
   return (
     <Layout
-      className={` ${className} ax-h-full flex flex-col items-stretch  gap-y-4 md:gap-y-5 `}
+      className={` ${className} flex flex-col items-stretch  gap-y-4 md:gap-y-5 `}
     >
       {(title || actionButton) && (
         <div className='flex w-full flex-col items-center justify-start gap-y-5 md:flex-row md:items-center md:justify-between '>

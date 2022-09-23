@@ -7,9 +7,8 @@ import {
 
 export default function useOperations() {
   const operations = useAppSelector(operationSelectors.selectAll);
-  const { operationsLoaded, metaData, status, operationType } = useAppSelector(
-    (state) => state.operation
-  );
+  const { operationsLoaded, metaData, status, operationParams } =
+    useAppSelector((state) => state.operation);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -21,7 +20,7 @@ export default function useOperations() {
   return {
     operations,
     operationsLoaded,
-    operationType,
+    operationParams,
     metaData,
   };
 }

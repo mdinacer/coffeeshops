@@ -15,7 +15,7 @@ export default function ShopProductCard({ product, onEdit, onDelete }: Props) {
       layout
       className='flex  select-none flex-col overflow-hidden  rounded-lg bg-stone-300 text-stone-600 md:flex-row'
     >
-      <div className='flex flex-auto  flex-row py-2 px-5 '>
+      <div className='my-auto flex  flex-auto flex-row py-2  px-5'>
         <div className=' w-32 px-5 '>
           <img
             src={product.pictureUrl}

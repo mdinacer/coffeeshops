@@ -3,15 +3,13 @@ import {
   ArrowLeftOnRectangleIcon,
   ArrowRightOnRectangleIcon,
   Bars3CenterLeftIcon,
-  BellIcon,
-  MagnifyingGlassIcon,
   UserCircleIcon,
 } from '@heroicons/react/24/outline';
 
 import { Link, useLocation } from 'react-router-dom';
 import { User } from '../../app/models/user';
 import { signOut } from '../../app/slices/accountSlice';
-import { useAppDispatch } from '../../app/store/configureStore';
+import { useAppDispatch, useAppSelector } from '../../app/store/configureStore';
 import AppButton from '../common/AppButton';
 import AppLink from '../common/AppLink';
 
@@ -20,54 +18,65 @@ interface Props {
   user: User | null;
   className?: string;
   sidebarExpanded?: boolean;
+  roles: string[] | null;
 }
 export default function AppPageHeader({
   user,
   className,
   sidebarExpanded = false,
+  roles,
   onMenuButtonClick,
 }: Props) {
   const dispatch = useAppDispatch();
+  const { shop } = useAppSelector((state) => state.shop);
   const { state }: any | null = useLocation();
   const from = state?.from || null;
+
+  const isAgent = roles && roles.some((r) => r === 'Agent');
 
   return (
     <>
       <div
         className={`flex w-full flex-row  items-center justify-between border-b border-b-stone-400 bg-stone-800 text-stone-300 md:py-0 md:pl-5 ${className}`}
       >
-        <div className='relative z-10 inline-flex items-center gap-x-5'>
-          {!sidebarExpanded && (
-            <button
-              type='button'
-              className='p-2'
-              onClick={() => onMenuButtonClick(true)}
-            >
-              <Bars3CenterLeftIcon className={` h-6 w-6 `} />
-            </button>
-          )}
-          {from && (
-            <Link
-              to={from}
-              className='inline-flex items-center gap-x-2 rounded-full border border-stone-800 bg-stone-500 py-1 px-5  hover:bg-yellow-500 hover:text-stone-100'
-            >
-              <ArrowLeftIcon className={` h-5 w-5 `} />
-              <span className='hidden font-Primary font-thin uppercase md:block'>
-                Retour
-              </span>
-            </Link>
-          )}
-        </div>
+        {!isAgent ? (
+          <div className='relative z-10 inline-flex items-center gap-x-5'>
+            {!sidebarExpanded && (
+              <button
+                type='button'
+                className='p-2'
+                onClick={() => onMenuButtonClick(true)}
+              >
+                <Bars3CenterLeftIcon className={` h-6 w-6 `} />
+              </button>
+            )}
+            {from && (
+              <Link
+                to={from}
+                className='inline-flex items-center gap-x-2 rounded-full border border-stone-800 bg-stone-500 py-1 px-5  hover:bg-yellow-500 hover:text-stone-100'
+              >
+                <ArrowLeftIcon className={` h-5 w-5 `} />
+                <span className='hidden font-Primary font-thin uppercase md:block'>
+                  Retour
+                </span>
+              </Link>
+            )}
+          </div>
+        ) : (
+          <Link to={'/'} className=' font-Primary text-lg uppercase'>
+            {shop?.name}
+          </Link>
+        )}
 
         <div className=' flex flex-row gap-x-5'>
-          <div className='grid grid-cols-2'>
+          {/* <div className='grid grid-cols-2'>
             <button type='button' className='p-2'>
               <MagnifyingGlassIcon className='h-6 w-6' />
             </button>
             <button type='button' className='p-2'>
               <BellIcon className='h-6 w-6' />
             </button>
-          </div>
+          </div> */}
 
           {user ? (
             <div className='flex flex-row items-center '>
