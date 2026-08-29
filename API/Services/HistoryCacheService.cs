@@ -29,7 +29,7 @@ public class HistoryCacheService
 
         return data.IsNullOrEmpty
             ? new List<HistoryElementDto>()
-            : JsonSerializer.Deserialize<List<HistoryElementDto>>(data!);
+            : JsonSerializer.Deserialize<List<HistoryElementDto>>(data!.ToString());
     }
 
     public async Task<bool> DeleteHistoryElementAsync(string shopId, string elementId)

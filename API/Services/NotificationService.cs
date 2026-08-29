@@ -37,7 +37,7 @@ namespace API.Services
             {
                 using var scope = _serviceProvider.CreateScope();
                 var hub = scope.ServiceProvider.GetRequiredService<IHubContext<NotificationHub>>();
-                var notification = JsonSerializer.Deserialize<Notification>(value!)!;
+                var notification = JsonSerializer.Deserialize<Notification>(value!.ToString())!;
                 var payload = new
                 {
                     Nature = notification.Nature,

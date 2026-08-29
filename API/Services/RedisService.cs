@@ -23,7 +23,7 @@ public class RedisService
     {
         var data = await _database.StringGetAsync(shopId);
 
-        return data.IsNullOrEmpty ? null : JsonSerializer.Deserialize<List<CacheShopOrder>>(data!);
+        return data.IsNullOrEmpty ? null : JsonSerializer.Deserialize<List<CacheShopOrder>>(data!.ToString());
     }
 
     public async Task<List<CacheShopOrder>?> UpdateOrderAsync(string shopId, ShopOrdersDto shopOrders)
